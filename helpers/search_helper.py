@@ -205,10 +205,10 @@ async def get_manga_details_embed(name:str) -> Embed:
         inline=True
     )
 
-    trailer_link = ("https://www.youtube.com/watch?v={}".format(data["trailer"]["id"]) if data["trailer"]["site"] == "youtube" else "Not Available")
+    trailer_link = ("[click here](https://www.youtube.com/watch?v={})".format(data["trailer"]["id"]) if data["trailer"] is not None and data["trailer"]["site"] == "youtube" else "Not Available")
     embd.add_field(
         name="Trailer",
-        value="[click here]({})".format(trailer_link),
+        value=trailer_link,
         inline=True
     )
 
