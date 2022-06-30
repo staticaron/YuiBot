@@ -1,13 +1,13 @@
 anime_query = '''
         query ($search : String) { 
-        Media (search:$search, type: ANIME) { 
+        Media (search:$search, type: ANIME, sort:POPULARITY_DESC) { 
             id
             title { 
                 romaji
                 english
                 native
             }
-            description(asHtml: true)
+            description(asHtml: false)
             isAdult
             trailer{
                 id
@@ -37,16 +37,19 @@ anime_query = '''
 
 manga_query = """
     query ($search : String) { 
-    Media (search:$search, type: MANGA) { 
+    Media (search:$search, type: MANGA, sort:POPULARITY_DESC) { 
         id
         title {
             romaji
             english
             native
         }
-        description(asHtml: true)
+        description(asHtml: false)
         isAdult
-        trailer
+        trailer{
+            id
+            site
+        }
         siteUrl
         genres
         chapters

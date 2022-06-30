@@ -50,7 +50,7 @@ async def get_anime_details_embed(name:str) -> Embed:
     embd.set_thumbnail(url=data["coverImage"]["large"])
 
 
-    titles = list(data["title"].values())
+    titles = [x if x is not None else "" for x in list(data["title"].values())]
     embd.add_field(
         name="Titles",
         value="\n".join(titles),
@@ -131,13 +131,13 @@ async def get_manga_details_embed(name:str) -> Embed:
     data = await get_media_details(name, MediaType.MANGA)
     data = data["data"]["Media"]
 
-    title = "#{id} - {eng_name} {is_adult}}".format(id=data["id"], eng_name=data["title"]["english"], is_adult=config.ADULT_CONTENT_EMOTE if data["isAdult"] else "")
+    title = "#{id} - {eng_name} {is_adult}".format(id=data["id"], eng_name=data["title"]["english"], is_adult=config.ADULT_CONTENT_EMOTE if data["isAdult"] else "")
 
     embd:Embed = Embed(title=title, color=config.NORMAL_COLOR, url=data["siteUrl"])
     embd.description = data["description"][:200] + "... [read more]({})".format(data["siteUrl"])
     embd.set_thumbnail(url=data["coverImage"]["large"])
 
-    titles = list(data["title"].values())
+    titles = [x if x is not None else "" for x in list(data["title"].values())]
     embd.add_field(
         name="Titles",
         value="\n".join(titles),
