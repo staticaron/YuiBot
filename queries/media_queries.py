@@ -1,6 +1,6 @@
 anime_query = '''
         query ($search : String) { 
-        Media (search:$search, type: ANIME, sort:POPULARITY_DESC) { 
+        Media (search:$search, type: ANIME, sort:SEARCH_MATCH) { 
             id
             title { 
                 romaji
@@ -37,7 +37,7 @@ anime_query = '''
 
 manga_query = """
     query ($search : String) { 
-    Media (search:$search, type: MANGA, sort:POPULARITY_DESC) { 
+    Media (search:$search, type: MANGA, sort:SEARCH_MATCH) { 
         id
         title {
             romaji
