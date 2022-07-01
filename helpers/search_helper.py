@@ -34,10 +34,7 @@ async def get_character_details(name:str) -> dict:
 
     resp = requests.post(config.ANILIST_BASE, json={"query" : character_queries.character_query, "variables" : variables})
 
-    print(resp.text)
-
     return resp.json()
-
 
 async def get_anime_details_embed(name:str) -> Embed:
 
@@ -225,11 +222,12 @@ async def get_manga_details_embed(name:str) -> Embed:
 
 async def get_character_details_embed(name:str) -> Embed:
 
-    data = await get_character_details(name)
-    data = data["data"]["Character"]
+    data_raw = await get_character_details(name)
+    data = data_raw["data"]["Character"]
 
     if data is None:
-        pass # return not found embed
+        errors = [error["message"] for error in data_raw["errors"]]
+        return await general_helper.get_information_embed(title="Error Occurred!", color=config.ERROR_COLOR, description="{}{}".format(config.BULLET_EMOTE, "\n{}".format(config.BULLET_EMOTE).join(errors)))
 
     title = "#{} - {}".format(data["id"], data["name"]["full"] if data["name"]["full"] is not None else data["name"]["native"])
 

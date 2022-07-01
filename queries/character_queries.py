@@ -1,7 +1,7 @@
 character_query = '''
 
     query($search : String){
-        Character(search :$search){
+        Character(search :$search, sort:SEARCH_MATCH){
             id
             name{
                 full
