@@ -4,6 +4,7 @@ import enum
 import requests
 
 import config
+from helpers import general_helper
 from queries import media_queries, character_queries
 
 class MediaType(enum.Enum):
@@ -40,8 +41,12 @@ async def get_character_details(name:str) -> dict:
 
 async def get_anime_details_embed(name:str) -> Embed:
 
-    data = await get_media_details(name, MediaType.ANIME)
-    data = data["data"]["Media"]
+    data_raw = await get_media_details(name, MediaType.ANIME)
+    data = data_raw["data"]["Media"]
+
+    if data is None:
+        errors = [error["message"] for error in data_raw["errors"]]
+        return await general_helper.get_information_embed(title="Error Occurred!", color=config.ERROR_COLOR, description="{}{}".format(config.BULLET_EMOTE, "\n{}".format(config.BULLET_EMOTE).join(errors)))
 
     title = "#{id} - {eng_name} {is_adult}".format(id=data["id"], eng_name=(data["title"]["english"] if data["title"]["english"] is not None else data["title"]["romaji"]), is_adult=config.ADULT_CONTENT_EMOTE if data["isAdult"] else "")
 
@@ -128,8 +133,12 @@ async def get_anime_details_embed(name:str) -> Embed:
     return embd
 
 async def get_manga_details_embed(name:str) -> Embed:
-    data = await get_media_details(name, MediaType.MANGA)
-    data = data["data"]["Media"]
+    data_raw = await get_media_details(name, MediaType.MANGA)
+    data = data_raw["data"]["Media"]
+
+    if data is None:
+        errors = [error["message"] for error in data_raw["errors"]]
+        return await general_helper.get_information_embed(title="Error Occurred!", color=config.ERROR_COLOR, description="{}{}".format(config.BULLET_EMOTE, "\n{}".format(config.BULLET_EMOTE).join(errors)))
 
     title = "#{id} - {eng_name} {is_adult}".format(id=data["id"], eng_name=data["title"]["english"], is_adult=config.ADULT_CONTENT_EMOTE if data["isAdult"] else "")
 
@@ -170,7 +179,7 @@ async def get_manga_details_embed(name:str) -> Embed:
     )
 
     embd.add_field(
-        name="Favourites",
+        name="Favorites",
         value=str(data["favourites"]),
         inline=True
     )

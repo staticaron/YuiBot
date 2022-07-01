@@ -5,7 +5,7 @@ import config
 
 class SearchModule(commands.Cog):
 
-    @commands.group(name="search", description="Commands for searching Anime and Manga")
+    @commands.group(name="search", aliases=["find"], description="Commands for searching Anime and Manga")
     async def search_group(self, ctx:commands.Context):
         if ctx.subcommand_passed is None:
             return await ctx.reply(f"Please provide a valid subcommand! {config.YUI_SHY_EMOTE}")
@@ -17,7 +17,7 @@ class SearchModule(commands.Cog):
 
         embd = await search_helper.get_anime_details_embed(name)
 
-        await ctx.reply(embed=embd)
+        await ctx.send(embed=embd)
 
     @search_group.command(name="manga", description="Returns the manga details with provide name")
     async def manga_details(self, ctx:commands.Context, *name):
@@ -26,7 +26,7 @@ class SearchModule(commands.Cog):
 
         embd = await search_helper.get_manga_details_embed(name)
 
-        await ctx.reply(embed=embd)
+        await ctx.send(embed=embd)
 
     @search_group.command(name="character", description="Returns the character details for the character with provided name")
     async def character_details(self, ctx:commands.Context, *name):
