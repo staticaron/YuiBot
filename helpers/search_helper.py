@@ -127,9 +127,11 @@ async def get_anime_details_embed(name:str) -> Embed:
         inline=True
     )
 
+    studios = (data["studios"]["nodes"] if len(data["studios"]["nodes"]) <=3 else data["studios"]["nodes"][:3])
+    studios_str = "\n".join(["[{name}]({url})".format(name=studio["name"], url=studio["siteUrl"] if studio["siteUrl"] is not None else "") for studio in studios])
     embd.add_field(
-        name="Season",
-        value=data["seasonInt"],
+        name="Studios",
+        value=studios_str,
         inline=True
     )
 
@@ -217,9 +219,11 @@ async def get_manga_details_embed(name:str) -> Embed:
         inline=True
     )
 
+    studios = (data["studios"]["nodes"] if len(data["studios"]["nodes"]) <=3 else data["studios"]["nodes"][:3])
+    studios_str = "\n".join(["[{name}]({url})".format(name=studio["name"], url=studio["siteUrl"] if studio["siteUrl"] is not None else "") for studio in studios])
     embd.add_field(
-        name="Season",
-        value=data["seasonInt"],
+        name="Studios",
+        value=studios_str,
         inline=True
     )
 

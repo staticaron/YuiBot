@@ -30,7 +30,12 @@ anime_query = '''
             meanScore
             favourites
             format
-            seasonInt
+            studios{
+                nodes{
+                    name
+                    siteUrl
+                }
+            }
         }
         }
     '''
@@ -67,7 +72,12 @@ manga_query = """
         meanScore
         favourites
         format
-        seasonInt
+        studios(sort:SEARCH_MATCH){
+            nodes{
+                name
+                siteUrl
+            }
+        }
     }
     }
 """
