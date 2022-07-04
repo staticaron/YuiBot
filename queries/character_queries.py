@@ -1,4 +1,4 @@
-character_query = '''
+query = '''
 
     query($search : String){
         Character(search :$search, sort:SEARCH_MATCH){

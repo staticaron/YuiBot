@@ -5,11 +5,15 @@ import requests
 
 import config
 from helpers import general_helper
-from queries import media_queries, character_queries
+from queries import media_queries, character_queries, studio_queries
 
 class MediaType(enum.Enum):
     ANIME = 0,
     MANGA = 1
+
+async def get_error_embed(data_raw:dict) -> Embed:
+        errors = [error["message"] for error in data_raw["errors"]]
+        return await general_helper.get_information_embed(title="Error Occurred!", color=config.ERROR_COLOR, description="{}{}".format(config.BULLET_EMOTE, "\n{}".format(config.BULLET_EMOTE).join(errors)))
 
 async def get_media_details(name:str, type:MediaType) -> dict:
     
@@ -32,7 +36,17 @@ async def get_character_details(name:str) -> dict:
         "search" : name
     }
 
-    resp = requests.post(config.ANILIST_BASE, json={"query" : character_queries.character_query, "variables" : variables})
+    resp = requests.post(config.ANILIST_BASE, json={"query" : character_queries.query, "variables" : variables})
+
+    return resp.json()
+
+async def get_studio_details(name:str) -> dict:
+
+    variables = {
+        "search" : name
+    }
+
+    resp = requests.post(config.ANILIST_BASE, json={"query" : studio_queries.query, "variables" : variables})
 
     return resp.json()
 
@@ -42,8 +56,7 @@ async def get_anime_details_embed(name:str) -> Embed:
     data = data_raw["data"]["Media"]
 
     if data is None:
-        errors = [error["message"] for error in data_raw["errors"]]
-        return await general_helper.get_information_embed(title="Error Occurred!", color=config.ERROR_COLOR, description="{}{}".format(config.BULLET_EMOTE, "\n{}".format(config.BULLET_EMOTE).join(errors)))
+        return await get_error_embed(data_raw)
 
     title = "#{id} - {eng_name} {is_adult}".format(id=data["id"], eng_name=(data["title"]["english"] if data["title"]["english"] is not None else data["title"]["romaji"]), is_adult=config.ADULT_CONTENT_EMOTE if data["isAdult"] else "")
 
@@ -134,8 +147,7 @@ async def get_manga_details_embed(name:str) -> Embed:
     data = data_raw["data"]["Media"]
 
     if data is None:
-        errors = [error["message"] for error in data_raw["errors"]]
-        return await general_helper.get_information_embed(title="Error Occurred!", color=config.ERROR_COLOR, description="{}{}".format(config.BULLET_EMOTE, "\n{}".format(config.BULLET_EMOTE).join(errors)))
+        return await get_error_embed(data_raw)
 
     title = "#{id} - {eng_name} {is_adult}".format(id=data["id"], eng_name=data["title"]["english"], is_adult=config.ADULT_CONTENT_EMOTE if data["isAdult"] else "")
 
@@ -226,8 +238,7 @@ async def get_character_details_embed(name:str) -> Embed:
     data = data_raw["data"]["Character"]
 
     if data is None:
-        errors = [error["message"] for error in data_raw["errors"]]
-        return await general_helper.get_information_embed(title="Error Occurred!", color=config.ERROR_COLOR, description="{}{}".format(config.BULLET_EMOTE, "\n{}".format(config.BULLET_EMOTE).join(errors)))
+        return await get_error_embed(data_raw)
 
     title = "#{} - {}".format(data["id"], data["name"]["full"] if data["name"]["full"] is not None else data["name"]["native"])
 
@@ -275,6 +286,35 @@ async def get_character_details_embed(name:str) -> Embed:
         name="Appearances",
         value=appearances_str,
         inline=True
+    )
+
+    return embd
+
+async def get_studio_details_embed(name:str) -> Embed:
+
+    data_raw = await get_studio_details(name)   
+    data = data_raw["data"]["Studio"]
+
+    if data is None:
+        return await get_error_embed(data_raw)
+
+    title = "#{} - {}".format(data["id"], data["name"])
+
+    embd:Embed = Embed(title=title, color=config.NORMAL_COLOR, url=data["siteUrl"])
+
+    embd.description = "**Animation Studio ? : **" + ("Yes" if data["isAnimationStudio"] is True else "No")
+    embd.description += "\n"
+    embd.description += "**Favourites : **" + str(data["favourites"])
+
+    work_str = ""
+    medias = (data["media"]["nodes"] if len(data["media"]["nodes"]) <= 5 else data["media"]["nodes"][:6]) 
+    for media in medias:
+        work_str += "{bullet} [{name}]({url}) {dot} {format} {dot} {status} \n".format(bullet=config.BULLET_EMOTE, dot=config.DOT_EMOTE, name=media["title"]["english"] if media["title"]["english"] is not None else media["title"]["romaji"], url=media["siteUrl"], format=media["format"], status=media["status"])
+
+    embd.add_field(
+        name="Works ",
+        value=work_str,
+        inline=False
     )
 
     return embd
