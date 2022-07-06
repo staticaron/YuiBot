@@ -11,7 +11,7 @@ def main():
     
     bot:Bot = Bot()
 
-    bot.run(config.TOKEN)
+    bot.run(config.DISCORD_TOKEN)
 
 if __name__ == "__main__":
     main()
