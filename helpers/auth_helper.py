@@ -3,12 +3,11 @@ import requests
 from config import ANILIST_BASE
 from helpers import general_helper
 
-async def get_user_from_username(username:str):
+async def get_user_from_anilistID(anilistID:str):
 
     query = """
-        query($username:String){
-            User(search:$username){
-                id
+        query($anilistID:Int){
+            User(id:$anilistID){
                 name
                 siteUrl
                 avatar{
@@ -19,7 +18,7 @@ async def get_user_from_username(username:str):
     """
 
     variables = {
-        "username" : username
+        "anilistID" : anilistID
     }
 
     resp = requests.post(ANILIST_BASE, json={

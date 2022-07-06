@@ -1,6 +1,5 @@
-from discord.ext import commands
-
 from utils.bot import Bot
+from managers import mongo_manager
 import config
 
 def main():
@@ -8,6 +7,7 @@ def main():
     config.initialize_config_vars()
 
     # load databases
+    mongo_manager.init_motor()
     
     bot:Bot = Bot()
 

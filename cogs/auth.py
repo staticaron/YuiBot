@@ -2,6 +2,7 @@ from discord.ext import commands
 from discord import Message
 
 from helpers import general_helper, auth_helper
+from managers import mongo_manager
 from config import ANILIST_LOGIN, ANILIST_ID, BULLET_EMOTE, LOADING_EMOTE, YUI_SHY_EMOTE
 
 class AuthModule(commands.Cog):
@@ -16,7 +17,7 @@ class AuthModule(commands.Cog):
 
         await ctx.reply(f"Check DM {YUI_SHY_EMOTE}")
 
-        username = None
+        anilistID = None
         token = None
         trials = 0
         max_trials = 3
@@ -39,11 +40,11 @@ class AuthModule(commands.Cog):
             else:
                 finding_account_msg:Message = await ctx.author.send(f"Finding account {LOADING_EMOTE}")
 
-            profile_embd = await auth_helper.get_user_from_username(username_msg.content)
+            fetched_id = await general_helper.get_id_from_anilist_username(username_msg.content)
 
             await finding_account_msg.delete()
 
-            if profile_embd is None:
+            if fetched_id is None:
                 not_found = await general_helper.get_information_embed(
                     title="Profile Not Found",
                     description=f"Make sure your username is correct.",
@@ -51,18 +52,20 @@ class AuthModule(commands.Cog):
                 await ctx.author.send(embed=not_found)
                 continue
             else:
+                profile_embd = await auth_helper.get_user_from_anilistID(str(fetched_id))
+                
                 await ctx.author.send(embed=profile_embd)
 
                 confirmation:Message = await bot.wait_for("message", check=check_user_message, timeout=100)
 
                 if confirmation.content.lower().strip() == "yes" or confirmation.content.lower().strip() == "y":
-                    username = username_msg.content
+                    anilistID = fetched_id
                     break
                 elif confirmation.content.lower().strip() == "no" or confirmation.content.lower().strip() == "n":
                     continue
 
-        if username is None:
-            await ctx.author.send("Authentication Terminated.")
+        if anilistID is None:
+            await ctx.author.send("Maximum Attempts Reached! Authentication Terminated.")
             return
 
         auth_embd = await general_helper.get_information_embed(
@@ -90,6 +93,8 @@ class AuthModule(commands.Cog):
             await ctx.author.send("**Please delete this message now for your own safety!**", reference=token_msg)
 
         await ctx.author.send(f"Authentication Successful {YUI_SHY_EMOTE}")
+
+        await mongo_manager.manager.add_user(str(ctx.author.id), anilistID, token)
 
 def setup(bot:commands.Bot):
     bot.add_cog(AuthModule())

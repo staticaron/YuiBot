@@ -1,2 +1,4 @@
 git+https://github.com/Pycord-Development/pycord
 requests
+motor[srv]
+jwt
