@@ -1,6 +1,7 @@
 from discord import Embed, Member
 from datetime import datetime
 import requests
+import jwt
 
 from config import NORMAL_COLOR, ANILIST_BASE
 
@@ -56,6 +57,7 @@ async def get_id_from_anilist_username(username:str) -> int:
         print(e)
         return None
 
+async def get_id_from_token(token:str) -> str:
+    data = jwt.decode(token, options={"verify_signature": False})
 
-
-    
+    return data["sub"]
