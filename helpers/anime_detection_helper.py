@@ -17,7 +17,7 @@ async def get_embed(url:str) -> Embed:
         if resp["error"].startswith("Failed to fetch image"):
             return await general_helper.get_information_embed("Unable to Fetch Image from the url.", description="The url doesn't leads to a valid image. Url ending with `.jpg`, `.png`, `.gif` are supported.", color=ERROR_COLOR)
 
-        return
+        return await general_helper.get_information_embed("Unable to detect.", color=ERROR_COLOR, description="The following error occurred : ```{}```".format(resp["error"]))
 
     name = top_result["filename"]
     name = name.replace("-", "")
