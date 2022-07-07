@@ -14,6 +14,7 @@ ANILIST_LOGIN = "https://anilist.co/api/v2/oauth/authorize?client_id={client_id}
 
 # Colors
 NORMAL_COLOR = Color.dark_theme()
+INFO_COLOR = Color.gold()
 ERROR_COLOR = Color.red()
 
 # Emojis
