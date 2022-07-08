@@ -1,5 +1,5 @@
 query = """
-    query($id:Int){
+    query($id:Int!){
         User(id:$id){
             name
             siteUrl
@@ -53,6 +53,14 @@ query = """
                             genre
                     }
                 }
+            }
+        }
+        Page{
+            pageInfo{
+                total
+            }
+            followers(userId:$id){
+                name
             }
         }
     }

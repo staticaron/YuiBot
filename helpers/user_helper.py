@@ -58,15 +58,18 @@ async def get_user_embed(userID:str):
     ).json()
 
     user_data = user_resp["data"]["User"]
+    social_data = user_resp["data"]["Page"]
 
     if user_data is None:
         pass
 
     embd:Embed = Embed(
         title="User Information",
-        description="""
-            **Name** : [{name}]({url})\n
-        """.format(name=user_data["name"], url=user_data["siteUrl"])
+        description="**Name** : [{name}]({url})\n**Followers** : {followers}".format(
+            name=user_data["name"], 
+            url=user_data["siteUrl"],
+            followers=social_data["pageInfo"]["total"]
+        )
     )
 
     fav_anime = "\n".join(["[{name}]({url})".format(name=anime["title"]["english"] if anime["title"]["english"] is not None else anime["title"]["romaji"], url=anime["siteUrl"]) for anime in user_data["favourites"]["anime"]["nodes"]]) + " ..."
@@ -98,36 +101,24 @@ async def get_user_embed(userID:str):
 
     embd.add_field(
         name="Anime Stats",
-        value="""
-        Count : **{count}**
-        Mean Score : **{mean_score}**
-        Standard Deviation : **{standard_deviation}**
-        Episode Watched : **{episodes}**
-        Top Genre : \n{genre}
-        """.format(
+        value="Count : **{count}**\nMean Score : **{mean_score}**\nStandard Deviation : **{standard_deviation}**\nEpisode Watched : **{episodes}**\nTop Genre : \n{genre}".format(
             count=user_data["statistics"]["anime"]["count"],
             mean_score=user_data["statistics"]["anime"]["meanScore"],
             standard_deviation=user_data["statistics"]["anime"]["standardDeviation"],
             episodes=user_data["statistics"]["anime"]["episodesWatched"],
-            genre="\n".join([genre["genre"] for genre in user_data["statistics"]["anime"]["genres"]])
+            genre="\n".join("{bullet}**{name}**".format(name=genre["genre"], bullet=config.BULLET_EMOTE) for genre in user_data["statistics"]["anime"]["genres"])
         ),
         inline=True
     )
 
     embd.add_field(
         name="Manga Stats",
-        value="""
-        Count : **{count}**
-        Mean Score : **{mean_score}**
-        Standard Deviation : **{standard_deviation}**
-        Chapters Read : **{chapters}**
-        Top Genre : \n{genre}
-        """.format(
+        value="Count : **{count}**\nMean Score : **{mean_score}**\nStandard Deviation : **{standard_deviation}**\nChapters Read : **{chapters}**\nTop Genre : \n{genre}".format(
             count=user_data["statistics"]["manga"]["count"],
             mean_score=user_data["statistics"]["manga"]["meanScore"],
             standard_deviation=user_data["statistics"]["manga"]["standardDeviation"],
             chapters=user_data["statistics"]["manga"]["chaptersRead"],
-            genre="\n".join([genre["genre"] for genre in user_data["statistics"]["manga"]["genres"]])
+            genre="\n".join("{bullet}**{name}**".format(name=genre["genre"], bullet=config.BULLET_EMOTE) for genre in user_data["statistics"]["manga"]["genres"])
         ),
         inline=True
     )
