@@ -1,9 +1,11 @@
 from discord import Embed, Member
+from discord.ext import commands
 from datetime import datetime
 import requests
 import jwt
 
-from config import NORMAL_COLOR, ANILIST_BASE
+from managers import mongo_manager
+from config import NORMAL_COLOR, ANILIST_BASE, ERROR_COLOR
 
 async def get_information_embed(title:str, color=NORMAL_COLOR, url:str=None, description:str=None, user:Member=None, thumbnail_link:str=None, fields:list=None) -> Embed:
 
@@ -61,3 +63,35 @@ async def get_id_from_token(token:str) -> str:
     data = jwt.decode(token, options={"verify_signature": False})
 
     return data["sub"]
+
+async def get_id_from_userID(userID:str) -> str:
+    
+    data = await mongo_manager.manager.get_user(userID)
+
+    if data is not None:
+        return data["anilistID"]
+    else:
+        return None
+
+"""Check whether the user is registered with AniList account or not"""
+
+def validate_user(func):
+
+    async def predicate(user_class, ctx, user:Member=None):
+
+        if user is None:
+            user = ctx.author
+
+        data = await mongo_manager.manager.get_user(str(user.id))
+
+        if data is None:
+            reply = await get_information_embed(
+                title="Not Found",
+                description="User is not registered! Ask them to link their AniList Account using `login` command",
+                color=ERROR_COLOR
+            )
+            return await ctx.reply(embed=reply)
+
+        await func(user_class, ctx, user)
+
+    return predicate

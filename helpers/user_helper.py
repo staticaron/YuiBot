@@ -1,8 +1,9 @@
-from discord import Member
+from discord import Member, Embed
 import requests
 
 from managers import mongo_manager
 from helpers import general_helper
+from queries import user_query
 import config
 
 """Check whether user is following the target on AniList"""
@@ -40,12 +41,116 @@ async def is_following(current_user_token:str, targetID:str) -> bool:
 
     return follow_check_response["data"]["User"]["isFollowing"]
 
+"""Get user information from AniList"""
+
+async def get_user_embed(userID:str):
+    
+    data = await mongo_manager.manager.get_user(userID)
+
+    anilistID = int(data["anilistID"])
+
+    user_resp = requests.post(
+        url=config.ANILIST_BASE,
+        json={
+            "query" : user_query.query,
+            "variables" : {"id" : anilistID}
+        }
+    ).json()
+
+    user_data = user_resp["data"]["User"]
+
+    if user_data is None:
+        pass
+
+    embd:Embed = Embed(
+        title="User Information",
+        description="""
+            **Name** : [{name}]({url})\n
+        """.format(name=user_data["name"], url=user_data["siteUrl"])
+    )
+
+    fav_anime = "\n".join(["[{name}]({url})".format(name=anime["title"]["english"] if anime["title"]["english"] is not None else anime["title"]["romaji"], url=anime["siteUrl"]) for anime in user_data["favourites"]["anime"]["nodes"]]) + " ..."
+    fav_anime = ("None" if len(user_data["favourites"]["anime"]["nodes"]) <= 0 else fav_anime)
+
+    embd.add_field(
+        name="Favorite Anime",
+        value=fav_anime,
+        inline=True
+    )
+
+    fav_manga = "\n".join(["[{name}]({url})".format(name=manga["title"]["english"] if manga["title"]["english"] is not None else manga["title"]["romaji"], url=manga["siteUrl"]) for manga in user_data["favourites"]["manga"]["nodes"]]) + " ..."
+    fav_manga = ("None" if len(user_data["favourites"]["manga"]["nodes"]) <= 0 else fav_manga)
+
+    embd.add_field(
+        name="Favorite Manga",
+        value=fav_manga,
+        inline=True
+    )
+
+    fav_characters = "\n".join(["[{name}]({url})".format(name=character["name"]["full"], url=character["siteUrl"]) for character in user_data["favourites"]["characters"]["nodes"]]) + " ..."
+    fav_characters = ("None" if len(user_data["favourites"]["characters"]["nodes"]) <= 0 else fav_characters)
+
+    embd.add_field(
+        name="Favorite Characters",
+        value=fav_characters,
+        inline=True
+    )
+
+    embd.add_field(
+        name="Anime Stats",
+        value="""
+        Count : **{count}**
+        Mean Score : **{mean_score}**
+        Standard Deviation : **{standard_deviation}**
+        Episode Watched : **{episodes}**
+        Top Genre : \n{genre}
+        """.format(
+            count=user_data["statistics"]["anime"]["count"],
+            mean_score=user_data["statistics"]["anime"]["meanScore"],
+            standard_deviation=user_data["statistics"]["anime"]["standardDeviation"],
+            episodes=user_data["statistics"]["anime"]["episodesWatched"],
+            genre="\n".join([genre["genre"] for genre in user_data["statistics"]["anime"]["genres"]])
+        ),
+        inline=True
+    )
+
+    embd.add_field(
+        name="Manga Stats",
+        value="""
+        Count : **{count}**
+        Mean Score : **{mean_score}**
+        Standard Deviation : **{standard_deviation}**
+        Chapters Read : **{chapters}**
+        Top Genre : \n{genre}
+        """.format(
+            count=user_data["statistics"]["manga"]["count"],
+            mean_score=user_data["statistics"]["manga"]["meanScore"],
+            standard_deviation=user_data["statistics"]["manga"]["standardDeviation"],
+            chapters=user_data["statistics"]["manga"]["chaptersRead"],
+            genre="\n".join([genre["genre"] for genre in user_data["statistics"]["manga"]["genres"]])
+        ),
+        inline=True
+    )
+
+    embd.set_thumbnail(url=user_data["avatar"]["medium"])
+
+    return embd
+
+
 """Follow a discord user on AniList"""
 
 async def follow_user(user:Member, target:Member) -> str:
 
     # Get the target's anilist ID
     target_data = await mongo_manager.manager.get_user(str(target.id))
+
+    if target_data is None:
+        return await general_helper.get_information_embed(
+            title="Hold It",
+            description="<@{}> has not linked his account yet. Ask them to link their AniList account using `login` command.".format(target.id),
+            color=config.ERROR_COLOR
+        )
+
     target_anilistID = target_data["anilistID"]
 
     # Get the current user's token
@@ -98,8 +203,6 @@ async def follow_user(user:Member, target:Member) -> str:
             description="The following error occurred : ```>{}```".format(f"\n>".join(errors))
         )
 
-    # Reusing the variables from follow_check_response and not pulling them again from the API
-
     return (await general_helper.get_information_embed(
         title="Done",
         description="You are now following [{name}]({url})".format(name=follow_response["data"]["ToggleFollow"]["name"], url=follow_response["data"]["ToggleFollow"]["siteUrl"])
@@ -126,7 +229,7 @@ async def unfollow_user(user:Member, target:Member) -> str:
             description="You are not even following <@{}>".format(target.id)
         )
 
-    # add the target to the follow list.
+    # remove the target from the follow list.
 
     follow_query = """
         mutation($targetID:Int){
@@ -144,18 +247,18 @@ async def unfollow_user(user:Member, target:Member) -> str:
         "targetID" : target_anilistID
     }
 
-    follow_response = requests.post(url=config.ANILIST_BASE, json={
+    unfollow_response = requests.post(url=config.ANILIST_BASE, json={
         "query" : follow_query,
         "variables" : variables
     }, headers={
         "Authorization" : current_user_token
     })
 
-    follow_response = follow_response.json()
+    unfollow_response = unfollow_response.json()
 
-    if follow_response["data"]["ToggleFollow"] is None:
+    if unfollow_response["data"]["ToggleFollow"] is None:
 
-        errors = [error["message"] for error in follow_response["errors"]]
+        errors = [error["message"] for error in unfollow_response["errors"]]
 
         return await general_helper.get_information_embed(
             title="Error Occurred!",
@@ -163,12 +266,10 @@ async def unfollow_user(user:Member, target:Member) -> str:
             description="The following error occurred : ```>{}```".format(f"\n>".join(errors))
         )
 
-    # Reusing the variables from follow_check_response and not pulling them again from the API
-
     return (await general_helper.get_information_embed(
         title="Done",
-        description="You are no longer following [{name}]({url})".format(name=follow_response["data"]["ToggleFollow"]["name"], url=follow_response["data"]["ToggleFollow"]["siteUrl"])
-    )).set_thumbnail(url=follow_response["data"]["ToggleFollow"]["avatar"]["medium"])
+        description="You are no longer following [{name}]({url})".format(name=unfollow_response["data"]["ToggleFollow"]["name"], url=unfollow_response["data"]["ToggleFollow"]["siteUrl"])
+    )).set_thumbnail(url=unfollow_response["data"]["ToggleFollow"]["avatar"]["medium"])
 
 
 
