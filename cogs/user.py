@@ -7,6 +7,8 @@ class UserModule(commands.Cog):
 
     @commands.command(name="user", aliases=["info"], description="Returns the details of mentioned AniList user")
     async def user_info(self, ctx:commands.Context, user:Member=None):
+        user = (ctx.author if user is None else user)
+
         reply = await user_helper.get_user_embed(str(user.id))
 
         await ctx.send(embed=reply)
