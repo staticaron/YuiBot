@@ -1,4 +1,6 @@
 from discord.ext import commands
+import traceback
+import sys
 
 from helpers import general_helper
 
@@ -35,6 +37,11 @@ class ErrorHandlerModule(commands.Cog):
             time = int(ctx.command.get_cooldown_retry_after(ctx))
             time_str = await general_helper.get_time_str_from_seconds(time)
             await ctx.reply("You are on a cooldown. Please wait for {}".format(time_str))  
+
+        else:
+            print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
+            traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
+
 
 def setup(bot):
     bot.add_cog(ErrorHandlerModule())
