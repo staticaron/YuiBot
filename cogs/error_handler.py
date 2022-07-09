@@ -1,0 +1,40 @@
+from discord.ext import commands
+
+from helpers import general_helper
+
+class ErrorHandlerModule(commands.Cog):
+
+    @commands.Cog.listener()
+    async def on_command_error(self, ctx:commands.Context, error):
+        
+        cog = ctx.cog
+
+        if hasattr(ctx.command, "on_error"):
+            return
+
+        if cog:
+            if cog._get_overridden_method(cog.cog_command_error):
+                return
+
+        ignored_exceptions = (commands.CommandNotFound, )
+
+        error = getattr(error, 'original', error)
+        if isinstance(error, ignored_exceptions):
+            return
+
+        if isinstance(error, commands.DisabledCommand):
+            await ctx.send(f'{ctx.command} has been disabled.')
+
+        elif isinstance(error, commands.NoPrivateMessage):
+            try:
+                await ctx.author.send(f'{ctx.command} can not be used in Private Messages.')
+            except:
+                pass
+
+        elif isinstance(error, commands.CommandOnCooldown):
+            time = int(ctx.command.get_cooldown_retry_after(ctx))
+            time_str = await general_helper.get_time_str_from_seconds(time)
+            await ctx.reply("You are on a cooldown. Please wait for {}".format(time_str))  
+
+def setup(bot):
+    bot.add_cog(ErrorHandlerModule())

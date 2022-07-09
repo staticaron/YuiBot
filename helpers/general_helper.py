@@ -73,6 +73,24 @@ async def get_id_from_userID(userID:str) -> str:
     else:
         return None
 
+async def get_time_str_from_seconds(seconds:int):
+
+    time_str = ""
+
+    hours = seconds // 3600
+    seconds = seconds - hours * 3600
+    minutes = seconds // 60
+    seconds = seconds - minutes * 60
+
+    time_vals = (hours, minutes, seconds)
+    time_markers = ("hours", "minutes", "seconds")
+
+    for i in range(len(time_vals)):
+        if time_vals[i] > 0:
+            time_str += "{} {} ".format(time_vals[i], time_markers[i])
+
+    return (time_str if time_str != "" else None)
+
 """Check whether the user is registered with AniList account or not"""
 
 def validate_user(func):
