@@ -1,6 +1,6 @@
 from discord.ext import commands
 
-from helpers import general_helper
+from helpers import general_helper, lists_helper
 import config
 
 class ListsModule(commands.Cog):
@@ -12,9 +12,12 @@ class ListsModule(commands.Cog):
             return
 
     @add_group.command(name="ptw", aliases=["planning"], case_insensitive=True, description="Adds anime to your planning to watch list")
-    @general_helper.validate_user
-    async def ptw(self,ctx:commands.Context, search:str, *args):
-        await ctx.send("This is the ptw command")
+    @commands.check(general_helper.validate_user)
+    async def ptw(self,ctx:commands.Context, *anime):
+        anime = " ".join(anime)
+
+        await lists_helper.add_ptw(anime)
+        
 
 def setup(bot:commands.Bot):
     bot.add_cog(ListsModule())

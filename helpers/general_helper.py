@@ -75,25 +75,13 @@ async def get_id_from_userID(userID:str) -> str:
 
 """Check whether the user is registered with AniList account or not"""
 
-def validate_user(func):
+async def validate_user(ctx:commands.Context):
 
-    async def predicate(user_class, ctx, *args, **kwargs):
+    command_user = ctx.author
 
-        command_user = ctx.author
+    data = await mongo_manager.manager.get_user(str(command_user.id))
 
-        data = await mongo_manager.manager.get_user(str(command_user.id))
+    if data is None:
+        return False
 
-        if data is None:
-            reply = await get_information_embed(
-                title="Hold It",
-                description="Log-In with your AniList account before using that command.\nUse `login` command to login.",
-                color=ERROR_COLOR
-            )
-            return await ctx.reply(embed=reply)
-
-        print(args)
-        print(kwargs)
-
-        await func(user_class, ctx, *args, **kwargs)
-
-    return predicate
+    return True
