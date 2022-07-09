@@ -77,21 +77,23 @@ async def get_id_from_userID(userID:str) -> str:
 
 def validate_user(func):
 
-    async def predicate(user_class, ctx, user:Member=None):
+    async def predicate(user_class, ctx, *args, **kwargs):
 
-        if user is None:
-            user = ctx.author
+        command_user = ctx.author
 
-        data = await mongo_manager.manager.get_user(str(user.id))
+        data = await mongo_manager.manager.get_user(str(command_user.id))
 
         if data is None:
             reply = await get_information_embed(
-                title="Not Found",
-                description="User is not registered! Ask them to link their AniList Account using `login` command",
+                title="Hold It",
+                description="Log-In with your AniList account before using that command.\nUse `login` command to login.",
                 color=ERROR_COLOR
             )
             return await ctx.reply(embed=reply)
 
-        await func(user_class, ctx, user)
+        print(args)
+        print(kwargs)
+
+        await func(user_class, ctx, *args, **kwargs)
 
     return predicate
