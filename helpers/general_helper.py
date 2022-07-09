@@ -6,6 +6,8 @@ import jwt
 from managers import mongo_manager
 from config import NORMAL_COLOR, ANILIST_BASE, ERROR_COLOR
 
+"""Returns an embed with specified details"""
+
 async def get_information_embed(title:str, color=NORMAL_COLOR, url:str=None, description:str=None, user:Member=None, thumbnail_link:str=None, fields:list=None) -> Embed:
 
     embd:Embed = Embed(title=title, color=color)
@@ -36,6 +38,8 @@ async def get_information_embed(title:str, color=NORMAL_COLOR, url:str=None, des
 
     return embd
 
+"""Returns the aniList id from anilist username"""
+
 async def get_id_from_anilist_username(username:str) -> int:
 
     query = """
@@ -58,10 +62,14 @@ async def get_id_from_anilist_username(username:str) -> int:
         print(e)
         return None
 
+"""Returns the aniList Id from token"""
+
 async def get_id_from_token(token:str) -> str:
     data = jwt.decode(token, options={"verify_signature": False})
 
     return data["sub"]
+
+"""Returns the aniList id from userID"""
 
 async def get_id_from_userID(userID:str) -> str:
     
@@ -71,6 +79,8 @@ async def get_id_from_userID(userID:str) -> str:
         return data["anilistID"]
     else:
         return None
+
+"""Returns a formatted time string"""
 
 async def get_time_str_from_seconds(seconds:int):
 
