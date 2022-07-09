@@ -1,5 +1,4 @@
 from discord import Embed, Member
-from discord.ext import commands
 from datetime import datetime
 import requests
 import jwt
@@ -89,7 +88,7 @@ async def get_time_str_from_seconds(seconds:int):
         if time_vals[i] > 0:
             time_str += "{} {} ".format(time_vals[i], time_markers[i])
 
-    return (time_str if time_str != "" else None)
+    return (time_str if time_str != "" else "0 seconds")
 
 """Check whether the user is registered with AniList account or not"""
 
