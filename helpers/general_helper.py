@@ -1,4 +1,5 @@
 from discord import Embed, Member
+from discord.ext import commands
 from datetime import datetime
 import requests
 import jwt
