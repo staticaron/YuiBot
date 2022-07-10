@@ -4,12 +4,40 @@ from datetime import datetime
 import requests
 import jwt
 
+from views.select_view import SelectPaginator
 from managers import mongo_manager
-from config import NORMAL_COLOR, ANILIST_BASE, ERROR_COLOR
+import config
+
+"""Just a way to transmit paginator and ids at the same time. Please no bully"""
+
+class AnimeData:
+    media_id:int = None
+    titles:list = None
+    genre:list = None
+    url:str = None
+
+    def __init__(self, media_id:int, title:list=None, genre:list=None, url:str=None):
+        self.media_id = media_id
+        self.titles = title
+        self.genre = genre
+        self.url = url
+
+    def get_name(self):
+        for title in self.titles:
+            if title is not None:
+                return title
+
+class AnimePaginator:
+    paginator:SelectPaginator = None
+    anime:list = None
+
+    def __init__(self, paginator, anime:list):
+        self.paginator = paginator
+        self.anime = anime
 
 """Returns an embed with specified details"""
 
-async def get_information_embed(title:str, color=NORMAL_COLOR, url:str=None, description:str=None, user:Member=None, thumbnail_link:str=None, fields:list=None) -> Embed:
+async def get_information_embed(title:str, color=config.NORMAL_COLOR, url:str=None, description:str=None, user:Member=None, thumbnail_link:str=None, fields:list=None) -> Embed:
 
     embd:Embed = Embed(title=title, color=color)
     embd.timestamp = datetime.now()
@@ -55,7 +83,7 @@ async def get_id_from_anilist_username(username:str) -> int:
         "username" : username
     }
 
-    resp = requests.post(ANILIST_BASE, json={"query" : query, "variables" : variables})
+    resp = requests.post(config.ANILIST_BASE, json={"query" : query, "variables" : variables})
 
     try:
         return resp.json()["data"]["User"]["id"]
@@ -113,3 +141,75 @@ async def validate_user(ctx:commands.Context):
         return False
 
     return True
+
+def short_cooldown():
+
+    return commands.cooldown(rate=1, per=5, type=commands.BucketType.user)
+
+"""Returns a list of anime to select from"""
+
+async def get_anime_selection_paginator(anime:str, select_callback:callable) -> AnimePaginator:
+
+    anime_query = """
+        query($search:String){
+            Page(page:0, perPage:5){
+                pageInfo{
+                    total
+                }
+                media(search:$search, sort:SEARCH_MATCH, type:ANIME){
+                    id 
+                    title{
+                        english
+                        romaji
+                    }
+                    siteUrl
+                    genres
+                    coverImage{
+                        medium
+                    }
+                    episodes
+                    status
+                }
+            }
+        }
+    """
+
+    variables = {
+        "search" : anime
+    }
+
+    anime_resp = requests.post(
+        url=config.ANILIST_BASE,
+        json={
+            "query" : anime_query,
+            "variables" : variables
+        }
+    ).json()
+
+    anime_data = anime_resp["data"]["Page"]["media"]
+
+    pages = []
+    anime_list = []
+
+    for page_data in anime_data:
+        embd = Embed(
+            title=(page_data["title"]["english"] if page_data["title"]["english"] is not None else page_data["title"]["romaji"]),
+            color=config.NORMAL_COLOR,
+            url=page_data["siteUrl"]
+        )
+
+        embd.description = "**Genre** : {genre}\n**Episodes** : {episodes}\n**Status** : {status}".format(
+            genre="\n" + "\n".join(["{bullet}**{genre}**".format(bullet=config.BULLET_EMOTE, genre=genre) for genre in page_data["genres"]]),
+            episodes=page_data["episodes"],
+            status=page_data["status"]
+        )
+
+        embd.set_thumbnail(url=page_data["coverImage"]["medium"])
+
+        pages.append(embd)
+        anime_list.append(AnimeData(page_data["id"]))
+        
+
+    paginator = SelectPaginator(pages, select_callback)
+
+    return AnimePaginator(paginator, anime_list)

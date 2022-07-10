@@ -33,10 +33,10 @@ class ListsModule(commands.Cog):
             await ctx.reply(embed=reply)
 
             
-        response = await lists_helper.get_anime_selection_paginator(anime=anime, select_callback=select_callback)
+        response = await general_helper.get_anime_selection_paginator(anime=anime, select_callback=select_callback)
 
         paginator = response.paginator
-        ids = response.ids
+        ids = [str(anime.media_id) for anime in response.anime]
 
         await paginator.send(ctx)
 
