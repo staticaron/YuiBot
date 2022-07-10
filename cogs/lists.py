@@ -38,7 +38,11 @@ class ListsModule(commands.Cog):
         paginator = response.paginator
         ids = [str(anime.media_id) for anime in response.anime]
 
-        await paginator.send(ctx)
+        if response.length() > 0:
+            await paginator.send(ctx)
+        else:
+            await ctx.reply(embed=await response.get_error_embed())
+        
 
 def setup(bot:commands.Bot):
     bot.add_cog(ListsModule())
