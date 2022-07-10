@@ -6,6 +6,7 @@ import jwt
 
 from views.select_view import SelectPaginator
 from managers import mongo_manager
+from helpers import general_helper
 import config
 
 """Just a way to transmit paginator and ids at the same time. Please no bully"""
@@ -34,6 +35,16 @@ class AnimePaginator:
     def __init__(self, paginator, anime:list):
         self.paginator = paginator
         self.anime = anime
+
+    def length(self):
+        return len(self.anime)
+
+    async def get_error_embed(self):
+        return await general_helper.get_information_embed(
+            title="Damn",
+            description="No anime were found for that input",
+            color=config.ERROR_COLOR
+        )
 
 """Returns an embed with specified details"""
 
@@ -193,15 +204,21 @@ async def get_anime_selection_paginator(anime:str, select_callback:callable) -> 
 
     for page_data in anime_data:
         embd = Embed(
-            title=(page_data["title"]["english"] if page_data["title"]["english"] is not None else page_data["title"]["romaji"]),
-            color=config.NORMAL_COLOR,
-            url=page_data["siteUrl"]
+            title="Which anime are you talking about?",
+            color=config.NORMAL_COLOR
         )
 
-        embd.description = "**Genre** : {genre}\n**Episodes** : {episodes}\n**Status** : {status}".format(
-            genre="\n" + "\n".join(["{bullet}**{genre}**".format(bullet=config.BULLET_EMOTE, genre=genre) for genre in page_data["genres"]]),
+        embd.description = "**Name** : [{name}]({url})\n**Episodes** : {episodes}\n**Status** : {status}".format(
+            name=(page_data["title"]["english"] if page_data["title"]["english"] is not None else page_data["title"]["romaji"]),
+            url=page_data["siteUrl"],
             episodes=page_data["episodes"],
             status=page_data["status"]
+        )
+
+        embd.add_field(
+            name="Genres",
+            value="\n".join(["{bullet}**{genre}**".format(bullet=config.BULLET_EMOTE, genre=genre) for genre in page_data["genres"]]),
+            inline=False
         )
 
         embd.set_thumbnail(url=page_data["coverImage"]["medium"])
@@ -209,7 +226,9 @@ async def get_anime_selection_paginator(anime:str, select_callback:callable) -> 
         pages.append(embd)
         anime_list.append(AnimeData(page_data["id"]))
         
-
-    paginator = SelectPaginator(pages, select_callback)
+    if len(pages) > 0:
+        paginator = SelectPaginator(pages, select_callback)
+    else:
+        paginator=None
 
     return AnimePaginator(paginator, anime_list)
