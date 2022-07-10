@@ -102,23 +102,13 @@ async def get_time_str_from_seconds(seconds:int):
 
 """Check whether the user is registered with AniList account or not"""
 
-def validate_user(func):
+async def validate_user(ctx:commands.Context):
 
-    async def predicate(user_class, ctx, user:Member=None):
+    command_user = ctx.author
 
-        if user is None:
-            user = ctx.author
+    data = await mongo_manager.manager.get_user(str(command_user.id))
 
-        data = await mongo_manager.manager.get_user(str(user.id))
+    if data is None:
+        return False
 
-        if data is None:
-            reply = await get_information_embed(
-                title="Not Found",
-                description="User is not registered! Ask them to link their AniList Account using `login` command",
-                color=ERROR_COLOR
-            )
-            return await ctx.reply(embed=reply)
-
-        await func(user_class, ctx, user)
-
-    return predicate
+    return True

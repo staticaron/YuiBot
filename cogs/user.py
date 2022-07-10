@@ -14,7 +14,7 @@ class UserModule(commands.Cog):
         await ctx.send(embed=reply)
 
     @commands.command(name="follow", aliases=["addfollow"], description="Add the mentioned user to the following list.")
-    @general_helper.validate_user
+    @commands.check(general_helper.validate_user)
     async def follow_user(self, ctx:commands.Context, target:Member):
 
         reply = await user_helper.follow_user(ctx.author, target)
@@ -22,7 +22,7 @@ class UserModule(commands.Cog):
         await ctx.reply(embed=reply)
 
     @commands.command(name="unfollow", aliases=["removefollow"], description="Add the mentioned user to the following list.")
-    @general_helper.validate_user
+    @commands.check(general_helper.validate_user)
     async def unfollow_user(self, ctx:commands.Context, target:Member):
 
         reply = await user_helper.unfollow_user(ctx.author, target)
