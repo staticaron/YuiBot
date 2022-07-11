@@ -2,8 +2,9 @@ from discord.ext import commands
 from discord import Message
 from asyncio import TimeoutError
 
-from helpers import general_helper, auth_helper
+from views.confirmation_view import ConfirmationView
 from managers import mongo_manager
+from helpers import general_helper, auth_helper
 from config import ANILIST_LOGIN, ANILIST_ID, BULLET_EMOTE, LOADING_EMOTE, YUI_SHY_EMOTE
 
 class AuthModule(commands.Cog):
@@ -52,6 +53,27 @@ class AuthModule(commands.Cog):
         anilistID = await general_helper.get_id_from_token(token)
 
         await mongo_manager.manager.add_user(str(ctx.author.id), anilistID, token)
+
+    @commands.command(name="logout", description="Logout with your AniList account")
+    async def logout(self, ctx:commands.Context):
+        confirmation_embd = await general_helper.get_information_embed(
+            title="Are you sure?",
+            description="Click `CONFIRM` to log out."
+        )
+
+        async def yes_callback(self):
+            reply = await auth_helper.logout(str(ctx.author.id))
+
+            await ctx.reply(embed=reply)
+
+        async def no_callback(self):
+            
+            await ctx.reply("Logout Terminated. You are still logged in ^^.")
+            return
+
+        view = ConfirmationView(yes_callback, no_callback)
+
+        await ctx.reply(embed=confirmation_embd, view=view)
 
 def setup(bot:commands.Bot):
     bot.add_cog(AuthModule())

@@ -3,6 +3,7 @@ import traceback
 import sys
 
 from helpers import general_helper
+import config
 
 class ErrorHandlerModule(commands.Cog):
 
@@ -37,6 +38,13 @@ class ErrorHandlerModule(commands.Cog):
             time = int(ctx.command.get_cooldown_retry_after(ctx))
             time_str = await general_helper.get_time_str_from_seconds(time)
             await ctx.reply("You are on a cooldown. Please wait for {}".format(time_str))  
+
+        elif isinstance(error, commands.CheckFailure):
+            await ctx.reply(embed=await general_helper.get_information_embed(
+                title="Damn!",
+                description="You are not logged in with your AniList Account. Log-in using `login` command",
+                color=config.ERROR_COLOR
+            ))
 
         else:
             print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)

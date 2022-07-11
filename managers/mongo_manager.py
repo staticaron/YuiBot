@@ -66,6 +66,16 @@ class MongoManager:
         except Exception as e:
             print(e)
 
+    async def remove_user(self, userID:str) -> None:
+
+        collection: AsyncIOMotorCollection = self.db["user"]
+
+        delete_query = {
+            "userID" : userID
+        }
+
+        await collection.delete_one(delete_query)
+
 manager:MongoManager = None
 
 def init_motor():
