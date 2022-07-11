@@ -51,12 +51,12 @@ class AnimePaginator:
         )
 
     def length(self):
-        return len(self.anime)
+        return len(self.media)
 
     async def get_error_embed(self):
         return await general_helper.get_information_embed(
             title="Damn",
-            description="No anime were found for that input",
+            description="No {} were found for that input".format(self.media_type),
             color=config.ERROR_COLOR
         )
 
@@ -248,7 +248,11 @@ async def get_media_selection_paginator(media_name:str, select_callback:callable
         paginator=None
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     return AnimePaginator(paginator, media_list, media_type)
 =======
     return AnimePaginator(paginator, anime_list)
 >>>>>>> 27e756c (ADD: Anime Recommendations)
+=======
+    return AnimePaginator(paginator, media_list, media_type)
+>>>>>>> bb4ee89 (ADD : Add mangas to lists)
