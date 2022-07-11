@@ -132,8 +132,6 @@ async def get_user_embed(userID:str):
 
 async def follow_user(user:Member, target:Member) -> str:
 
-    print(type(target))
-
     # Get the target's anilist ID
     target_data = await mongo_manager.manager.get_user(str(target.id))
 
