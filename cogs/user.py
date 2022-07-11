@@ -6,6 +6,7 @@ from helpers import user_helper, general_helper
 class UserModule(commands.Cog):
 
     @commands.command(name="user", aliases=["info"], description="Returns the details of mentioned AniList user")
+    @commands.check(general_helper.validate_user)
     async def user_info(self, ctx:commands.Context, user:Member=None):
         user = (ctx.author if user is None else user)
 

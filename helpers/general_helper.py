@@ -215,9 +215,10 @@ async def get_anime_selection_paginator(anime:str, select_callback:callable) -> 
             status=page_data["status"]
         )
 
+        genres = ("\n".join(["{bullet}**{genre}**".format(bullet=config.BULLET_EMOTE, genre=genre) for genre in page_data["genres"]]) if len(page_data["genres"]) > 0 else None)
         embd.add_field(
             name="Genres",
-            value="\n".join(["{bullet}**{genre}**".format(bullet=config.BULLET_EMOTE, genre=genre) for genre in page_data["genres"]]),
+            value=genres,
             inline=False
         )
 
