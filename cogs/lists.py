@@ -1,6 +1,5 @@
 from discord import Member
 from discord.ext import commands
-from discord.ui import Button
 
 from helpers import general_helper, lists_helper
 import config
@@ -176,8 +175,11 @@ class ListsModule(commands.Cog):
                 )
             )
 
+<<<<<<< HEAD
     """View Dropped Lists"""
 
+=======
+>>>>>>> 4bb1c17 (ADD : List Viewer)
     @commands.command(name="drp", aliases=["dropped"], case_insensitive=True, description="Returns the dropped list of the user/member")
     async def dropped_list(self, ctx:commands.Context, user:Member=None):
         
