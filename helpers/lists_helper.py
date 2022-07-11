@@ -6,14 +6,16 @@ from managers import mongo_manager
 from helpers import general_helper
 import config
 
-all_lists = ["ptw", "planning", "crt", "current", "watching", "comp", "completed", "drp", "dropped"]
+all_lists = ["ptw", "ptr", "planning", "crt", "current", "watching", "reading", "comp", "completed", "drp", "dropped"]
 
 lists = {
     "ptw" : "PLANNING",
+    "ptr" : "PLANNING",
     "planning" : "PLANNING",
     "crt" : "CURRENT",
     "current" : "CURRENT",
     "watching" : "CURRENT",
+    "reading" : "CURRENT",
     "comp" : "COMPLETED",
     "completed" : "COMPLETED",
     "drp" : "DROPPED",
