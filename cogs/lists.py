@@ -21,19 +21,14 @@ class ListsModule(commands.Cog):
 
         anime = " ".join(anime)
 
-        async def select_callback(self):
+        async def reply_callback():
 
             mediaId = ids[paginator.current_page]
 
             #modify the ptw list
-            reply = await lists_helper.add_to_list(list_name, mediaId, ctx.author)
-
-            paginator.clear_items()
-
-            await ctx.reply(embed=reply)
-
+            return await lists_helper.add_to_list(list_name, mediaId, ctx.author)
             
-        response = await general_helper.get_anime_selection_paginator(anime=anime, select_callback=select_callback)
+        response = await general_helper.get_anime_selection_paginator(anime=anime, select_callback=reply_callback)
 
         paginator = response.paginator
         ids = [str(anime.media_id) for anime in response.anime]

@@ -18,23 +18,21 @@ class AnimeModule(commands.Cog):
         
         anime = " ".join(anime)
 
-        async def select_callback(self):
+        async def reply_callback():
             media_id = anime_list[paginator.current_page].media_id
 
             anime_scroller = await anime_helper.get_similar_anime(media_id)
 
             if anime_scroller is not None:
-                await anime_scroller.send(ctx)
+                return anime_scroller
             else:
-                await ctx.reply(embed=
-                    await general_helper.get_information_embed(
+                return await general_helper.get_information_embed(
                         title="Whoops",
                         description="No recommendations were found for this anime",
                         color=config.ERROR_COLOR
                     )
-                )
 
-        response = await general_helper.get_anime_selection_paginator(anime, select_callback)
+        response = await general_helper.get_anime_selection_paginator(anime, reply_callback)
 
         paginator = response.paginator
         anime_list = response.anime
