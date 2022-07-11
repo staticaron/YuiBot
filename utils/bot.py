@@ -9,8 +9,11 @@ class Bot(commands.Bot):
     intents:Intents = Intents.default()
     intents.message_content = True
 
-    def __init__(self, command_prefix="yui "):
-        super().__init__(command_prefix, intents=self.intents)
+    def prefix_callable(self, bot, msg):
+        return ["yui ", "Yui "]
+
+    def __init__(self):
+        super().__init__(command_prefix=self.prefix_callable, intents=self.intents)
 
         #load extensions
         for file in os.listdir("cogs"):
