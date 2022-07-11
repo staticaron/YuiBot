@@ -22,7 +22,7 @@ lists = {
 
 """Adds specified anime to the specified list"""
 
-async def add_to_list(list_name:str, mediaID:int, user:Member) -> Embed:
+async def add_to_list(list_name:str, mediaID:int, user:Member, media_type:str="ANIME") -> Embed:
 
     lst = lists[list_name]
 
@@ -60,7 +60,7 @@ async def add_to_list(list_name:str, mediaID:int, user:Member) -> Embed:
 
     return await general_helper.get_information_embed(
         title="Done",
-        description="Anime was added to your `{}` list.".format(lst)
+        description="{} was added to your `{}` list.".format(media_type, lst)
     )
 
 async def get_list_paginator(target:Member, list_name:str):

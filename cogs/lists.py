@@ -6,9 +6,9 @@ import config
 
 class ListsModule(commands.Cog):
 
-    @commands.command(name="add", case_insensitive=True, description="Adds anime to your mentioned list")
+    @commands.command(name="addanime", aliases=["aa"], case_insensitive=True, description="Adds anime to your mentioned list")
     @commands.check(general_helper.validate_user)
-    async def add(self,ctx:commands.Context, list_name:str, *anime):
+    async def addanime(self,ctx:commands.Context, list_name:str, *anime):
 
         # check for valid list
         if list_name.lower() not in lists_helper.all_lists:
@@ -28,16 +28,48 @@ class ListsModule(commands.Cog):
             #modify the ptw list
             return await lists_helper.add_to_list(list_name, mediaId, ctx.author)
             
-        response = await general_helper.get_anime_selection_paginator(anime=anime, select_callback=reply_callback)
+        response = await general_helper.get_media_selection_paginator(media_name=anime, select_callback=reply_callback)
 
         paginator = response.paginator
-        ids = [str(anime.media_id) for anime in response.anime]
+        ids = [str(anime.media_id) for anime in response.media]
 
         if response.length() > 0:
             await paginator.send(ctx)
         else:
             await ctx.reply(embed=await response.get_error_embed())
-        
+
+    @commands.command(name="addmanga", aliases=["am"], case_insensitive=True, description="Adds anime to your mentioned list")
+    @commands.check(general_helper.validate_user)
+    async def addmanga(self,ctx:commands.Context, list_name:str, *manga):
+
+        # check for valid list
+        if list_name.lower() not in lists_helper.all_lists:
+            return await ctx.reply(embed=await general_helper.get_information_embed(
+                title="Hold It",
+                description="The following error occurred : ```INVALID LIST NAME``` Provide one of these list names : Planning, Dropped, Watching, Completed",
+                color=config.ERROR_COLOR
+            )
+        )
+
+        manga = " ".join(manga)
+
+        async def reply_callback():
+
+            mediaId = ids[paginator.current_page]
+
+            #modify the ptw list
+            return await lists_helper.add_to_list(list_name, mediaId, ctx.author, "MANGA")
+            
+        response = await general_helper.get_media_selection_paginator(media_name=manga, select_callback=reply_callback, media_type="MANGA")
+
+        paginator = response.paginator
+        ids = [str(anime.media_id) for anime in response.media]
+
+        if response.length() > 0:
+            await paginator.send(ctx)
+        else:
+            await ctx.reply(embed=await response.get_error_embed())
+
     @commands.command(name="ptw", aliases=["planning"], case_insensitive=True, description="Returns the planning list of the user/member")
     async def planning_list(self, ctx:commands.Context, user:Member=None):
         
@@ -61,7 +93,7 @@ class ListsModule(commands.Cog):
         
         user = (user if user is not None else ctx.author)
 
-        reply = await lists_helper.get_list_paginator(user, "WATCHING")
+        reply = await lists_helper.get_list_paginator(user, "CURRENT")
 
         if reply is not None:
             await reply.send(ctx)

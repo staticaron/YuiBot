@@ -11,14 +11,16 @@ import config
 
 """Just a way to transmit paginator and ids at the same time. Please no bully"""
 
-class AnimeData:
+class MediaData:
     media_id:int = None
+    media_type = None
     titles:list = None
     genre:list = None
     url:str = None
 
-    def __init__(self, media_id:int, title:list=None, genre:list=None, url:str=None):
+    def __init__(self, media_id:int, media_type:str="ANIME", title:list=None, genre:list=None, url:str=None):
         self.media_id = media_id
+        self.media_type = media_type
         self.titles = title
         self.genre = genre
         self.url = url
@@ -30,19 +32,21 @@ class AnimeData:
 
 class AnimePaginator:
     paginator:SelectPaginator = None
-    anime:list = None
+    media:list = None
+    media_type:str = None
 
-    def __init__(self, paginator, anime:list):
+    def __init__(self, paginator, media:list, media_type:str):
         self.paginator = paginator
-        self.anime = anime
+        self.media = media
+        self.media_type = media_type
 
     def length(self):
-        return len(self.anime)
+        return len(self.media)
 
     async def get_error_embed(self):
         return await general_helper.get_information_embed(
             title="Damn",
-            description="No anime were found for that input",
+            description="No {} were found for that input".format(self.media_type),
             color=config.ERROR_COLOR
         )
 
@@ -159,15 +163,15 @@ def short_cooldown():
 
 """Returns a list of anime to select from"""
 
-async def get_anime_selection_paginator(anime:str, select_callback:callable) -> AnimePaginator:
+async def get_media_selection_paginator(media_name:str, select_callback:callable, media_type="ANIME") -> AnimePaginator:
 
     anime_query = """
-        query($search:String){
+        query($search:String, $type:MediaType){
             Page(page:0, perPage:5){
                 pageInfo{
                     total
                 }
-                media(search:$search, sort:SEARCH_MATCH, type:ANIME){
+                media(search:$search, sort:SEARCH_MATCH, type:$type){
                     id 
                     title{
                         english
@@ -186,7 +190,8 @@ async def get_anime_selection_paginator(anime:str, select_callback:callable) -> 
     """
 
     variables = {
-        "search" : anime
+        "search" : media_name,
+        "type" : media_type
     }
 
     anime_resp = requests.post(
@@ -200,11 +205,11 @@ async def get_anime_selection_paginator(anime:str, select_callback:callable) -> 
     anime_data = anime_resp["data"]["Page"]["media"]
 
     pages = []
-    anime_list = []
+    media_list = []
 
     for page_data in anime_data:
         embd = Embed(
-            title="Which anime are you talking about?",
+            title="Which {} are you talking about?".format(media_type),
             color=config.NORMAL_COLOR
         )
 
@@ -225,11 +230,11 @@ async def get_anime_selection_paginator(anime:str, select_callback:callable) -> 
         embd.set_thumbnail(url=page_data["coverImage"]["medium"])
 
         pages.append(embd)
-        anime_list.append(AnimeData(page_data["id"]))
+        media_list.append(MediaData(page_data["id"]))
         
     if len(pages) > 0:
         paginator = SelectPaginator(pages, select_callback)
     else:
         paginator=None
 
-    return AnimePaginator(paginator, anime_list)
+    return AnimePaginator(paginator, media_list, media_type)

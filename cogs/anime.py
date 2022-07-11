@@ -32,10 +32,10 @@ class AnimeModule(commands.Cog):
                         color=config.ERROR_COLOR
                     )
 
-        response = await general_helper.get_anime_selection_paginator(anime, reply_callback)
+        response = await general_helper.get_media_selection_paginator(anime, reply_callback)
 
         paginator = response.paginator
-        anime_list = response.anime
+        anime_list = response.media
 
         if response.length() > 0:
             await paginator.send(ctx)
