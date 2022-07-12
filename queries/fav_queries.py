@@ -10,7 +10,7 @@ anime_query = """
     }
 """
 
-media_query = """
+manga_query = """
     mutation($id:Int!){
         ToggleFavourite(mangaId:$id){
             manga {

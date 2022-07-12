@@ -7,7 +7,7 @@ from helpers import general_helper
 from queries import fav_queries
 import config
 
-all_lists = ["ptw", "ptr", "planning", "crt", "current", "watching", "reading", "comp", "completed", "drp", "dropped"]
+all_lists = ["ptw", "ptr", "planning", "crt", "current", "watching", "reading", "comp", "completed", "drp", "dropped", "fav"]
 
 lists = {
     "ptw" : "PLANNING",
@@ -20,7 +20,8 @@ lists = {
     "comp" : "COMPLETED",
     "completed" : "COMPLETED",
     "drp" : "DROPPED",
-    "dropped" : "DROPPED"
+    "dropped" : "DROPPED",
+    "fav" : "FAVOURITE"
 }
 
 """Adds specified anime to the specified list"""
@@ -28,6 +29,9 @@ lists = {
 async def add_to_list(list_name:str, mediaID:int, user:Member, media_type:str="ANIME") -> Embed:
 
     lst = lists[list_name]
+
+    if lst == "FAVOURITE":
+        return await add_to_fav(mediaID, user, media_type)
 
     list_query = """
         mutation($id:Int!, $list:MediaListStatus){
@@ -64,6 +68,44 @@ async def add_to_list(list_name:str, mediaID:int, user:Member, media_type:str="A
     return await general_helper.get_information_embed(
         title="Done",
         description="{} was added to your `{}` list.".format(media_type, lst)
+    )
+
+async def add_to_fav(mediaID:int, user:Member, media_type:str="ANIME"):
+
+    data = await mongo_manager.manager.get_user(str(user.id))
+
+    if media_type == "ANIME":
+        fav_query = fav_queries.anime_query
+    elif media_type == "MANGA":
+        fav_query = fav_queries.manga_query
+    elif media_type == "CHARACTER":
+        fav_query = fav_queries.character_query
+
+    resp = requests.post(
+        url=config.ANILIST_BASE,
+        json={
+            "query" : fav_query,
+            "variables" : {
+                "id" : mediaID
+            }
+        },
+        headers={
+            "Authorization" : data["token"]
+        }
+    ).json()
+
+    fav_data = resp["data"]
+
+    if fav_data is None:
+        return await general_helper.get_information_embed(
+            title="Whoops!",
+            description="The following error(s) occurred : ```{}```".format("\n".join([error["message"] for error in resp["errors"]])),
+            color=config.ERROR_COLOR
+        )
+
+    return await general_helper.get_information_embed(
+        title="Done",
+        description="That {} was added to your favourite. ".format(media_type)
     )
 
 async def get_list_paginator(target:Member, list_name:str):
@@ -162,7 +204,7 @@ async def get_fav_paginator(target:Member, fav_type:str) -> Scroller:
         fav_query = fav_queries.manga_list_query
 
     anilistID = await general_helper.get_id_from_userID(str(target.id))
-    
+
     resp = requests.post(
         url=config.ANILIST_BASE,
         json={
