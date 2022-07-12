@@ -6,6 +6,50 @@ import config
 
 class ListsModule(commands.Cog):
 
+
+    """View Favorite Anime"""
+
+    @commands.command(name="favanime", aliases=["fa", "favorite_anime"], description="Returns your favorite anime list")
+    async def fav_anime_list(self, ctx:commands.Context, target:Member=None):
+
+        target = (ctx.author if target is None else target)
+
+        paginator = await lists_helper.get_fav_paginator(target, "ANIME")
+
+        if paginator is not None:
+            await paginator.send(ctx)
+        else:
+            await ctx.reply(embed=
+                await general_helper.get_information_embed(
+                    title="Hold It!",
+                    description="No Media entries were found in this list.",
+                    color=config.INFO_COLOR
+                )
+            )
+
+
+    """View Favorite Manga"""
+
+    @commands.command(name="favmanga", aliases=["fm", "favorite_manga"], description="Returns your favorite manga list")
+    async def fav_anime_list(self, ctx:commands.Context, target:Member=None):
+
+        target = (ctx.author if target is None else target)
+
+        paginator = await lists_helper.get_fav_paginator(target, "MANGA")
+
+        if paginator is not None:
+            await paginator.send(ctx)
+        else:
+            await ctx.reply(embed=
+                await general_helper.get_information_embed(
+                    title="Hold It!",
+                    description="No Media entries were found in this list.",
+                    color=config.INFO_COLOR
+                )
+            )
+
+    """Add Anime to Lists"""
+
     @commands.command(name="addanime", aliases=["aa"], case_insensitive=True, description="Adds anime to your mentioned list")
     @commands.check(general_helper.validate_user)
     async def addanime(self,ctx:commands.Context, list_name:str, *anime):

@@ -4,6 +4,7 @@ from discord import Embed, Member
 from views.scroller import Scroller
 from managers import mongo_manager
 from helpers import general_helper
+from queries import fav_queries
 import config
 
 all_lists = ["ptw", "ptr", "planning", "crt", "current", "watching", "reading", "comp", "completed", "drp", "dropped"]
@@ -112,6 +113,7 @@ async def get_list_paginator(target:Member, list_name:str):
         return None
 
     entries = list_data["entries"]
+    entries_size = len(entries)
 
     pages = []
 
@@ -123,7 +125,7 @@ async def get_list_paginator(target:Member, list_name:str):
         description="Total : {}\n\n".format(len(entries))
     )
     
-    for i in range(len(entries)):
+    for i in range(entries_size):
 
         current_listing_count += 1
 
@@ -132,7 +134,7 @@ async def get_list_paginator(target:Member, list_name:str):
             pages.append(current_embed)
             current_embed = Embed(
                 title=list_data["name"] + " list",
-                description="Total : {}\n\n".format(len(entries))
+                description="Total : {}\n\n".format(entries_size)
             )
 
         current_title = (entries[i]["media"]["title"]["english"] if entries[i]["media"]["title"]["english"] is not None else entries[i]["media"]["title"]["romaji"])
@@ -144,7 +146,7 @@ async def get_list_paginator(target:Member, list_name:str):
             episodes=entries[i]["media"]["episodes"]
         )
 
-        if i >= len(entries) - 1:
+        if i >= entries_size - 1:
             pages.append(current_embed)
 
     if len(pages) > 0:
@@ -152,6 +154,58 @@ async def get_list_paginator(target:Member, list_name:str):
     else:
         return None
 
+async def get_fav_paginator(target:Member, fav_type:str) -> Scroller:
+
+    if fav_type == "ANIME":
+        fav_query = fav_queries.anime_list_query
+    elif fav_type == "MANGA":
+        fav_query = fav_queries.manga_list_query
+
+    anilistID = await general_helper.get_id_from_userID(str(target.id))
     
+    resp = requests.post(
+        url=config.ANILIST_BASE,
+        json={
+            "query" : fav_query,
+            "variables" : {
+                "userID" : anilistID
+            }
+        }
+    ).json()
+
+    entries = resp["data"]["User"]["favourites"]["{}".format(fav_type.lower())]["nodes"] # List of media elements
+    entries_size = len(entries)
+
+    MAX_ENTRIES_PER_PAGE = 10
+    current_entries_count = 0
+
+    pages = []
+
+    current_embd = Embed(
+        title="Favourite {}".format(fav_type.capitalize()),
+        description="Total : {} \n\n".format(len(entries))
+    )
+
+    for i in range(entries_size):
+
+        current_entries_count += 1
+
+        if current_entries_count > MAX_ENTRIES_PER_PAGE:
+            pages.append(current_embd)
+            current_embd = Embed(
+                title="Favourite {}".format(fav_type.capitalize()),
+                description="Total : {} \n\n".format(entries_size)
+            )
+
+        title = (entries[i]["title"]["english"] if entries[i]["title"]["english"] is not None else entries[i]["title"]["romaji"])
+        current_embd.description += "{bullet} [{name}]({url}) \n".format(bullet=config.BULLET_EMOTE, name=title, url=entries[i]["siteUrl"])
+
+        if i >= entries_size - 1:
+            pages.append(current_embd)
+
+    if len(pages) > 0:
+        return Scroller(pages, show_all_btns=True)
+    else:
+        return None
 
     
