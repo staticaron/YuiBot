@@ -247,12 +247,4 @@ async def get_media_selection_paginator(media_name:str, select_callback:callable
     else:
         paginator=None
 
-<<<<<<< HEAD
-<<<<<<< HEAD
     return AnimePaginator(paginator, media_list, media_type)
-=======
-    return AnimePaginator(paginator, anime_list)
->>>>>>> 27e756c (ADD: Anime Recommendations)
-=======
-    return AnimePaginator(paginator, media_list, media_type)
->>>>>>> bb4ee89 (ADD : Add mangas to lists)
