@@ -32,15 +32,7 @@ class AnimeModule(commands.Cog):
                         color=config.ERROR_COLOR
                     )
 
-<<<<<<< HEAD
-<<<<<<< HEAD
         response = await general_helper.get_media_selection_paginator(anime, reply_callback)
-=======
-        response = await general_helper.get_anime_selection_paginator(anime, reply_callback)
->>>>>>> bbd2353 (MODIFY : Better Selection Screen)
-=======
-        response = await general_helper.get_media_selection_paginator(anime, reply_callback)
->>>>>>> bb4ee89 (ADD : Add mangas to lists)
 
         paginator = response.paginator
         anime_list = response.media
