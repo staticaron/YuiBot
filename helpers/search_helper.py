@@ -72,9 +72,10 @@ async def get_anime_details_embed(name:str) -> Embed:
         inline=True
     )
 
+    genres = ("\n".join(list(data["genres"])) if len(list(data["genres"])) > 0 else None)
     embd.add_field(
         name="Genres",
-        value="\n".join(list(data["genres"])),
+        value=genres,
         inline=True
     )
 
