@@ -9,6 +9,7 @@ class ListsModule(commands.Cog):
     """View Favorite Anime"""
 
     @commands.command(name="favanime", aliases=["fa", "favorite_anime"], description="Returns your favorite anime list")
+    @commands.check(general_helper.validate_user)
     async def fav_anime_list(self, ctx:commands.Context, target:Member=None):
 
         target = (ctx.author if target is None else target)
@@ -30,6 +31,7 @@ class ListsModule(commands.Cog):
     """View Favorite Manga"""
 
     @commands.command(name="favmanga", aliases=["fm", "favorite_manga"], description="Returns your favorite manga list")
+    @commands.check(general_helper.validate_user)
     async def fav_manga_list(self, ctx:commands.Context, target:Member=None):
 
         target = (ctx.author if target is None else target)
@@ -118,6 +120,7 @@ class ListsModule(commands.Cog):
     """View Planning Lists"""
 
     @commands.command(name="ptw", aliases=["planning"], case_insensitive=True, description="Returns the planning list of the user/member")
+    @commands.check(general_helper.validate_user)
     async def planning_list(self, ctx:commands.Context, user:Member=None):
         
         user = (user if user is not None else ctx.author)
@@ -138,6 +141,7 @@ class ListsModule(commands.Cog):
     """View Watching Lists"""
     
     @commands.command(name="wtc", aliases=["watching"], case_insensitive=True, description="Returns the watching list of the user/member")
+    @commands.check(general_helper.validate_user)
     async def watching_list(self, ctx:commands.Context, user:Member=None):
         
         user = (user if user is not None else ctx.author)
@@ -158,6 +162,7 @@ class ListsModule(commands.Cog):
     """View Completed Lists"""
 
     @commands.command(name="comp", aliases=["completed"], case_insensitive=True, description="Returns the completed list of the user/member")
+    @commands.check(general_helper.validate_user)
     async def completed_list(self, ctx:commands.Context, user:Member=None):
         
         user = (user if user is not None else ctx.author)
@@ -178,6 +183,7 @@ class ListsModule(commands.Cog):
     """View Dropped Lists"""
 
     @commands.command(name="drp", aliases=["dropped"], case_insensitive=True, description="Returns the dropped list of the user/member")
+    @commands.check(general_helper.validate_user)
     async def dropped_list(self, ctx:commands.Context, user:Member=None):
         
         user = (user if user is not None else ctx.author)
@@ -198,6 +204,7 @@ class ListsModule(commands.Cog):
     """View Paused Lists"""
 
     @commands.command(name="psd", aliases=["paused"], case_insensitive=True, description="Returns the paused list of the user/member")
+    @commands.check(general_helper.validate_user)
     async def paused_list(self, ctx:commands.Context, user:Member=None):
         
         user = (user if user is not None else ctx.author)

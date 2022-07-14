@@ -50,6 +50,16 @@ class AnimePaginator:
             color=config.ERROR_COLOR
         )
 
+    def length(self):
+        return len(self.media)
+
+    async def get_error_embed(self):
+        return await general_helper.get_information_embed(
+            title="Damn",
+            description="No {} were found for that input".format(self.media_type),
+            color=config.ERROR_COLOR
+        )
+
 """Returns an embed with specified details"""
 
 async def get_information_embed(title:str, color=config.NORMAL_COLOR, url:str=None, description:str=None, user:Member=None, thumbnail_link:str=None, fields:list=None) -> Embed:

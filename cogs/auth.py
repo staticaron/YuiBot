@@ -5,6 +5,8 @@ from asyncio import TimeoutError
 from views.confirmation_view import ConfirmationView
 from managers import mongo_manager
 from helpers import general_helper, auth_helper
+from managers import mongo_manager
+from helpers import general_helper, auth_helper
 from config import ANILIST_LOGIN, ANILIST_ID, BULLET_EMOTE, LOADING_EMOTE, YUI_SHY_EMOTE
 
 class AuthModule(commands.Cog):
