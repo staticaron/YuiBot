@@ -43,7 +43,7 @@ async def is_following(current_user_token:str, targetID:str) -> bool:
 
 """Get user information from AniList"""
 
-async def get_user_embed(userID:str):
+async def get_user_embed(userID:str) -> Embed:
     
     data = await mongo_manager.manager.get_user(userID)
 
@@ -52,7 +52,7 @@ async def get_user_embed(userID:str):
     user_resp = requests.post(
         url=config.ANILIST_BASE,
         json={
-            "query" : user_query.query,
+            "query" : user_query.user_query,
             "variables" : {"id" : anilistID}
         }
     ).json()
@@ -69,7 +69,8 @@ async def get_user_embed(userID:str):
             name=user_data["name"], 
             url=user_data["siteUrl"],
             followers=social_data["pageInfo"]["total"]
-        )
+        ),
+        color=config.NORMAL_COLOR
     )
 
     fav_anime = "\n".join(["[{name}]({url})".format(name=anime["title"]["english"] if anime["title"]["english"] is not None else anime["title"]["romaji"], url=anime["siteUrl"]) for anime in user_data["favourites"]["anime"]["nodes"]]) + " ..."
@@ -127,10 +128,9 @@ async def get_user_embed(userID:str):
 
     return embd
 
-
 """Follow a discord user on AniList"""
 
-async def follow_user(user:Member, target:Member) -> str:
+async def follow_user(user:Member, target:Member) -> Embed:
 
     # Get the target's anilist ID
     target_data = await mongo_manager.manager.get_user(str(target.id))
@@ -201,7 +201,7 @@ async def follow_user(user:Member, target:Member) -> str:
 
 """Unfollow a discord user on AniList"""
 
-async def unfollow_user(user:Member, target:Member) -> str:
+async def unfollow_user(user:Member, target:Member) -> Embed:
 
     # Get the target's anilist ID
     target_data = await mongo_manager.manager.get_user(str(target.id))
@@ -262,5 +262,84 @@ async def unfollow_user(user:Member, target:Member) -> str:
         description="You are no longer following [{name}]({url})".format(name=unfollow_response["data"]["ToggleFollow"]["name"], url=unfollow_response["data"]["ToggleFollow"]["siteUrl"])
     )).set_thumbnail(url=unfollow_response["data"]["ToggleFollow"]["avatar"]["medium"])
 
+"""Get user media stats """
 
+async def get_user_media_stats(target:Member, media_type:str="ANIME") -> Embed:
 
+    if media_type == "ANIME":
+        stats_query = user_query.anime_stats_query
+    elif media_type == "MANGA":
+        stats_query = user_query.manga_stats_query
+
+    anilistID = await general_helper.get_id_from_userID(str(target.id))
+
+    stats_resp = requests.post(
+        url=config.ANILIST_BASE,
+        json={
+            "query" : stats_query,
+            "variables" : {
+                "userID" : anilistID
+            }
+        }
+    ).json()
+
+    user_data = stats_resp["data"]["User"]
+    if media_type == "ANIME":
+        stats_data = stats_resp["data"]["User"]["statistics"]["anime"]
+    else:
+        stats_data = stats_resp["data"]["User"]["statistics"]["manga"]
+
+    embd = Embed(
+        title="Anime Statistics",
+        description="**Name : ** [{}]({})\n\n".format(user_data["name"], user_data["siteUrl"])
+    )
+
+    embd.set_thumbnail(url=user_data["avatar"]["medium"])
+
+    embd.add_field(
+        name="Total Count",
+        value=str(stats_data["count"]),
+        inline=True
+    )
+
+    embd.add_field(
+        name="Mean Score",
+        value=str(stats_data["meanScore"]),
+        inline=True
+    )
+
+    if media_type == "ANIME":
+        embd.add_field(
+            name="Standard Deviation",
+            value=str(stats_data["standardDeviation"]),
+            inline=True
+        )
+
+    if media_type == "ANIME":
+        embd.add_field(
+            name="Episodes Watched",
+            value=str(stats_data["episodesWatched"]),
+            inline=True
+        )
+    else:
+        embd.add_field(
+            name="Chapters Read",
+            value=str(stats_data["chaptersRead"]),
+            inline=True
+        )
+
+    if media_type == "ANIME":
+        embd.add_field(
+            name="Watch Time",
+            value=await general_helper.get_time_str_from_seconds(stats_data["minutesWatched"] * 60, 2),
+            inline=True
+        )
+
+    if media_type == "MANGA":
+        embd.add_field(
+            name="Volumes Read",
+            value=str(stats_data["volumesRead"]),
+            inline=True
+        )
+
+    return embd

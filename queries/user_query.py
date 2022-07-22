@@ -1,4 +1,4 @@
-query = """
+user_query = """
     query($id:Int!){
         User(id:$id){
             name
@@ -61,6 +61,48 @@ query = """
             }
             followers(userId:$id){
                 name
+            }
+        }
+    }
+"""
+
+anime_stats_query = """
+    query($userID:Int!){
+        User(id:$userID) {
+            name
+            siteUrl
+            avatar{
+                medium
+            }
+            statistics {
+                anime {
+                    count
+                    meanScore
+                    episodesWatched
+                    minutesWatched
+                    standardDeviation
+                }
+            }
+        }
+    }
+
+"""
+
+manga_stats_query = """
+    query($userID:Int!){
+        User(id:$userID) {
+            name
+            siteUrl
+            avatar{
+                medium
+            }
+            statistics {
+                manga {
+                    count
+                    meanScore
+                    chaptersRead
+                    volumesRead
+                }
             }
         }
     }

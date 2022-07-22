@@ -30,5 +30,25 @@ class UserModule(commands.Cog):
 
         await ctx.reply(embed=reply)
 
+    @commands.command(name="animestats", aliases=["as", "statistics"], description="Returns the anime stats of a user")
+    @general_helper.short_cooldown()
+    async def anime_stats(self, ctx:commands.Context, target:Member=None):
+
+        target = (ctx.author if target is None else target)
+
+        reply = await user_helper.get_user_media_stats(target, "ANIME")
+
+        await ctx.send(embed=reply)
+
+    @commands.command(name="mangastats", aliases=["ms"], description="Returns the manga stats of a user")
+    @general_helper.short_cooldown()
+    async def manga_stats(self, ctx:commands.Context, target:Member=None):
+
+        target = (ctx.author if target is None else target)
+
+        reply = await user_helper.get_user_media_stats(target, "MANGA")
+
+        await ctx.send(embed=reply)
+
 def setup(bot:commands.Bot):
     bot.add_cog(UserModule())
