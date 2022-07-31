@@ -1,6 +1,7 @@
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase, AsyncIOMotorCollection
 
 import config
+import pprint
 
 class MongoManager:
     
@@ -8,11 +9,13 @@ class MongoManager:
     db: AsyncIOMotorDatabase = None
 
     user_collection:AsyncIOMotorCollection = None
+    smash_collection:AsyncIOMotorCollection = None
 
     def __init__(self) -> None:
         self.client = AsyncIOMotorClient(config.MONGO_SRV)
         self.db = self.client[config.DB]
         self.user_collection = self.db["user"]
+        self.smash_collection = self.db["smash"]
 
     async def get_user(self, userID:str) -> dict:
 
@@ -27,8 +30,6 @@ class MongoManager:
     async def add_user(self, userID:str, anilistID:str, token:str) -> None:
 
         try:
-            collection : AsyncIOMotorCollection = self.db["user"]
-
             existing_user = await self.get_user(userID)
 
             if existing_user is not None:
@@ -41,15 +42,13 @@ class MongoManager:
                 "token" : token
             }
 
-            await collection.insert_one(document)
+            await self.user_collection.insert_one(document)
         except Exception as e:
             print(e)
 
     async def update_user(self, userID:str, anilistID:str=None, token:str=None) -> None:
 
         try:
-            collection:AsyncIOMotorCollection = self.db["user"]
-
             query = {
                 "userID" : userID
             }
@@ -62,19 +61,42 @@ class MongoManager:
             if token is not None:
                 updates["token"] = token
 
-            await collection.update_one(query, {"$set" : updates})
+            await self.user_collection.update_one(query, {"$set" : updates})
         except Exception as e:
             print(e)
 
     async def remove_user(self, userID:str) -> None:
 
-        collection: AsyncIOMotorCollection = self.db["user"]
-
         delete_query = {
             "userID" : userID
         }
 
-        await collection.delete_one(delete_query)
+        await self.user_collection.delete_one(delete_query)
+
+    async def update_smash_leaderboard(self, results:dict=None):
+
+        all_entries = self.smash_collection.find({})
+
+        list_of_entries = all_entries.to_list(length=2)
+
+        for i in await list_of_entries:
+            pprint.pprint(i)
+
+        # results = {
+        #     "https://i.waifu.pics/W13nei-.jpg" : 1,
+        #     "https://i.waifu.pics/KAWTYus.jpg" : 0,
+        #     "https://i.waifu.pics/zxSlO-7.png" : 2
+        # }
+
+        # for entry in all_entries:
+        #     print("entry found")
+
+        # print("Done")
+
+        # await self.smash_collection.update_many({}, {"$inc" : results})
+
+        pass
+
 
 manager:MongoManager = None
 

@@ -136,23 +136,38 @@ async def get_id_from_userID(userID:str) -> str:
 
 """Returns a formatted time string"""
 
-async def get_time_str_from_seconds(seconds:int):
+async def get_time_str_from_seconds(seconds:int, front_limit:int=None, back_limit:int=None):
 
     time_str = ""
 
+    days = seconds // 86400
+    seconds = seconds - days * 86400
     hours = seconds // 3600
     seconds = seconds - hours * 3600
     minutes = seconds // 60
     seconds = seconds - minutes * 60
 
-    time_vals = (hours, minutes, seconds)
-    time_markers = ("hours", "minutes", "seconds")
+    time_vals = (days, hours, minutes, seconds)
+    time_markers = ("days", "hours", "minutes", "seconds")
+
+    if front_limit is not None and front_limit > len(time_markers):
+        front_limit = len(time_markers)
+
+    if back_limit is not None and back_limit > len(time_markers):
+        back_limit = len(time_markers)
+
+    if front_limit is not None:
+        for i in range(len(time_markers) - ((len(time_markers) - front_limit))):
+            if time_vals[i] > 0:
+                time_str += "{} {} ".format(time_vals[i], time_markers[i])
+        
+        return (time_str if time_str != "" else "1 seconds")
 
     for i in range(len(time_vals)):
         if time_vals[i] > 0:
             time_str += "{} {} ".format(time_vals[i], time_markers[i])
 
-    return (time_str if time_str != "" else "0 seconds")
+    return (time_str if time_str != "" else "1 seconds")
 
 """Check whether the user is registered with AniList account or not"""
 

@@ -1,5 +1,6 @@
 from discord import Embed, Member
 import requests
+import random
 
 from helpers import general_helper
 import config
@@ -36,7 +37,10 @@ reactions_double = {
         "poke"  :["poke", "{user} poked {target}"]
     }
 
-async def fetch_waifu_api(endpoint:str) -> str:
+async def fetch_waifu_api(endpoint:str=None) -> str:
+
+    if endpoint is None:
+        endpoint = ("waifu" if random.randint(0, 100) > 30 else "neko")
     
     url = "https://waifu.pics/api/sfw/{}".format(endpoint)
     waifu_resp = requests.get(url).json()
@@ -52,7 +56,7 @@ async def get_waifu_embed():
         title="Waifu Picture"
     )
 
-    url = await fetch_waifu_api("waifu")
+    url = await fetch_waifu_api()
     embd.set_image(url=url)
 
     return embd
