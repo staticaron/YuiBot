@@ -299,47 +299,47 @@ async def get_user_media_stats(target:Member, media_type:str="ANIME") -> Embed:
     embd.add_field(
         name="Total Count",
         value=str(stats_data["count"]),
-        inline=True
+        inline=False
     )
 
     embd.add_field(
         name="Mean Score",
         value=str(stats_data["meanScore"]),
-        inline=True
+        inline=False
     )
 
     if media_type == "ANIME":
         embd.add_field(
             name="Standard Deviation",
             value=str(stats_data["standardDeviation"]),
-            inline=True
+            inline=False
         )
 
     if media_type == "ANIME":
         embd.add_field(
             name="Episodes Watched",
             value=str(stats_data["episodesWatched"]),
-            inline=True
+            inline=False
         )
     else:
         embd.add_field(
             name="Chapters Read",
             value=str(stats_data["chaptersRead"]),
-            inline=True
+            inline=False
         )
 
     if media_type == "ANIME":
         embd.add_field(
             name="Watch Time",
             value=await general_helper.get_time_str_from_seconds(stats_data["minutesWatched"] * 60, 2),
-            inline=True
+            inline=False
         )
 
     if media_type == "MANGA":
         embd.add_field(
             name="Volumes Read",
             value=str(stats_data["volumesRead"]),
-            inline=True
+            inline=False
         )
 
     return embd
