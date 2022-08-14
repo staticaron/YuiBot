@@ -6,13 +6,16 @@ import config
 
 class ListsModule(commands.Cog):
 
+    """
+    
+    ANIME
+    
+    """
+
     @commands.group(name="anime", description="Commands about your anime lists")
     async def anime_group(self, ctx:commands.Context):
-        pass
-
-    @commands.group(name="manga", description="Commands about your manga lists")
-    async def manga_group(self, ctx:commands.Context):
-        pass
+        if ctx.subcommand_passed == None:
+            await ctx.reply("Please provide a valid subcommand. Try ```yui help anime```")
 
     """View Favorite Anime"""
 
@@ -25,30 +28,6 @@ class ListsModule(commands.Cog):
         target = (ctx.author if target is None else target)
 
         paginator = await lists_helper.get_fav_paginator(target, "ANIME")
-
-        if paginator is not None:
-            await paginator.send(ctx)
-        else:
-            await ctx.reply(embed=
-                await general_helper.get_information_embed(
-                    title="Hold It!",
-                    description="No Media entries were found in this list.",
-                    color=config.INFO_COLOR
-                )
-            )
-
-
-    """View Favorite Manga"""
-
-    @commands.command(name="favmanga", aliases=["fm", "favorite_manga"], description="Returns your favorite manga list")
-    @commands.check(general_helper.validate_user)
-    async def fav_manga_list(self, ctx:commands.Context, target:Member=None):
-
-        await ctx.trigger_typing()
-
-        target = (ctx.author if target is None else target)
-
-        paginator = await lists_helper.get_fav_paginator(target, "MANGA")
 
         if paginator is not None:
             await paginator.send(ctx)
@@ -97,6 +76,155 @@ class ListsModule(commands.Cog):
         else:
             await ctx.reply(embed=await response.get_error_embed())
 
+    """View Planning Lists"""
+
+    @anime_group.command(name="ptw", aliases=["planning"], case_insensitive=True, description="Returns the planning list of the user/member")
+    @commands.check(general_helper.validate_user)
+    async def anime_planning_list(self, ctx:commands.Context, user:Member=None):
+        
+        await ctx.trigger_typing()
+
+        user = (user if user is not None else ctx.author)
+
+        reply = await lists_helper.get_list_paginator(user, "ANIME", "PLANNING")
+
+        if reply is not None:
+            await reply.send(ctx)
+        else:
+            await ctx.reply(embed=
+                await general_helper.get_information_embed(
+                    title="Hold It!",
+                    description="No Media entries were found in this list.",
+                    color=config.INFO_COLOR
+                )
+            )
+        
+    """View Watching Lists"""
+    
+    @anime_group.command(name="wtc", aliases=["watching"], case_insensitive=True, description="Returns the watching list of the user/member")
+    @commands.check(general_helper.validate_user)
+    async def anime_watching_list(self, ctx:commands.Context, user:Member=None):
+
+        await ctx.trigger_typing()
+           
+        user = (user if user is not None else ctx.author)
+
+        reply = await lists_helper.get_list_paginator(user, "ANIME", "CURRENT")
+
+        if reply is not None:
+            await reply.send(ctx)
+        else:
+            await ctx.reply(embed=
+                await general_helper.get_information_embed(
+                    title="Hold It!",
+                    description="No Media entries were found in this list.",
+                    color=config.INFO_COLOR
+                )
+            )
+
+    """View Completed Lists"""
+
+    @anime_group.command(name="comp", aliases=["completed"], case_insensitive=True, description="Returns the completed list of the user/member")
+    @commands.check(general_helper.validate_user)
+    async def anime_completed_list(self, ctx:commands.Context, user:Member=None):
+
+        await ctx.trigger_typing()
+           
+        user = (user if user is not None else ctx.author)
+
+        reply = await lists_helper.get_list_paginator(user, "ANIME", "COMPLETED")
+
+        if reply is not None:
+            await reply.send(ctx)
+        else:
+            await ctx.reply(embed=
+                await general_helper.get_information_embed(
+                    title="Hold It!",
+                    description="No Media entries were found in this list.",
+                    color=config.INFO_COLOR
+                )
+            )
+
+    """View Dropped Lists"""
+
+    @anime_group.command(name="drp", aliases=["dropped"], case_insensitive=True, description="Returns the dropped list of the user/member")
+    @commands.check(general_helper.validate_user)
+    async def anime_dropped_list(self, ctx:commands.Context, user:Member=None):
+        
+        await ctx.trigger_typing()
+          
+        user = (user if user is not None else ctx.author)
+
+        reply = await lists_helper.get_list_paginator(user, "ANIME", "DROPPED")
+
+        if reply is not None:
+            await reply.send(ctx)
+        else:
+            await ctx.reply(embed=
+                await general_helper.get_information_embed(
+                    title="Hold It!",
+                    description="No Media entries were found in this list.",
+                    color=config.INFO_COLOR
+                )
+            )
+
+    """View Paused Lists"""
+
+    @anime_group.command(name="psd", aliases=["paused"], case_insensitive=True, description="Returns the paused list of the user/member")
+    @commands.check(general_helper.validate_user)
+    async def anime_paused_list(self, ctx:commands.Context, user:Member=None):
+        
+        await ctx.trigger_typing()
+          
+        user = (user if user is not None else ctx.author)
+
+        reply = await lists_helper.get_list_paginator(user, "ANIME", "PAUSED")
+
+        if reply is not None:
+            await reply.send(ctx)
+        else:
+            await ctx.reply(embed=
+                await general_helper.get_information_embed(
+                    title="Hold It!",
+                    description="No Media entries were found in this list.",
+                    color=config.INFO_COLOR
+                )
+            )
+
+    """
+    
+    MANGA
+    
+    """
+
+    @commands.group(name="manga", description="Commands about your manga lists")
+    async def manga_group(self, ctx:commands.Context):
+        if ctx.subcommand_passed == None:
+            await ctx.reply("Please provide a valid subcommand. Try ```yui help manga```")
+
+    """View Favorite Manga"""
+
+    @commands.command(name="favmanga", aliases=["fm", "favorite_manga"], description="Returns your favorite manga list")
+    @commands.check(general_helper.validate_user)
+    async def fav_manga_list(self, ctx:commands.Context, target:Member=None):
+
+        await ctx.trigger_typing()
+
+        target = (ctx.author if target is None else target)
+
+        paginator = await lists_helper.get_fav_paginator(target, "MANGA")
+
+        if paginator is not None:
+            await paginator.send(ctx)
+        else:
+            await ctx.reply(embed=
+                await general_helper.get_information_embed(
+                    title="Hold It!",
+                    description="No Media entries were found in this list.",
+                    color=config.INFO_COLOR
+                )
+            )
+
     """Add Manga to Lists"""
 
     @commands.command(name="addmanga", aliases=["am"], case_insensitive=True, description="Adds anime to your mentioned list")
@@ -135,15 +263,15 @@ class ListsModule(commands.Cog):
 
     """View Planning Lists"""
 
-    @anime_group.command(name="ptw", aliases=["planning"], case_insensitive=True, description="Returns the planning list of the user/member")
+    @manga_group.command(name="ptr", aliases=["planning"], case_insensitive=True, description="Returns the planning list of the user/member")
     @commands.check(general_helper.validate_user)
-    async def planning_list(self, ctx:commands.Context, user:Member=None):
+    async def manga_planning_list(self, ctx:commands.Context, user:Member=None):
         
         await ctx.trigger_typing()
 
         user = (user if user is not None else ctx.author)
 
-        reply = await lists_helper.get_list_paginator(user, "PLANNING")
+        reply = await lists_helper.get_list_paginator(user, "MANGA", "PLANNING")
 
         if reply is not None:
             await reply.send(ctx)
@@ -158,15 +286,15 @@ class ListsModule(commands.Cog):
         
     """View Watching Lists"""
     
-    @anime_group.command(name="wtc", aliases=["watching"], case_insensitive=True, description="Returns the watching list of the user/member")
+    @manga_group.command(name="rd", aliases=["reading"], case_insensitive=True, description="Returns the watching list of the user/member")
     @commands.check(general_helper.validate_user)
-    async def watching_list(self, ctx:commands.Context, user:Member=None):
+    async def manga_reading_list(self, ctx:commands.Context, user:Member=None):
 
         await ctx.trigger_typing()
            
         user = (user if user is not None else ctx.author)
 
-        reply = await lists_helper.get_list_paginator(user, "CURRENT")
+        reply = await lists_helper.get_list_paginator(user, "MANGA", "CURRENT")
 
         if reply is not None:
             await reply.send(ctx)
@@ -181,15 +309,15 @@ class ListsModule(commands.Cog):
 
     """View Completed Lists"""
 
-    @anime_group.command(name="comp", aliases=["completed"], case_insensitive=True, description="Returns the completed list of the user/member")
+    @manga_group.command(name="comp", aliases=["completed"], case_insensitive=True, description="Returns the completed list of the user/member")
     @commands.check(general_helper.validate_user)
-    async def completed_list(self, ctx:commands.Context, user:Member=None):
+    async def manga_completed_list(self, ctx:commands.Context, user:Member=None):
 
         await ctx.trigger_typing()
            
         user = (user if user is not None else ctx.author)
 
-        reply = await lists_helper.get_list_paginator(user, "COMPLETED")
+        reply = await lists_helper.get_list_paginator(user, "MANGA", "COMPLETED")
 
         if reply is not None:
             await reply.send(ctx)
@@ -204,15 +332,15 @@ class ListsModule(commands.Cog):
 
     """View Dropped Lists"""
 
-    @anime_group.command(name="drp", aliases=["dropped"], case_insensitive=True, description="Returns the dropped list of the user/member")
+    @manga_group.command(name="drp", aliases=["dropped"], case_insensitive=True, description="Returns the dropped list of the user/member")
     @commands.check(general_helper.validate_user)
-    async def dropped_list(self, ctx:commands.Context, user:Member=None):
+    async def manga_dropped_list(self, ctx:commands.Context, user:Member=None):
         
         await ctx.trigger_typing()
           
         user = (user if user is not None else ctx.author)
 
-        reply = await lists_helper.get_list_paginator(user, "DROPPED")
+        reply = await lists_helper.get_list_paginator(user, "MANGA", "DROPPED")
 
         if reply is not None:
             await reply.send(ctx)
@@ -227,15 +355,15 @@ class ListsModule(commands.Cog):
 
     """View Paused Lists"""
 
-    @anime_group.command(name="psd", aliases=["paused"], case_insensitive=True, description="Returns the paused list of the user/member")
+    @manga_group.command(name="psd", aliases=["paused"], case_insensitive=True, description="Returns the paused list of the user/member")
     @commands.check(general_helper.validate_user)
-    async def paused_list(self, ctx:commands.Context, user:Member=None):
+    async def manga_paused_list(self, ctx:commands.Context, user:Member=None):
         
         await ctx.trigger_typing()
           
         user = (user if user is not None else ctx.author)
 
-        reply = await lists_helper.get_list_paginator(user, "PAUSED")
+        reply = await lists_helper.get_list_paginator(user, "MANGA", "PAUSED")
 
         if reply is not None:
             await reply.send(ctx)
