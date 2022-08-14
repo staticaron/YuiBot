@@ -275,3 +275,81 @@ async def get_media_selection_paginator(media_name:str, select_callback:callable
         paginator=None
 
     return DataInclusivePaginator(paginator, media_list, media_type)
+
+"""Returns a list of characters to select from"""
+
+async def get_character_selection_paginator(character_name:str, select_callback:callable) -> DataInclusivePaginator:
+    
+    character_query = """
+        query($name:String){
+	        Page(page:0, perPage:5){
+                pageInfo{
+                    total
+                }
+                characters(search:$name, sort:SEARCH_MATCH){
+                    id
+                    name{
+                        full
+                        native
+                    }
+                    dateOfBirth {
+                        year
+                        month
+                        day
+                    }
+                    image{
+                        medium
+                    }
+                    siteUrl
+                    favourites
+                    gender
+                    age
+                }
+            } 
+        }
+    """
+
+    variables = {
+        "name" : character_name
+    }
+
+    ch_response = requests.post(
+        url=config.ANILIST_BASE,
+        json={
+            "query" : character_query,
+            "variables" : variables
+        }
+    ).json()
+
+    ch_data = ch_response["data"]["Page"]["characters"]
+
+    pages = []
+    media_list = []
+
+    for page_data in ch_data:
+        embd = Embed(
+            title="Which CHARACTER are you talking about?",
+            color=config.NORMAL_COLOR
+        )
+
+        embd.description = "**Name** : [{name}]({url}), {native}\n**Gender** : {gender}\n**Age** : {age}\n**Date Of Birth** : {dob}\n**Favorites** : {favorites}".format(
+            name=page_data["name"]["full"],
+            native=page_data["name"]["native"],
+            url=page_data["siteUrl"],
+            favorites=page_data["favourites"],
+            age=page_data["age"],
+            gender=page_data["gender"],
+            dob="{d} {m}".format(d=page_data["dateOfBirth"]["day"], m=page_data["dateOfBirth"]["month"])
+        )
+
+        embd.set_thumbnail(url=page_data["image"]["medium"])
+
+        pages.append(embd)
+        media_list.append(CharacterData(page_data["id"]))
+        
+    if len(pages) > 0:
+        paginator = SelectPaginator(pages, select_callback)
+    else:
+        paginator=None
+
+    return DataInclusivePaginator(paginator, media_list, "CHARACTER")
