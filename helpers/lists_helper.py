@@ -132,6 +132,11 @@ async def get_list_paginator(target:Member, list_name:str):
                     }
                     isCustomList
                 }
+                user{
+                    avatar{
+                        medium
+                    }
+                }
             }
         }
     """
@@ -167,7 +172,7 @@ async def get_list_paginator(target:Member, list_name:str):
     current_embed = Embed(
         title=list_data["name"] + " list",
         description="Total : {}\n\n".format(len(entries))
-    )
+    ).set_thumbnail(url=list_resp["data"]["MediaListCollection"]["user"]["avatar"]["medium"])
     
     for i in range(entries_size):
 
@@ -176,10 +181,11 @@ async def get_list_paginator(target:Member, list_name:str):
         if current_listing_count > MAX_LISTINGS_PER_PAGE:
             current_listing_count = 1
             pages.append(current_embed)
+            
             current_embed = Embed(
                 title=list_data["name"] + " list",
                 description="Total : {}\n\n".format(entries_size)
-            )
+            ).set_thumbnail(url=list_resp["data"]["MediaListCollection"]["user"]["avatar"]["medium"])
 
         current_title = (entries[i]["media"]["title"]["english"] if entries[i]["media"]["title"]["english"] is not None else entries[i]["media"]["title"]["romaji"])
         current_embed.description += "{bullet} [{name}]({url}) {progress}/{episodes}\n".format(
