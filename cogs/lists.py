@@ -19,7 +19,7 @@ class ListsModule(commands.Cog):
 
     """View Favorite Anime"""
 
-    @commands.command(name="favanime", aliases=["fa", "favorite_anime"], description="Returns your favorite anime list")
+    @anime_group.command(name="fav", aliases=["favorite"], description="Returns your favorite anime list")
     @commands.check(general_helper.validate_user)
     async def fav_anime_list(self, ctx:commands.Context, target:Member=None):
 
@@ -204,7 +204,7 @@ class ListsModule(commands.Cog):
 
     """View Favorite Manga"""
 
-    @commands.command(name="favmanga", aliases=["fm", "favorite_manga"], description="Returns your favorite manga list")
+    @manga_group.command(name="fav", aliases=["favorite"], description="Returns your favorite manga list")
     @commands.check(general_helper.validate_user)
     async def fav_manga_list(self, ctx:commands.Context, target:Member=None):
 
