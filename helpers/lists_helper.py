@@ -7,7 +7,7 @@ from helpers import general_helper
 from queries import fav_queries
 import config
 
-all_lists = ["ptw", "ptr", "planning", "crt", "current", "watching", "reading", "comp", "completed", "drp", "dropped", "fav"]
+all_lists = ["ptw", "ptr", "planning", "crt", "current", "watching", "wtc", "reading", "comp", "completed", "drp", "dropped", "fav", "favorite"]
 
 lists = {
     "ptw" : "PLANNING",
@@ -15,13 +15,15 @@ lists = {
     "planning" : "PLANNING",
     "crt" : "CURRENT",
     "current" : "CURRENT",
+    "wtc" : "CURRENT",
     "watching" : "CURRENT",
     "reading" : "CURRENT",
     "comp" : "COMPLETED",
     "completed" : "COMPLETED",
     "drp" : "DROPPED",
     "dropped" : "DROPPED",
-    "fav" : "FAVOURITE"
+    "fav" : "FAVOURITE",
+    "favorite" : "FAVOURITE"
 }
 
 """Adds specified anime to the specified list"""
