@@ -12,6 +12,8 @@ class ListsModule(commands.Cog):
     @commands.check(general_helper.validate_user)
     async def fav_anime_list(self, ctx:commands.Context, target:Member=None):
 
+        await ctx.trigger_typing()
+
         target = (ctx.author if target is None else target)
 
         paginator = await lists_helper.get_fav_paginator(target, "ANIME")
@@ -34,6 +36,8 @@ class ListsModule(commands.Cog):
     @commands.check(general_helper.validate_user)
     async def fav_manga_list(self, ctx:commands.Context, target:Member=None):
 
+        await ctx.trigger_typing()
+
         target = (ctx.author if target is None else target)
 
         paginator = await lists_helper.get_fav_paginator(target, "MANGA")
@@ -54,6 +58,8 @@ class ListsModule(commands.Cog):
     @commands.command(name="addanime", aliases=["aa"], case_insensitive=True, description="Adds anime to your mentioned list")
     @commands.check(general_helper.validate_user)
     async def addanime(self,ctx:commands.Context, list_name:str, *anime):
+
+        await ctx.trigger_typing()
 
         # check for valid list
         if list_name.lower() not in lists_helper.all_lists:
@@ -89,6 +95,8 @@ class ListsModule(commands.Cog):
     @commands.check(general_helper.validate_user)
     async def addmanga(self,ctx:commands.Context, list_name:str, *manga):
 
+        await ctx.trigger_typing()
+
         # check for valid list
         if list_name.lower() not in lists_helper.all_lists:
             return await ctx.reply(embed=await general_helper.get_information_embed(
@@ -123,6 +131,8 @@ class ListsModule(commands.Cog):
     @commands.check(general_helper.validate_user)
     async def planning_list(self, ctx:commands.Context, user:Member=None):
         
+        await ctx.trigger_typing()
+
         user = (user if user is not None else ctx.author)
 
         reply = await lists_helper.get_list_paginator(user, "PLANNING")
@@ -143,7 +153,9 @@ class ListsModule(commands.Cog):
     @commands.command(name="wtc", aliases=["watching"], case_insensitive=True, description="Returns the watching list of the user/member")
     @commands.check(general_helper.validate_user)
     async def watching_list(self, ctx:commands.Context, user:Member=None):
-        
+
+        await ctx.trigger_typing()
+           
         user = (user if user is not None else ctx.author)
 
         reply = await lists_helper.get_list_paginator(user, "CURRENT")
@@ -164,7 +176,9 @@ class ListsModule(commands.Cog):
     @commands.command(name="comp", aliases=["completed"], case_insensitive=True, description="Returns the completed list of the user/member")
     @commands.check(general_helper.validate_user)
     async def completed_list(self, ctx:commands.Context, user:Member=None):
-        
+
+        await ctx.trigger_typing()
+           
         user = (user if user is not None else ctx.author)
 
         reply = await lists_helper.get_list_paginator(user, "COMPLETED")
@@ -186,6 +200,8 @@ class ListsModule(commands.Cog):
     @commands.check(general_helper.validate_user)
     async def dropped_list(self, ctx:commands.Context, user:Member=None):
         
+        await ctx.trigger_typing()
+          
         user = (user if user is not None else ctx.author)
 
         reply = await lists_helper.get_list_paginator(user, "DROPPED")
@@ -207,6 +223,8 @@ class ListsModule(commands.Cog):
     @commands.check(general_helper.validate_user)
     async def paused_list(self, ctx:commands.Context, user:Member=None):
         
+        await ctx.trigger_typing()
+          
         user = (user if user is not None else ctx.author)
 
         reply = await lists_helper.get_list_paginator(user, "PAUSED")

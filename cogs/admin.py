@@ -6,6 +6,8 @@ class AdminModule(commands.Cog):
     @commands.command(name="disable", description="Disables a command.")
     async def disable_cmd(self, ctx:commands.Context, cmd_name:str):
 
+        await ctx.trigger_typing()
+
         bot:commands.Bot = ctx.bot
 
         try:
@@ -21,6 +23,8 @@ class AdminModule(commands.Cog):
     @commands.is_owner()
     @commands.command(name="enable", description="Enables a command.")
     async def enable_cmd(self, ctx:commands.Context, cmd_name:str):
+
+        await ctx.trigger_typing()
 
         bot:commands.Bot = ctx.bot
 

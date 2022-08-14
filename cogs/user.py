@@ -8,6 +8,9 @@ class UserModule(commands.Cog):
     @commands.command(name="user", aliases=["info"], description="Returns the details of mentioned AniList user")
     @commands.check(general_helper.validate_user)
     async def user_info(self, ctx:commands.Context, user:Member=None):
+
+        await ctx.trigger_typing()
+
         user = (ctx.author if user is None else user)
 
         reply = await user_helper.get_user_embed(str(user.id))
@@ -18,6 +21,8 @@ class UserModule(commands.Cog):
     @commands.check(general_helper.validate_user)
     async def follow_user(self, ctx:commands.Context, target:Member):
 
+        await ctx.trigger_typing()
+
         reply = await user_helper.follow_user(ctx.author, target)
 
         await ctx.reply(embed=reply)
@@ -26,6 +31,8 @@ class UserModule(commands.Cog):
     @commands.check(general_helper.validate_user)
     async def unfollow_user(self, ctx:commands.Context, target:Member):
 
+        await ctx.trigger_typing()
+
         reply = await user_helper.unfollow_user(ctx.author, target)
 
         await ctx.reply(embed=reply)
@@ -33,6 +40,8 @@ class UserModule(commands.Cog):
     @commands.command(name="animestats", aliases=["as", "statistics"], description="Returns the anime stats of a user")
     @general_helper.short_cooldown()
     async def anime_stats(self, ctx:commands.Context, target:Member=None):
+
+        await ctx.trigger_typing()
 
         target = (ctx.author if target is None else target)
 
@@ -43,6 +52,8 @@ class UserModule(commands.Cog):
     @commands.command(name="mangastats", aliases=["ms"], description="Returns the manga stats of a user")
     @general_helper.short_cooldown()
     async def manga_stats(self, ctx:commands.Context, target:Member=None):
+
+        await ctx.trigger_typing()
 
         target = (ctx.author if target is None else target)
 

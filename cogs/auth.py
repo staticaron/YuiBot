@@ -14,6 +14,8 @@ class AuthModule(commands.Cog):
     @commands.command(name="register", aliases=["login"], description="Login with Anilist to enable more features")
     async def login(self, ctx:commands.Context):
 
+        await ctx.trigger_typing()
+
         bot:commands.Bot = ctx.bot
 
         def check_user_message(msg:Message):
@@ -58,6 +60,9 @@ class AuthModule(commands.Cog):
 
     @commands.command(name="logout", description="Logout with your AniList account")
     async def logout(self, ctx:commands.Context):
+
+        await ctx.trigger_typing()
+
         confirmation_embd = await general_helper.get_information_embed(
             title="Are you sure?",
             description="Click `CONFIRM` to log out."
