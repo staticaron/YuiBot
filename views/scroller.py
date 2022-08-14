@@ -8,10 +8,10 @@ class Scroller(pages.Paginator):
 
     def __init__(self, pages:list, show_all_btns:bool = False):
 
-        prev_btn:PaginatorButton = PaginatorButton("prev", None, PREV_EMOTE, ButtonStyle.grey)
-        next_btn:PaginatorButton = PaginatorButton("next", None, NEXT_EMOTE, ButtonStyle.grey)
-        first_btn:PaginatorButton = PaginatorButton("first", None, FIRST_EMOTE, ButtonStyle.grey)
-        last_btn:PaginatorButton = PaginatorButton("last", None, LAST_EMOTE, ButtonStyle.grey)
+        prev_btn:PaginatorButton = PaginatorButton("prev", None, PREV_EMOTE, ButtonStyle.blurple)
+        next_btn:PaginatorButton = PaginatorButton("next", None, NEXT_EMOTE, ButtonStyle.blurple)
+        first_btn:PaginatorButton = PaginatorButton("first", None, FIRST_EMOTE, ButtonStyle.blurple)
+        last_btn:PaginatorButton = PaginatorButton("last", None, LAST_EMOTE, ButtonStyle.blurple)
 
         buttons = []
 
