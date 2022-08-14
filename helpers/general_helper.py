@@ -12,51 +12,60 @@ import config
 """Just a way to transmit paginator and ids at the same time. Please no bully"""
 
 class MediaData:
-    media_id:int = None
-    media_type = None
+    anilist_id:int = None
+    type = None
     titles:list = None
     genre:list = None
     url:str = None
+    image_link = None
 
-    def __init__(self, media_id:int, media_type:str="ANIME", title:list=None, genre:list=None, url:str=None):
-        self.media_id = media_id
-        self.media_type = media_type
+    def __init__(self, media_id:int, media_type:str="ANIME", title:list=None, genre:list=None, url:str=None, image_link:str=None):
+        self.anilist_id = media_id
+        self.type = media_type
         self.titles = title
         self.genre = genre
         self.url = url
+        self.image_link = image_link
 
     def get_name(self):
         for title in self.titles:
             if title is not None:
                 return title
 
-class AnimePaginator:
+class CharacterData:
+    anilist_id:int = None
+    titles:list = None
+    url:str = None
+    image_link:str = None
+
+    def __init__(self, character_id:int, character_titles:list=None, url:str=None, image_link:str=None) -> None:
+        self.anilist_id = character_id
+        self.titles = character_titles
+        self.url = url
+        self.image_link = image_link
+
+    def get_name(self) -> str:
+        for i in self.titles:
+            if i is not None:
+                return i
+
+class DataInclusivePaginator:
     paginator:SelectPaginator = None
-    media:list = None
-    media_type:str = None
+    data_elements:list = None
+    data_type:str = None
 
-    def __init__(self, paginator, media:list, media_type:str):
+    def __init__(self, paginator, data_elements:list, data_type:str):
         self.paginator = paginator
-        self.media = media
-        self.media_type = media_type
+        self.data_elements = data_elements
+        self.data_type = data_type
 
     def length(self):
-        return len(self.media)
+        return len(self.data_elements)
 
     async def get_error_embed(self):
         return await general_helper.get_information_embed(
             title="Damn",
-            description="No {} were found for that input".format(self.media_type),
-            color=config.ERROR_COLOR
-        )
-
-    def length(self):
-        return len(self.media)
-
-    async def get_error_embed(self):
-        return await general_helper.get_information_embed(
-            title="Damn",
-            description="No {} were found for that input".format(self.media_type),
+            description="No {} were found for that input".format(self.data_type),
             color=config.ERROR_COLOR
         )
 
@@ -182,15 +191,17 @@ async def validate_user(ctx:commands.Context):
 
     return True
 
+"""Short Cooldown Decorator"""
+
 def short_cooldown():
 
     return commands.cooldown(rate=1, per=5, type=commands.BucketType.user)
 
-"""Returns a list of anime to select from"""
+"""Returns a list of medias to select from"""
 
-async def get_media_selection_paginator(media_name:str, select_callback:callable, media_type="ANIME") -> AnimePaginator:
+async def get_media_selection_paginator(media_name:str, select_callback:callable, media_type="ANIME") -> DataInclusivePaginator:
 
-    anime_query = """
+    media_query = """
         query($search:String, $type:MediaType){
             Page(page:0, perPage:5){
                 pageInfo{
@@ -208,6 +219,7 @@ async def get_media_selection_paginator(media_name:str, select_callback:callable
                         medium
                     }
                     episodes
+                    chapters
                     status
                 }
             }
@@ -222,7 +234,7 @@ async def get_media_selection_paginator(media_name:str, select_callback:callable
     anime_resp = requests.post(
         url=config.ANILIST_BASE,
         json={
-            "query" : anime_query,
+            "query" : media_query,
             "variables" : variables
         }
     ).json()
@@ -262,4 +274,82 @@ async def get_media_selection_paginator(media_name:str, select_callback:callable
     else:
         paginator=None
 
-    return AnimePaginator(paginator, media_list, media_type)
+    return DataInclusivePaginator(paginator, media_list, media_type)
+
+"""Returns a list of characters to select from"""
+
+async def get_character_selection_paginator(character_name:str, select_callback:callable) -> DataInclusivePaginator:
+    
+    character_query = """
+        query($name:String){
+	        Page(page:0, perPage:5){
+                pageInfo{
+                    total
+                }
+                characters(search:$name, sort:SEARCH_MATCH){
+                    id
+                    name{
+                        full
+                        native
+                    }
+                    dateOfBirth {
+                        year
+                        month
+                        day
+                    }
+                    image{
+                        medium
+                    }
+                    siteUrl
+                    favourites
+                    gender
+                    age
+                }
+            } 
+        }
+    """
+
+    variables = {
+        "name" : character_name
+    }
+
+    ch_response = requests.post(
+        url=config.ANILIST_BASE,
+        json={
+            "query" : character_query,
+            "variables" : variables
+        }
+    ).json()
+
+    ch_data = ch_response["data"]["Page"]["characters"]
+
+    pages = []
+    media_list = []
+
+    for page_data in ch_data:
+        embd = Embed(
+            title="Which CHARACTER are you talking about?",
+            color=config.NORMAL_COLOR
+        )
+
+        embd.description = "**Name** : [{name}]({url}), {native}\n**Gender** : {gender}\n**Age** : {age}\n**Date Of Birth** : {dob}\n**Favorites** : {favorites}".format(
+            name=page_data["name"]["full"],
+            native=page_data["name"]["native"],
+            url=page_data["siteUrl"],
+            favorites=page_data["favourites"],
+            age=page_data["age"],
+            gender=page_data["gender"],
+            dob="{d} {m}".format(d=page_data["dateOfBirth"]["day"], m=page_data["dateOfBirth"]["month"])
+        )
+
+        embd.set_thumbnail(url=page_data["image"]["medium"])
+
+        pages.append(embd)
+        media_list.append(CharacterData(page_data["id"]))
+        
+    if len(pages) > 0:
+        paginator = SelectPaginator(pages, select_callback)
+    else:
+        paginator=None
+
+    return DataInclusivePaginator(paginator, media_list, "CHARACTER")

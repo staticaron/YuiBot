@@ -110,13 +110,13 @@ async def add_to_fav(mediaID:int, user:Member, media_type:str="ANIME"):
         description="That {} was added to your favourite. ".format(media_type)
     )
 
-async def get_list_paginator(target:Member, list_name:str):
+async def get_list_paginator(target:Member, media_type:str="ANIME", list_name:str="CURRENT"):
 
     anilistID = await general_helper.get_id_from_userID(str(target.id))
 
     list_query = """
-        query($id:Int!, $status:MediaListStatus){
-            MediaListCollection(userId:$id, type:ANIME, status:$status, sort:UPDATED_TIME_DESC){
+        query($id:Int!, $status:MediaListStatus, $media:MediaType){
+            MediaListCollection(userId:$id, type:$media, status:$status, sort:UPDATED_TIME_DESC){
                 lists{
                     name
                     entries{
@@ -127,10 +127,16 @@ async def get_list_paginator(target:Member, list_name:str):
                             }
                             siteUrl
                             episodes
+                          	chapters
                         }
                         progress
                     }
                     isCustomList
+                }
+                user{
+                    avatar{
+                        medium
+                  }
                 }
             }
         }
@@ -142,7 +148,8 @@ async def get_list_paginator(target:Member, list_name:str):
             "query" : list_query,
             "variables" : {
                 "id" : anilistID,
-                "status" : list_name
+                "status" : list_name,
+                "media" : media_type
             }
         }
     ).json()
@@ -167,7 +174,7 @@ async def get_list_paginator(target:Member, list_name:str):
     current_embed = Embed(
         title=list_data["name"] + " list",
         description="Total : {}\n\n".format(len(entries))
-    )
+    ).set_thumbnail(url=list_resp["data"]["MediaListCollection"]["user"]["avatar"]["medium"])
     
     for i in range(entries_size):
 
@@ -176,18 +183,19 @@ async def get_list_paginator(target:Member, list_name:str):
         if current_listing_count > MAX_LISTINGS_PER_PAGE:
             current_listing_count = 1
             pages.append(current_embed)
+
             current_embed = Embed(
                 title=list_data["name"] + " list",
                 description="Total : {}\n\n".format(entries_size)
-            )
+            ).set_thumbnail(url=list_resp["data"]["MediaListCollection"]["user"]["avatar"]["medium"])
 
         current_title = (entries[i]["media"]["title"]["english"] if entries[i]["media"]["title"]["english"] is not None else entries[i]["media"]["title"]["romaji"])
-        current_embed.description += "{bullet} [{name}]({url}) {progress}/{episodes}\n".format(
+        current_embed.description += "{bullet} [{name}]({url}) - {progress}/{total}\n".format(
             bullet=config.BULLET_EMOTE,
             name=current_title,
             url=entries[i]["media"]["siteUrl"],
             progress=entries[i]["progress"],
-            episodes=entries[i]["media"]["episodes"]
+            total="{}".format((entries[i]["media"]["episodes"] if media_type=="ANIME" else entries[i]["media"]["chapters"]))
         )
 
         if i >= entries_size - 1:
