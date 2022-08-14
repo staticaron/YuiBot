@@ -13,6 +13,8 @@ class SmashGame(commands.Cog):
     @commands.max_concurrency(1, per=commands.BucketType.channel)
     async def smashgame(self, ctx:commands.Context, count:int=10):
 
+        await ctx.trigger_typing()
+
         WAIT_TIME = 10
 
         count = (20 if count > 20 else count and 0 if count < 0 else count)

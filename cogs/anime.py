@@ -8,6 +8,9 @@ class AnimeModule(commands.Cog):
     @commands.command(name="quote", description="Returns a random anime quote")
     @commands.cooldown(rate=5, per=30*60, type=commands.BucketType.user)
     async def anime_quote(self, ctx:commands.Context):
+
+        await ctx.trigger_typing()
+
         reply = await anime_helper.get_random_anime_quote_embed()
 
         await ctx.send(embed=reply)
@@ -16,6 +19,8 @@ class AnimeModule(commands.Cog):
     @general_helper.short_cooldown()
     async def suggest_anime(self, ctx:commands.Context, *anime):
         
+        await ctx.trigger_typing()
+
         anime = " ".join(anime)
 
         async def reply_callback():
