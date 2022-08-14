@@ -69,7 +69,7 @@ class ListsModule(commands.Cog):
         response = await general_helper.get_media_selection_paginator(media_name=anime, select_callback=reply_callback)
 
         paginator = response.paginator
-        ids = [str(anime.media_id) for anime in response.media]
+        ids = [str(anime.anilist_id) for anime in response.data_elements]
 
         if response.length() > 0:
             await paginator.send(ctx)
@@ -254,7 +254,7 @@ class ListsModule(commands.Cog):
         response = await general_helper.get_media_selection_paginator(media_name=manga, select_callback=reply_callback, media_type="MANGA")
 
         paginator = response.paginator
-        ids = [str(anime.media_id) for anime in response.media]
+        ids = [str(anime.anilist_id) for anime in response.data_elements]
 
         if response.length() > 0:
             await paginator.send(ctx)

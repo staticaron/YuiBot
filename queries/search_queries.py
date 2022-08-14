@@ -81,3 +81,9 @@ manga_query = """
     }
     }
 """
+
+character_query = """
+
+
+
+"""

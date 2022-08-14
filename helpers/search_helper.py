@@ -5,7 +5,7 @@ import requests
 
 import config
 from helpers import general_helper
-from queries import media_queries, character_queries, studio_queries
+from queries import character_queries, search_queries, studio_queries
 
 class MediaType(enum.Enum):
     ANIME = 0,
@@ -18,9 +18,9 @@ async def get_error_embed(data_raw:dict) -> Embed:
 async def get_media_details(name:str, type:MediaType) -> dict:
     
     if type is MediaType.ANIME:
-        query = media_queries.anime_query
+        query = search_queries.anime_query
     else:
-        query = media_queries.manga_query
+        query = search_queries.manga_query
 
     variables = {
         "search" : name

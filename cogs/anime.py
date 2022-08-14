@@ -40,7 +40,7 @@ class AnimeModule(commands.Cog):
         response = await general_helper.get_media_selection_paginator(anime, reply_callback)
 
         paginator = response.paginator
-        anime_list = response.media
+        anime_list = response.data_elements
 
         if response.length() > 0:
             await paginator.send(ctx)
