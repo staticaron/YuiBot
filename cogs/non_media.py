@@ -1,6 +1,5 @@
 from discord.ext import commands
 from discord.ext import pages
-import requests
 
 from helpers import general_helper, non_media_helper
 

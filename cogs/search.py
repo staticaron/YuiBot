@@ -22,7 +22,7 @@ class SearchModule(commands.Cog):
 
         name = " ".join(name)
 
-        embd = await search_helper.get_anime_details_embed(name)
+        embd = await search_helper.get_anime_details_embed(name, ctx.author)
 
         await ctx.send(embed=embd)
 
@@ -35,7 +35,7 @@ class SearchModule(commands.Cog):
 
         name = " ".join(name)
 
-        embd = await search_helper.get_manga_details_embed(name)
+        embd = await search_helper.get_manga_details_embed(name, ctx.author)
 
         await ctx.send(embed=embd)
 
