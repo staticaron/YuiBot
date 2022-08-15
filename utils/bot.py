@@ -10,7 +10,7 @@ class Bot(commands.Bot):
     intents.message_content = True
 
     def prefix_callable(self, bot, msg):
-        return ["yui ", "Yui "]
+        return ["yui ", "Yui ", "<@991739924250362047> ", "<@!991739924250362047> "]
 
     def __init__(self):
         super().__init__(command_prefix=self.prefix_callable, intents=self.intents)
