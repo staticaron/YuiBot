@@ -78,6 +78,7 @@ character_list_query = """
                     nodes{
                         name{
                             full
+                            native
                         }
                         siteUrl
                     }
