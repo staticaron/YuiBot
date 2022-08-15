@@ -1,32 +1,42 @@
-from discord import Embed
+from discord import Embed, Member
 import enum
 
 import requests
 
-import config
+from managers import mongo_manager
 from helpers import general_helper
 from queries import character_queries, search_queries, studio_queries
+import config
 
 class MediaType(enum.Enum):
     ANIME = 0,
     MANGA = 1
 
 async def get_error_embed(data_raw:dict) -> Embed:
-        errors = [error["message"] for error in data_raw["errors"]]
-        return await general_helper.get_information_embed(title="Error Occurred!", color=config.ERROR_COLOR, description="{}{}".format(config.BULLET_EMOTE, "\n{}".format(config.BULLET_EMOTE).join(errors)))
+    errors = [error["message"] for error in data_raw["errors"]]
+    return await general_helper.get_information_embed(title="Error Occurred!", color=config.ERROR_COLOR, description="{}{}".format(config.BULLET_EMOTE, "\n{}".format(config.BULLET_EMOTE).join(errors)))
 
-async def get_media_details(name:str, type:MediaType) -> dict:
+async def get_media_details(name:str, type:MediaType, user:Member) -> dict:
     
+    anilist_user = await mongo_manager.manager.get_user(str(user.id))
+
     if type is MediaType.ANIME:
         query = search_queries.anime_query
     else:
         query = search_queries.manga_query
 
-    variables = {
-        "search" : name
-    }
-
-    resp = requests.post(config.ANILIST_BASE, json={"query" : query, "variables" : variables})
+    resp = requests.post(
+        url=config.ANILIST_BASE,
+        json={
+            "query" : query,
+            "variables" : {
+                "search" : name
+            }
+        },
+        headers={
+            "Authorization" : anilist_user["token"]
+        }
+    )
 
     return resp.json()
 
@@ -50,9 +60,9 @@ async def get_studio_details(name:str) -> dict:
 
     return resp.json()
 
-async def get_anime_details_embed(name:str) -> Embed:
+async def get_anime_details_embed(name:str, user:Member) -> Embed:
 
-    data_raw = await get_media_details(name, MediaType.ANIME)
+    data_raw = await get_media_details(name, MediaType.ANIME, user)
     data = data_raw["data"]["Media"]
 
     if data is None:
@@ -143,10 +153,20 @@ async def get_anime_details_embed(name:str) -> Embed:
         inline=True
     )
 
+    #### Footer
+    isFav = (f"🔘FAV : Yes" if data["isFavourite"] is True else "")
+    status = ("STATUS : " + data["mediaListEntry"]["status"] if data["mediaListEntry"]  is not None else "")
+    score = ((f"🔘SCORE : " + str(data["mediaListEntry"]["score"]) if data["mediaListEntry"]["score"] != 0 else "") if data["mediaListEntry"]  is not None else "")
+    progress = (f"🔘PROGRESS : " + str(data["mediaListEntry"]["progress"] if data["mediaListEntry"]  is not None else ""))
+    total = ("/" + str(data["mediaListEntry"]["media"]["episodes"] if data["mediaListEntry"]  is not None else ""))
+
+    if not (isFav == "" and status == ""):
+        embd.set_footer(text="{status}{fav}{score}{progress}{total}".format(status=status, fav=isFav, score=score, progress=progress, total=total))
+
     return embd
 
-async def get_manga_details_embed(name:str) -> Embed:
-    data_raw = await get_media_details(name, MediaType.MANGA)
+async def get_manga_details_embed(name:str, user:Member) -> Embed:
+    data_raw = await get_media_details(name, MediaType.MANGA, user)
     data = data_raw["data"]["Media"]
 
     if data is None:
@@ -234,6 +254,16 @@ async def get_manga_details_embed(name:str) -> Embed:
         value=trailer_link,
         inline=True
     )
+
+    #### Footer
+    isFav = (f"🔘FAV : Yes" if data["isFavourite"] is True else "")
+    status = ("STATUS : " + data["mediaListEntry"]["status"] if data["mediaListEntry"]  is not None else "")
+    score = ((f"🔘SCORE : " + str(data["mediaListEntry"]["score"]) if data["mediaListEntry"]["score"] != 0 else "") if data["mediaListEntry"]  is not None else "")
+    progress = (f"🔘PROGRESS : " + str(data["mediaListEntry"]["progress"] if data["mediaListEntry"]  is not None else ""))
+    total = ("/" + str(data["mediaListEntry"]["media"]["chapters"] if data["mediaListEntry"]  is not None else ""))
+
+    if not (isFav == "" and status == ""):
+        embd.set_footer(text="{status}{fav}{score}{progress}{total}".format(status=status, fav=isFav, score=score, progress=progress, total=total))
 
     return embd
 
