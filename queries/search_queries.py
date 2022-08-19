@@ -82,13 +82,7 @@ manga_query = """
             meanScore
             favourites
             format
-            studios(sort:SEARCH_MATCH){
-                nodes{
-                    name
-                    siteUrl
-                }
-            }
-
+            popularity
             isFavourite
             mediaListEntry{
                 status
