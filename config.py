@@ -1,5 +1,7 @@
 from discord import Color
 from os import environ
+import traceback
+import sys
 
 DISCORD_TOKEN = None
 ANILIST_ID = None
@@ -18,11 +20,11 @@ INFO_COLOR = Color.gold()
 ERROR_COLOR = Color.red()
 
 # Emojis
-YUI_SHY_EMOTE="<a:yui_shy:991749482763014184>"
-ADULT_CONTENT_EMOTE="<:18_up:991930483309023352>"
-BULLET_EMOTE="<:bullet:992560047978729512>"
-DOT_EMOTE="<:dots:993535564835979357>"
-LOADING_EMOTE="<a:LOADING:994182649100894318>"
+YUI_SHY_EMOTE = "<a:yui_shy:991749482763014184>"
+ADULT_CONTENT_EMOTE = "<:18_up:991930483309023352>"
+BULLET_EMOTE = "<:bullet:992560047978729512>"
+DOT_EMOTE = "<:dots:993535564835979357>"
+LOADING_EMOTE = "<a:LOADING:994182649100894318>"
 NEXT_EMOTE = "<:next:995484808207683604>"
 PREV_EMOTE = "<:prev:995484847139209238>"
 FIRST_EMOTE = "<:first:996104181515571201>"
@@ -38,6 +40,8 @@ def initialize_config_vars() -> str:
         MONGO_SRV = environ["MONGO_SRV"]
         INVITE = environ["INVITE"]
     except Exception as e:
-        return f"Error occurred while trying to cache Config Vars! \n{e}"
+        print(f"Error occurred while trying to cache Config Vars! \n{e}")
+        traceback.print_exception(
+            type(e), e, e.__traceback__, file=sys.stderr)
     else:
-        return "Config Vars were cached successfully!"
+        print("Config Vars were cached successfully!")

@@ -3,13 +3,14 @@ from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase, AsyncI
 import config
 import pprint
 
+
 class MongoManager:
-    
-    client : AsyncIOMotorClient = None
+
+    client: AsyncIOMotorClient = None
     db: AsyncIOMotorDatabase = None
 
-    user_collection:AsyncIOMotorCollection = None
-    smash_collection:AsyncIOMotorCollection = None
+    user_collection: AsyncIOMotorCollection = None
+    smash_collection: AsyncIOMotorCollection = None
 
     def __init__(self) -> None:
         self.client = AsyncIOMotorClient(config.MONGO_SRV)
@@ -17,17 +18,17 @@ class MongoManager:
         self.user_collection = self.db["user"]
         self.smash_collection = self.db["smash"]
 
-    async def get_user(self, userID:str) -> dict:
+    async def get_user(self, userID: str) -> dict:
 
         query = {
-            "userID" : userID
+            "userID": userID
         }
 
         cursor = await self.user_collection.find_one(query)
 
         return cursor
 
-    async def add_user(self, userID:str, anilistID:str, token:str) -> None:
+    async def add_user(self, userID: str, anilistID: str, token: str) -> None:
 
         try:
             existing_user = await self.get_user(userID)
@@ -37,20 +38,20 @@ class MongoManager:
                 return
 
             document = {
-                "userID" : userID,
-                "anilistID" : anilistID,
-                "token" : token
+                "userID": userID,
+                "anilistID": anilistID,
+                "token": token
             }
 
             await self.user_collection.insert_one(document)
         except Exception as e:
             print(e)
 
-    async def update_user(self, userID:str, anilistID:str=None, token:str=None) -> None:
+    async def update_user(self, userID: str, anilistID: str = None, token: str = None) -> None:
 
         try:
             query = {
-                "userID" : userID
+                "userID": userID
             }
 
             updates = {}
@@ -61,19 +62,19 @@ class MongoManager:
             if token is not None:
                 updates["token"] = token
 
-            await self.user_collection.update_one(query, {"$set" : updates})
+            await self.user_collection.update_one(query, {"$set": updates})
         except Exception as e:
             print(e)
 
-    async def remove_user(self, userID:str) -> None:
+    async def remove_user(self, userID: str) -> None:
 
         delete_query = {
-            "userID" : userID
+            "userID": userID
         }
 
         await self.user_collection.delete_one(delete_query)
 
-    async def update_smash_leaderboard(self, results:dict=None):
+    async def update_smash_leaderboard(self, results: dict = None):
 
         all_entries = self.smash_collection.find({})
 
@@ -98,7 +99,8 @@ class MongoManager:
         pass
 
 
-manager:MongoManager = None
+manager: MongoManager = None
+
 
 def init_motor():
     global manager
@@ -109,4 +111,3 @@ def init_motor():
         print(e)
     else:
         print("Database Initialized")
-    
