@@ -3,6 +3,7 @@ import enum
 
 import requests
 
+from views.scroller import Scroller
 from managers import mongo_manager
 from helpers import general_helper
 from queries import search_queries, studio_queries
@@ -395,3 +396,56 @@ async def get_studio_details_embed(name: str) -> Embed:
     )
 
     return embd
+
+
+async def get_top_by_genre(genres: list, media_type: str = "ANIME") -> Scroller:
+
+    genres = [config.ALL_GENRE_ALTS[genre.lower()] for genre in genres]
+
+    resp = requests.post(
+        url=config.ANILIST_BASE,
+        json={
+            "query": search_queries.top_genre_query,
+            "variables": {
+                "genre": genres,
+                "type": media_type
+            }
+        }
+    ).json()
+
+    data = resp["data"]["Page"]["media"]
+
+    # TODO : check for data length 0
+
+    pages = []
+
+    embd = await general_helper.get_information_embed(
+        title="Top {type} in {genre}".format(
+            type=media_type, genre=", ".join(genres).upper()),
+        description=""
+    )
+
+    MAX_PER_EMBED = 10
+    entry_count = 1
+    total_entry_count = 1
+
+    for media in data:
+
+        title = (media["title"]["english"] if media["title"]
+                 ["english"] is not None else media["title"]["romaji"])
+        embd.description += "{number}. [{name}]({link})".format(
+            number=total_entry_count, name=title, link=media["siteUrl"]) + "\n"
+
+        entry_count += 1
+        total_entry_count += 1
+
+        if entry_count > MAX_PER_EMBED:
+            entry_count = 1
+            pages.append(embd)
+            embd = await general_helper.get_information_embed(
+                title="Top {type} in {genre}".format(
+                    type=media_type, genre=", ".join(genres).capitalize()),
+                description=""
+            )
+
+    return Scroller(pages=pages, show_all_btns=True)

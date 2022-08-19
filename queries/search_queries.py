@@ -133,3 +133,21 @@ character_query = """
         }
     }
 """
+
+top_genre_query = """
+    query ($genre: [String], $type:MediaType) {
+        Page(page: 0, perPage: 30) {
+            pageInfo {
+                total
+            }
+            media(genre_in: $genre, sort: POPULARITY_DESC, type:$type) {
+                title {
+                    english
+                    romaji
+                }
+                siteUrl
+            }
+        }
+    }
+
+"""

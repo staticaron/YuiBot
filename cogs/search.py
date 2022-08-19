@@ -1,5 +1,6 @@
 from discord.ext import commands
 
+from managers import cache_manager
 from helpers import search_helper
 import config
 
@@ -65,6 +66,32 @@ class SearchModule(commands.Cog):
         embd = await search_helper.get_studio_details_embed(name)
 
         await ctx.send(embed=embd)
+
+    """Top ANIME By Genre"""
+
+    @search_group.command(name="topanime", aliases=["ta"], description="Returns the top anime from a particular genre")
+    async def top_genre_anime(self, ctx: commands.Context, *genres):
+
+        for genre in genres:
+            if genre.lower() not in config.ALL_GENRE:
+                return await ctx.reply(embed=cache_manager.CACHED_GENRE_EMBED)
+
+        scroller = await search_helper.get_top_by_genre(genres, "ANIME")
+
+        await scroller.send(ctx)
+
+    """Top MANGA by genre"""
+
+    @search_group.command(name="topmanga", aliases=["tm"], description="Returns the top manga from a particular genre")
+    async def top_genre_manga(self, ctx: commands.Context, *genres):
+
+        for genre in genres:
+            if genre.lower() not in config.ALL_GENRE:
+                return await ctx.reply(embed=cache_manager.CACHED_GENRE_EMBED)
+
+        scroller = await search_helper.get_top_by_genre(genres, "MANGA")
+
+        await scroller.send(ctx)
 
 
 def setup(bot: commands.Bot):
