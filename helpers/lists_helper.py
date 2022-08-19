@@ -7,28 +7,30 @@ from helpers import general_helper
 from queries import fav_queries
 import config
 
-all_lists = ["ptw", "ptr", "planning", "crt", "current", "watching", "wtc", "reading", "comp", "completed", "drp", "dropped", "fav", "favorite"]
+all_lists = ["ptw", "ptr", "planning", "crt", "current", "watching", "wtc",
+             "reading", "comp", "completed", "drp", "dropped", "fav", "favorite"]
 
 lists = {
-    "ptw" : "PLANNING",
-    "ptr" : "PLANNING",
-    "planning" : "PLANNING",
-    "crt" : "CURRENT",
-    "current" : "CURRENT",
-    "wtc" : "CURRENT",
-    "watching" : "CURRENT",
-    "reading" : "CURRENT",
-    "comp" : "COMPLETED",
-    "completed" : "COMPLETED",
-    "drp" : "DROPPED",
-    "dropped" : "DROPPED",
-    "fav" : "FAVOURITE",
-    "favorite" : "FAVOURITE"
+    "ptw": "PLANNING",
+    "ptr": "PLANNING",
+    "planning": "PLANNING",
+    "crt": "CURRENT",
+    "current": "CURRENT",
+    "wtc": "CURRENT",
+    "watching": "CURRENT",
+    "reading": "CURRENT",
+    "comp": "COMPLETED",
+    "completed": "COMPLETED",
+    "drp": "DROPPED",
+    "dropped": "DROPPED",
+    "fav": "FAVOURITE",
+    "favorite": "FAVOURITE"
 }
 
 """Adds specified anime to the specified list"""
 
-async def add_to_list(list_name:str, mediaID:int, user:Member, media_type:str="ANIME") -> Embed:
+
+async def add_to_list(list_name: str, mediaID: int, user: Member, media_type: str = "ANIME") -> Embed:
 
     lst = lists[list_name]
 
@@ -49,21 +51,22 @@ async def add_to_list(list_name:str, mediaID:int, user:Member, media_type:str="A
     list_resp = requests.post(
         url=config.ANILIST_BASE,
         json={
-            "query" : list_query,
-            "variables" : {
-                "id" : mediaID,
-                "list" : lst
+            "query": list_query,
+            "variables": {
+                "id": mediaID,
+                "list": lst
             }
         },
         headers={
-            "Authorization" : token
+            "Authorization": token
         }
-    ).json()    
-    
+    ).json()
+
     if list_resp["data"]["SaveMediaListEntry"] is None:
         return await general_helper.get_information_embed(
             title="Whoops",
-            description="The following error occurred : ```{}```".format(list_resp["error"]["message"]),
+            description="The following error occurred : ```{}```".format(
+                list_resp["error"]["message"]),
             color=config.ERROR_COLOR
         )
 
@@ -72,7 +75,8 @@ async def add_to_list(list_name:str, mediaID:int, user:Member, media_type:str="A
         description="{} was added to your `{}` list.".format(media_type, lst)
     )
 
-async def add_to_fav(mediaID:int, user:Member, media_type:str="ANIME"):
+
+async def add_to_fav(mediaID: int, user: Member, media_type: str = "ANIME"):
 
     data = await mongo_manager.manager.get_user(str(user.id))
 
@@ -86,13 +90,13 @@ async def add_to_fav(mediaID:int, user:Member, media_type:str="ANIME"):
     resp = requests.post(
         url=config.ANILIST_BASE,
         json={
-            "query" : fav_query,
-            "variables" : {
-                "id" : mediaID
+            "query": fav_query,
+            "variables": {
+                "id": mediaID
             }
         },
         headers={
-            "Authorization" : data["token"]
+            "Authorization": data["token"]
         }
     ).json()
 
@@ -101,7 +105,8 @@ async def add_to_fav(mediaID:int, user:Member, media_type:str="ANIME"):
     if fav_data is None:
         return await general_helper.get_information_embed(
             title="Whoops!",
-            description="The following error(s) occurred : ```{}```".format("\n".join([error["message"] for error in resp["errors"]])),
+            description="The following error(s) occurred : ```{}```".format(
+                "\n".join([error["message"] for error in resp["errors"]])),
             color=config.ERROR_COLOR
         )
 
@@ -110,7 +115,8 @@ async def add_to_fav(mediaID:int, user:Member, media_type:str="ANIME"):
         description="That {} was added to your favourite. ".format(media_type)
     )
 
-async def get_list_paginator(target:Member, media_type:str="ANIME", list_name:str="CURRENT"):
+
+async def get_list_paginator(target: Member, media_type: str = "ANIME", list_name: str = "CURRENT"):
 
     anilistID = await general_helper.get_id_from_userID(str(target.id))
 
@@ -145,11 +151,11 @@ async def get_list_paginator(target:Member, media_type:str="ANIME", list_name:st
     list_resp = requests.post(
         url=config.ANILIST_BASE,
         json={
-            "query" : list_query,
-            "variables" : {
-                "id" : anilistID,
-                "status" : list_name,
-                "media" : media_type
+            "query": list_query,
+            "variables": {
+                "id": anilistID,
+                "status": list_name,
+                "media": media_type
             }
         }
     ).json()
@@ -171,11 +177,11 @@ async def get_list_paginator(target:Member, media_type:str="ANIME", list_name:st
     MAX_LISTINGS_PER_PAGE = 10
     current_listing_count = 0
 
-    current_embed = Embed(
+    current_embed = (await general_helper.get_information_embed(
         title=list_data["name"] + " list",
         description="Total : {}\n\n".format(len(entries))
-    ).set_thumbnail(url=list_resp["data"]["MediaListCollection"]["user"]["avatar"]["medium"])
-    
+    )).set_thumbnail(url=list_resp["data"]["MediaListCollection"]["user"]["avatar"]["medium"])
+
     for i in range(entries_size):
 
         current_listing_count += 1
@@ -184,18 +190,20 @@ async def get_list_paginator(target:Member, media_type:str="ANIME", list_name:st
             current_listing_count = 1
             pages.append(current_embed)
 
-            current_embed = Embed(
+            current_embed = (await general_helper.get_information_embed(
                 title=list_data["name"] + " list",
                 description="Total : {}\n\n".format(entries_size)
-            ).set_thumbnail(url=list_resp["data"]["MediaListCollection"]["user"]["avatar"]["medium"])
+            )).set_thumbnail(url=list_resp["data"]["MediaListCollection"]["user"]["avatar"]["medium"])
 
-        current_title = (entries[i]["media"]["title"]["english"] if entries[i]["media"]["title"]["english"] is not None else entries[i]["media"]["title"]["romaji"])
+        current_title = (entries[i]["media"]["title"]["english"] if entries[i]["media"]
+                         ["title"]["english"] is not None else entries[i]["media"]["title"]["romaji"])
         current_embed.description += "{bullet} [{name}]({url}) - {progress}/{total}\n".format(
             bullet=config.BULLET_EMOTE,
             name=current_title,
             url=entries[i]["media"]["siteUrl"],
             progress=entries[i]["progress"],
-            total="{}".format((entries[i]["media"]["episodes"] if media_type=="ANIME" else entries[i]["media"]["chapters"]))
+            total="{}".format(
+                (entries[i]["media"]["episodes"] if media_type == "ANIME" else entries[i]["media"]["chapters"]))
         )
 
         if i >= entries_size - 1:
@@ -206,7 +214,8 @@ async def get_list_paginator(target:Member, media_type:str="ANIME", list_name:st
     else:
         return None
 
-async def get_fav_paginator(target:Member, fav_type:str) -> Scroller:
+
+async def get_fav_paginator(target: Member, fav_type: str) -> Scroller:
 
     if fav_type == "ANIME":
         fav_query = fav_queries.anime_list_query
@@ -218,14 +227,15 @@ async def get_fav_paginator(target:Member, fav_type:str) -> Scroller:
     resp = requests.post(
         url=config.ANILIST_BASE,
         json={
-            "query" : fav_query,
-            "variables" : {
-                "userID" : anilistID
+            "query": fav_query,
+            "variables": {
+                "userID": anilistID
             }
         }
     ).json()
 
-    entries = resp["data"]["User"]["favourites"]["{}".format(fav_type.lower())]["nodes"] # List of media elements
+    entries = resp["data"]["User"]["favourites"]["{}".format(
+        fav_type.lower())]["nodes"]  # List of media elements
     entries_size = len(entries)
 
     MAX_ENTRIES_PER_PAGE = 10
@@ -249,8 +259,10 @@ async def get_fav_paginator(target:Member, fav_type:str) -> Scroller:
                 description="Total : {} \n\n".format(entries_size)
             )
 
-        title = (entries[i]["title"]["english"] if entries[i]["title"]["english"] is not None else entries[i]["title"]["romaji"])
-        current_embd.description += "{bullet} [{name}]({url}) \n".format(bullet=config.BULLET_EMOTE, name=title, url=entries[i]["siteUrl"])
+        title = (entries[i]["title"]["english"] if entries[i]["title"]
+                 ["english"] is not None else entries[i]["title"]["romaji"])
+        current_embd.description += "{bullet} [{name}]({url}) \n".format(
+            bullet=config.BULLET_EMOTE, name=title, url=entries[i]["siteUrl"])
 
         if i >= entries_size - 1:
             pages.append(current_embd)
@@ -259,5 +271,3 @@ async def get_fav_paginator(target:Member, fav_type:str) -> Scroller:
         return Scroller(pages, show_all_btns=True)
     else:
         return None
-
-    
