@@ -82,13 +82,7 @@ manga_query = """
             meanScore
             favourites
             format
-            studios(sort:SEARCH_MATCH){
-                nodes{
-                    name
-                    siteUrl
-                }
-            }
-
+            popularity
             isFavourite
             mediaListEntry{
                 status
@@ -138,4 +132,22 @@ character_query = """
             isFavourite
         }
     }
+"""
+
+top_genre_query = """
+    query ($genre: [String], $type:MediaType) {
+        Page(page: 0, perPage: 30) {
+            pageInfo {
+                total
+            }
+            media(genre_in: $genre, sort: POPULARITY_DESC, type:$type) {
+                title {
+                    english
+                    romaji
+                }
+                siteUrl
+            }
+        }
+    }
+
 """
