@@ -5,7 +5,7 @@ import requests
 
 from managers import mongo_manager
 from helpers import general_helper
-from queries import character_queries, search_queries, studio_queries
+from queries import search_queries, studio_queries
 import config
 
 class MediaType(enum.Enum):
@@ -40,13 +40,15 @@ async def get_media_details(name:str, type:MediaType, user:Member) -> dict:
 
     return resp.json()
 
-async def get_character_details(name:str) -> dict:
+async def get_character_details(name:str, user:Member) -> dict:
+
+    anilist_user = await mongo_manager.manager.get_user(str(user.id))
 
     variables = {
         "search" : name
     }
 
-    resp = requests.post(config.ANILIST_BASE, json={"query" : character_queries.query, "variables" : variables})
+    resp = requests.post(config.ANILIST_BASE, json={"query" : search_queries.character_query, "variables" : variables}, headers={"Authorization" : anilist_user["token"]})
 
     return resp.json()
 
@@ -267,9 +269,9 @@ async def get_manga_details_embed(name:str, user:Member) -> Embed:
 
     return embd
 
-async def get_character_details_embed(name:str) -> Embed:
+async def get_character_details_embed(name:str, user:Member) -> Embed:
 
-    data_raw = await get_character_details(name)
+    data_raw = await get_character_details(name, user)
     data = data_raw["data"]["Character"]
 
     if data is None:
@@ -322,6 +324,9 @@ async def get_character_details_embed(name:str) -> Embed:
         value=appearances_str,
         inline=True
     )
+
+    if data["isFavourite"]:
+        embd.set_footer(text="FAVORITE : Yes")
 
     return embd
 

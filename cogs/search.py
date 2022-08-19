@@ -41,14 +41,14 @@ class SearchModule(commands.Cog):
 
     """Character Search"""
 
-    @search_group.command(name="character", description="Returns the character details for the character with provided name")
+    @search_group.command(name="character", aliases=["char"], description="Returns the character details for the character with provided name")
     async def character_details(self, ctx:commands.Context, *name):
 
         await ctx.trigger_typing()
 
         name = " ".join(name)
 
-        embd = await search_helper.get_character_details_embed(name)
+        embd = await search_helper.get_character_details_embed(name, ctx.author)
 
         await ctx.reply(embed=embd)
 
