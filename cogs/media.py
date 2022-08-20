@@ -9,12 +9,18 @@ class MediaModule(commands.Cog):
     """Update the anime progress"""
 
     @commands.command(name="update_anime", aliases=["ua"], description="Sets the progress for the provided anime")
-    async def update_anime(self, ctx: commands.Context, *anime_episode):
+    async def update_anime(self, ctx: commands.Context, *inputs):
 
         await ctx.trigger_typing()
 
-        ep = anime_episode[-1]
-        anime = " ".join(anime_episode[:-1])
+        ep = None
+        anime = None
+
+        try:
+            ep = float(inputs[-1])
+            anime = " ".join(inputs[:-1])
+        except Exception as e:
+            return await ctx.reply(embed=await general_helper.get_information_embed("Last parameter must be a decimal value representing the new score.", color=ERROR_COLOR))
 
         async def reply_callback():
 
@@ -35,12 +41,18 @@ class MediaModule(commands.Cog):
     """Update the manga progress"""
 
     @commands.command(name="update_manga", aliases=["um"], description="Sets the progress for the provided anime")
-    async def update_manga(self, ctx: commands.Context, *anime_episode):
+    async def update_manga(self, ctx: commands.Context, *inputs):
 
         await ctx.trigger_typing()
 
-        ep = anime_episode[-1]
-        anime = " ".join(anime_episode[:-1])
+        ep = None
+        anime = None
+
+        try:
+            ep = float(inputs[-1])
+            anime = " ".join(inputs[:-1])
+        except Exception as e:
+            return await ctx.reply(embed=await general_helper.get_information_embed("Last parameter must be a decimal value representing the new score.", color=ERROR_COLOR))
 
         async def reply_callback():
 
