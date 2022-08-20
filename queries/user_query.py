@@ -66,6 +66,31 @@ user_query = """
     }
 """
 
+follow_check_query = """
+    query($targetID:Int){
+        User(id:$targetID){
+            name
+            siteUrl
+            avatar{
+                medium
+            }
+            isFollowing
+        }
+    }
+"""
+
+follow_query = """
+    mutation($targetID:Int){
+        ToggleFollow(userId:$targetID){
+            name
+            siteUrl
+            avatar{
+                medium
+            }
+        }
+    }
+"""
+
 anime_stats_query = """
     query($userID:Int!){
         User(id:$userID) {

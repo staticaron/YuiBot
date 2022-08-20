@@ -6,7 +6,8 @@ import requests
 from views.scroller import Scroller
 from managers import mongo_manager
 from helpers import general_helper
-from queries import search_queries, studio_queries
+from queries.search_queries import *
+from queries.studio_queries import studio_query
 import config
 
 
@@ -25,9 +26,9 @@ async def get_media_details(name: str, type: MediaType, user: Member) -> dict:
     anilist_user = await mongo_manager.manager.get_user(str(user.id))
 
     if type is MediaType.ANIME:
-        query = search_queries.anime_query
+        query = anime_query
     else:
-        query = search_queries.manga_query
+        query = manga_query
 
     resp = requests.post(
         url=config.ANILIST_BASE,
@@ -54,7 +55,7 @@ async def get_character_details(name: str, user: Member) -> dict:
     }
 
     resp = requests.post(config.ANILIST_BASE, json={
-                         "query": search_queries.character_query, "variables": variables}, headers={"Authorization": anilist_user["token"]})
+                         "query": character_query, "variables": variables}, headers={"Authorization": anilist_user["token"]})
 
     return resp.json()
 
@@ -66,7 +67,7 @@ async def get_studio_details(name: str) -> dict:
     }
 
     resp = requests.post(config.ANILIST_BASE, json={
-                         "query": studio_queries.query, "variables": variables})
+                         "query": studio_query, "variables": variables})
 
     return resp.json()
 
@@ -409,7 +410,7 @@ async def get_top_by_genre(genres: list, media_type: str = "ANIME") -> Scroller:
     resp = requests.post(
         url=config.ANILIST_BASE,
         json={
-            "query": search_queries.top_genre_query,
+            "query": top_genre_query,
             "variables": {
                 "genre": genres,
                 "type": media_type

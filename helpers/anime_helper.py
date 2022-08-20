@@ -3,11 +3,13 @@ from discord.ext import pages
 import requests
 
 from views.scroller import Scroller
+from queries.media_queries import recommendation_query
 import config
+
 
 async def get_random_anime_quote_embed() -> Embed:
 
-    url="https://animechan.vercel.app/api/random"
+    url = "https://animechan.vercel.app/api/random"
 
     quote_resp = requests.get(url).json()
 
@@ -35,46 +37,15 @@ async def get_random_anime_quote_embed() -> Embed:
 
     return embd
 
-async def get_similar_anime(media_id:int) -> pages.Paginator:
 
-    recommendation_query = """
-        query ($id: Int!) {
-            Page(page:0, perPage:5){
-                pageInfo {
-                    total
-                }
-                recommendations(mediaId: $id, sort: RATING_DESC) {
-                    id
-                    rating
-                    mediaRecommendation {
-                        title {
-                            english
-                            romaji
-                        }
-                        siteUrl
-                        coverImage{
-                            medium
-                        }
-                        description
-                        genres
-                    }
-                    media{
-                        title{
-                            english
-                            romaji
-                        }
-                    }
-                }
-            }
-        }
-    """
+async def get_similar_anime(media_id: int) -> pages.Paginator:
 
     recommendation_resp = requests.post(
         url=config.ANILIST_BASE,
         json={
-            "query" : recommendation_query,
-            "variables" : {
-                "id" : media_id
+            "query": recommendation_query,
+            "variables": {
+                "id": media_id
             }
         }
     ).json()
@@ -87,14 +58,16 @@ async def get_similar_anime(media_id:int) -> pages.Paginator:
 
         recommendation = page_data["mediaRecommendation"]
 
-        title = (page_data["media"]["title"]["english"] if page_data["media"]["title"]["english"] is not None else page_data["media"]["title"]["romaji"])
+        title = (page_data["media"]["title"]["english"] if page_data["media"]["title"]
+                 ["english"] is not None else page_data["media"]["title"]["romaji"])
 
         embd = Embed(
             title="Anime similar to {}".format(title),
             color=config.NORMAL_COLOR
         )
 
-        recommendation_title = (recommendation["title"]["english"] if recommendation["title"]["english"] is not None else recommendation["title"]["romaji"])
+        recommendation_title = (recommendation["title"]["english"] if recommendation["title"]
+                                ["english"] is not None else recommendation["title"]["romaji"])
 
         embd.description = "**Name : ** [{name}]({url})\n\n**Rating : ** {rating}\n\n**Description** : {desc}".format(
             name=recommendation_title,
@@ -105,7 +78,8 @@ async def get_similar_anime(media_id:int) -> pages.Paginator:
 
         embd.add_field(
             name="Genre",
-            value="\n".join("{bullet}{genre}".format(bullet=config.BULLET_EMOTE, genre=genre) for genre in recommendation["genres"])
+            value="\n".join("{bullet}{genre}".format(
+                bullet=config.BULLET_EMOTE, genre=genre) for genre in recommendation["genres"])
         )
 
         embd.set_thumbnail(url=recommendation["coverImage"]["medium"])
@@ -116,11 +90,3 @@ async def get_similar_anime(media_id:int) -> pages.Paginator:
         return Scroller(pages)
     else:
         return None
-
-    
-
-    
-
-
-
-
