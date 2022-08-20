@@ -1,5 +1,6 @@
 from discord import Color
 from os import environ
+import json
 import traceback
 import sys
 
@@ -30,6 +31,8 @@ PREV_EMOTE = "<:prev:995484847139209238>"
 FIRST_EMOTE = "<:first:996104181515571201>"
 LAST_EMOTE = "<:last:996104225459277854>"
 
+FILLER_DATA = None
+
 ALL_GENRE = ["action", "adventure", "comedy", "drama", "ecchi", "fantasy", "hentai", "horror", "mecha",
              "music", "mystery", "psychological", "romance", "sci-fi", "sol", "sports", "supernatural", "thriller"]
 
@@ -52,11 +55,9 @@ ALL_GENRE_ALTS = {"action": "Action",
                   "supernatural": "Supernatural",
                   "thriller": "Thriller"}
 
-GENRE_EMBED = None
-
 
 def initialize_config_vars() -> str:
-    global DISCORD_TOKEN, ANILIST_ID, ANILIST_TOKEN, INVITE, MONGO_SRV
+    global DISCORD_TOKEN, ANILIST_ID, ANILIST_TOKEN, INVITE, MONGO_SRV, FILLER_DATA
 
     try:
         DISCORD_TOKEN = environ["TOKEN"]
@@ -64,9 +65,13 @@ def initialize_config_vars() -> str:
         ANILIST_ID = environ["ANILIST_ID"]
         MONGO_SRV = environ["MONGO_SRV"]
         INVITE = environ["INVITE"]
+
+        with (open("filler_data.json", "r", encoding="utf8") as filler_data):
+            FILLER_DATA = json.load(filler_data)
+
     except Exception as e:
-        print(f"Error occurred while trying to initialize Config Vars! \n{e}")
+        print(f"Error occurred while trying to cache Config Vars! \n{e}")
         traceback.print_exception(
             type(e), e, e.__traceback__, file=sys.stderr)
     else:
-        print("Config Vars were initialized successfully!")
+        print("Config Vars were cached successfully!")

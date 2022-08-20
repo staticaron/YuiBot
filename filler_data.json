@@ -1,0 +1,2528 @@
+{
+    "info": {
+        "86 eighty-six": "86-eighty-six",
+        "a certain magical index (toaru majutsu no index)": "certain-magical-index",
+        "a certain scientific accelerator (toaru kagaku no accelerator)": "sh%c5%8dnan-pure-love-gang",
+        "a certain scientific railgun (toaru kagaku no railgun)": "a-certain-scientific-railgun",
+        "a sister's all you need": "super-dragon-ball-heroes",
+        "ace attorney (gyakuten saiban)": "ace-attorney",
+        "ace of the diamond": "ace-diamond",
+        "ace of the diamond: act ii": "ace-diamond-act-ii",
+        "ajin: demi-human": "ajin-demi-human",
+        "akame ga kill!": "akame-ga-kill",
+        "angel beats!": "angel-beats",
+        "angel heart": "angel-heart",
+        "another": "another",
+        "aoashi": "aoashi",
+        "assassination classroom (ansatsu kyoushitsu)": "ansatsu-kyoushitsu-assassination-classroom",
+        "attack on titan (shingeki no kyojin)": "attack-titan",
+        "attack on titan oads": "attack-titan-ova-0",
+        "attack on titan: junior high": "attack-on-titan-junior-high",
+        "bakemonogatari": "bakemonogatari",
+        "beastars": "beastars",
+        "beelzebub": "beelzebub",
+        "berserk (berserk kenpuden)": "berserk",
+        "berserk (2016)": "berserk-2016",
+        "berserk: the golden age arc": "berserk-golden-age-arc",
+        "beyblade burst": "beyblade-burst-all-seasons",
+        "black butler (kuroshitsuji)": "black-butler",
+        "black cat": "black-cat",
+        "black clover": "black-clover",
+        "black lagoon": "black-lagoon",
+        "blade dance of the elementalers": "seirei-tsukai-no-blade-dance",
+        "blade of the immortal (2019)": "blade-immortal-2019",
+        "bleach": "bleach",
+        "bleach: thousand year blood war": "bleach-thousand-year-blood-war",
+        "blood blockade battlefront (kekkai sensen)": "blood-blockade-battlefront",
+        "blue exorcist (ao no exorcist)": "blue-exorcist",
+        "blue period": "blue-period",
+        "bluelock": "blue-lock",
+        "bobobo-bo bo-bobo": "bobobo-bo-bobo",
+        "boruto: naruto next generations": "boruto-naruto-next-generations",
+        "boruto: naruto next generations (manga only)": "boruto-naruto-next-generations-manga-canon",
+        "boruto: naruto the movie": "boruto-naruto-movie",
+        "btooom!": "btooom",
+        "bungo stray dogs": "bungo-stray-dogs",
+        "burn the witch": "burn-witch",
+        "buso renkin": "buso-renkin",
+        "campione!": "campione",
+        "cardcaptor sakura": "cardcaptor-sakura",
+        "carnival phantasm": "carnival-phantasm",
+        "case closed (detective conan)": "detective-conan",
+        "cells at work! (hataraku saibou)": "cells-work",
+        "cells at work! code black (hataraku saibou black)": "cells-work-code-black",
+        "chainsaw man": "chainsaw-man",
+        "charlotte": "charlotte",
+        "city hunter": "city-hunter",
+        "clannad": "clannad",
+        "classroom of the elite": "classroom-elite",
+        "claymore": "claymore",
+        "cobra: the animation": "cobra-animation",
+        "code geass": "code-geass",
+        "cowboy bebop": "cowboy-bebop",
+        "d-frag!": "d-frag",
+        "d.gray-man": "d-gray-man",
+        "dagashi kashi": "dagashi-kashi",
+        "darwin's game": "darwins-game",
+        "deadman wonderland": "deadman-wonderland",
+        "death note": "death-note",
+        "death parade": "death-parade",
+        "demon slayer: kimetsu no yaiba": "demon-slayer-kimetsu-no-yaiba",
+        "demon slayer: kimetsu no yaiba the movie: mugen train": "demon-slayer-kimetsu-no-yaiba-movie-mugen-train",
+        "den-noh coil": "dennou-coil",
+        "devilman": "devilman-birth",
+        "devilman crybaby": "devilman-crybaby",
+        "digimon adventure": "digimon-adventure",
+        "digimon adventure 02": "digimon-adventure-02",
+        "digimon adventure tri.": "digimon-adventure-tri",
+        "digimon adventure: ": "digimon-adventure-2020",
+        "digimon frontier": "digimon-frontier",
+        "digimon tamers": "digimon-tamers",
+        "don't toy with me, miss nagatoro (ijiranaide, nagatoro-san)": "don%e2%80%99t-toy-me-miss-nagatoro",
+        "dorohedoro": "dragon-ball-super-broly",
+        "dororo (2019)": "dororo",
+        "dr. stone": "dr-stone",
+        "dragon ball": "dragon-ball",
+        "dragon ball gt": "dragon-ball-gt",
+        "dragon ball super": "dragon-ball-super",
+        "dragon ball super: broly": "dragon-ball-super-broly-0",
+        "dragon ball z": "dragon-ball-z",
+        "dragon ball z kai": "dragon-ball-z-kai",
+        "dragon quest the adventure of dai (2020)": "dragon-quest-adventure-dai",
+        "drifters": "drifters",
+        "durarara!!": "durarara",
+        "edens zero": "edens-zero",
+        "elemental gelade": "elemental-gelade",
+        "elfen lied": "elfen-lied",
+        "emma: a victorian romance (eikoku koi monogatari emma)": "emma-victorian-romance",
+        "erased (boku dake ga inai machi)": "erased",
+        "excel saga": "excel-saga",
+        "fairy tail": "fairy-tail",
+        "fate/apocrypha": "fate-apocrypha",
+        "fate/kaleid liner prisma illya": "fatekaleid-liner-prisma-illya",
+        "fate/stay night": "fatestay-night",
+        "fate/stay night [unlimited blade works": "fatestay-night-unlimited-blade-works",
+        "fate/zero": "fate-zero",
+        "fighting spirit  (hajime no ippo)": "fighting-spirit",
+        "fire force (enen no shouboutai)": "fire-force",
+        "fist of the blue sky": "fist-of-the-blue-sky",
+        "fist of the blue sky: regenesis": "fist-of-the-blue-sky-regenesis",
+        "fist of the north star": "hokuto-no-ken",
+        "food wars! (shokugeki no souma)": "shokugeki-no-soma",
+        "food wars! the fifth plate (shokugeki no souma: gou no sara)": "food-wars-fifth-plate",
+        "food wars! the fourth plate (shokugeki no souma: shin no sara)": "food-wars-fourth-plate",
+        "food wars! the second plate (shokugeki no souma: ni no sara)": "food-wars-second-plate-1",
+        "food wars! the third plate (shokugeki no souma: san no sara)": "food-wars-third-plate-1",
+        "fruits basket (furuba)": "fruits-basket-2001",
+        "fruits basket (2019)": "fruits-basket-2019",
+        "full metal panic!": "full-metal-panic",
+        "fullmetal alchemist": "fullmetal-alchemist",
+        "fullmetal alchemist: brotherhood": "fullmetal-alchemist-brotherhood",
+        "gangsta.": "gangsta",
+        "gantz": "gantz",
+        "ghost in the shell: arise": "ghost-shell-arise",
+        "ghost in the shell: stand alone complex": "ghost-shell-stand-alone-complex",
+        "gintama": "gintama",
+        "girlfriend, girlfriend (kanojo mo kanojo)": "girlfriend-girlfriend",
+        "goblin slayer": "goblin-slayer",
+        "golden kamuy": "golden-kamuy",
+        "gosick": "gosick",
+        "great teacher onizuka": "great-teacher-onizuka",
+        "gurren lagann": "gurren-lagann",
+        "haikyu!!": "haikyuu",
+        "hakyu hoshin engi": "hakyu-hoshin-engi",
+        "hanamonogatari": "hanamonogatari",
+        "handa-kun": "handa-kun",
+        "happy-go-lucky days (dounika no hibi)": "happy-go-lucky-days",
+        "hayate the combat butler (hayate no gotoku!)": "hayate-combat-butler",
+        "heaven's lost property": "heavens-lost-property",
+        "hell girl (jigoku shōjo girl)": "hell-girl",
+        "hellsing": "hellsing",
+        "hellsing ultimate": "hellsing-ultimate",
+        "highschool dxd": "high-school-dxd",
+        "highschool of the dead": "highschoool-dead",
+        "hikaru no go": "hikaru-no-go",
+        "hunter × hunter": "hunter-x-hunter-1999",
+        "hunter × hunter (2011)": "hunter-x-hunter",
+        "initial d": "initial-d",
+        "inuyasha": "inuyasha",
+        "inuyashiki last hero": "inuyashiki-last-hero",
+        "is it wrong to try to pick up girls in a dungeon? (dungeon ni deai wo motomeru no wa machigatteiru darou ka)": "it-wrong-try-pick-girls-dungeon",
+        "is it wrong to try to pick up girls in a dungeon? on the side: sword oratoria": "it-wrong-try-pick-girls-dungeon-side-sword-oratoria",
+        "jojo's bizarre adventure (ova)": "jojos-biarre-adenture-ova",
+        "jojo's bizarre adventure (tv)": "jojos-bizarre-adventure-tv",
+        "jujutsu kaisen": "jujutsu-kaisen",
+        "k (k project)": "k",
+        "k: seven stories": "k-seven-stories",
+        "kabaneri of the iron fortress": "kabaneri-iron-fortress",
+        "kakegurui": "kakegurui",
+        "kamisama kiss (kamisama hajimemashita)": "kamisama-kiss",
+        "kenichi: the mightiest disciple": "kenichi-mightiest-disciple",
+        "kill la kill": "kill-la-kill",
+        "killing bites": "killing-bites",
+        "kingdom": "kingdom",
+        "kinnikuman": "kinnikuman",
+        "kiznaiver": "kiznaiver",
+        "kizumonogatari": "kizumonogatari",
+        "komi can’t communicate (komi-san wa, comyushou desu.)": "blue-period-0",
+        "konosuba -god's blessing on this wonderful world! (kono subarashii sekai ni shukufuku wo!)": "konosuba-gods-blessing-wonderful-world",
+        "kuroko’s basketball  (kuroko no basket)": "kuroko%e2%80%99s-basketball",
+        "land of the lustrous (houseki no kuni)": "land-lustrous",
+        "lord marksman and vanadis (madan no ou to vanadis)": "madan-no-ou-vanadis-lord-marksman-and-vanadis",
+        "lupin the third part i": "lupin-third-part-i",
+        "made in abyss": "made-abyss",
+        "magi": "magi-labyrinth-magic",
+        "magi: adventure of sinbad": "magi-adventure-sinbad-tv",
+        "magic knight rayearth": "magic-knight-rayearth",
+        "maid-sama! (kaichou wa maid sama)": "maid-sama",
+        "masamune-kun's revenge (masamune-kun no revenge)": "masamune-kuns-revenge",
+        "michiko & hatchin": "michiko-hatchin",
+        "miraculous - tales of ladybug & cat noir": "miraculous-ladybug",
+        "miss kobayashi's dragon maid": "miss-kobayashis-dragon-maid",
+        "mob psycho 100": "mob-psycho-100",
+        "mobile suit gundam (kidou senshi gundam)": "mobile-suit-gundam",
+        "mobile suit gundam zz (kidou senshi gundam zz)": "mobile-suit-gundam-zz",
+        "mobile suit zeta gundam (kidou senshi zeta gundam)": "mobile-suit-zeta-gundam",
+        "monogatari": "monogatari-series",
+        "monogatari series second season": "monogatari-series-second-season",
+        "monster": "monster",
+        "my dress-up darling (sono bisque doll wa koi wo suru)": "my-dress-darling",
+        "my hero academia (boku no hero academia)": "my-hero-academia",
+        "my hero academia movies": "my-hero-academia-movies",
+        "my next life as a villainess: all routes lead to doom! (bakarina)": "my-next-life-villainess-all-routes-lead-doom",
+        "nadia: the secret of blue water (fushigi no umi no nadia)": "nadia-secret-blue-water",
+        "naruto": "naruto",
+        "naruto shippuden": "naruto-shippuden",
+        "naruto the movie: legend of the stone of gelel": "naruto-movie-legend-stone-gelel",
+        "naruto the movie: ninja clash in the land of snow": "naruto-movie-ninja-clash-land-snow",
+        "negima ova/oad": "negima-ovaoad",
+        "negima! (mahou sensei negima!)": "magister-negi-magi",
+        "negima!? (mahou sensei negima?!)": "noragami-aragoto",
+        "nekomonogatari (kuro)": "nekomonogatari-kuro",
+        "neon genesis evangelion": "neon-genesis-evangelion",
+        "nisekoi: false love": "nisekoi-false-love",
+        "nisemonogatari": "nisemonogatari",
+        "no game, no life": "no-game-no-life",
+        "noragami": "noragami",
+        "one pace (one piece kai)": "one-pace",
+        "one piece": "one-piece",
+        "one piece movies (one piece)": "one-piece-movies",
+        "one-punch man": "one-punch-man",
+        "orange": "orange",
+        "orient": "orient",
+        "ouran high school host club": "ouran-high-school-host-club",
+        "outlaw star": "outlaw-star",
+        "overlord": "overlord",
+        "owarimonogatari": "owarimonogatari",
+        "panty & stocking with garterbelt": "tokyo-ghoul-%e2%88%9a-5",
+        "parasyte -the maxim- (kiseijuu)": "parasyte-maxim",
+        "platinum end": "platinum-end",
+        "platinum end - duplicate": "your-eternity-0",
+        "pokémon": "pokemon",
+        "pokémon advanced generation": "pok%c3%a9mon-advanced-generation",
+        "pokémon black & white  (pocket monsters: best wishes)": "pok%c3%a9mon-black-and-white",
+        "pokémon diamond and pearl": "pok%c3%a9mon-diamond-and-pearl",
+        "pokémon journeys: the series": "pok%c3%a9mon-journeys",
+        "pokémon origins  (pocket monsters: the origin)": "pok%c3%a9mon-origins-0",
+        "pokémon the series: sun & moon": "pok%c3%a9mon-sun-and-moon",
+        "pokémon the series: xy": "pok%c3%a9mon-x-and-y",
+        "pokémon: original series": "pok%c3%a9mon-original-series",
+        "prison school": "prison-school",
+        "project arms (arms)": "project-arms",
+        "psycho-pass": "psycho-pass",
+        "puella magi madoka magica": "puella-magi-madoka-magica",
+        "ranking of kings (ousama ranking)": "ranking-kings",
+        "ranma ½": "ranma-%c2%bd",
+        "rave master (groove adventure rave)": "rave-master",
+        "re:zero -starting life in another world- (re: zero- kara hajimeru isekai seikatsu)": "re-zero-starting-life-another-world",
+        "reborn! (katekyō hitman reborn!)": "katekyo-hitman-reborn",
+        "record of ragnarok (shuumatsu no walküre)": "record-ragnarok",
+        "redo of healer (kaifuku jutsushi no yarinaoshi)": "redo-healer",
+        "relife": "relife",
+        "rosario + vampire": "rosario-vampire",
+        "rurouni kenshin": "rurouni-kenshin",
+        "rwby": "rwby",
+        "saga of tanya the evil": "sage-tanya-evil",
+        "saga of tanya the evil - duplicate": "yakusoku-no-neverland",
+        "sailor moon (bishoujo sailor moon)": "sailor-moon",
+        "sailor moon crystal": "sailor-moon-crystal",
+        "saint seiya": "saint-seiya",
+        "samurai champloo": "samurai-champloo",
+        "school days": "school-days",
+        "seraph of the end: vampire reign (owari no seraph)": "seraph-end",
+        "serial experiments lain": "serial-experiments-lain",
+        "sgt. frog (keroro gunsou)": "keroro-gunsou-sgtfrog",
+        "shaman king": "shaman-king",
+        "shaman king (2021)": "shaman-king-2021",
+        "shugo chara": "shugo-chara",
+        "silver spoon": "silver-spoon",
+        "sket dance": "sket-dance",
+        "skip beat!": "skip-beat",
+        "slam dunk": "slam-dunk-0",
+        "soul eater": "soul-eater",
+        "soul eater not!": "soul-eater-not",
+        "soul hunter (hoshin engi)": "soul-hunter",
+        "space cobra": "space-cobra",
+        "space patrol luluco": "space-patrol-luloco",
+        "spy x family": "spy-x-family",
+        "steins;gate": "steinsgate",
+        "steins;gate 0": "steins-gate-0",
+        "summertime render": "summertime-render",
+        "super dragon ball heroes": "dragon-ball-heroes",
+        "sword art online": "sword-art-online",
+        "sword art online alternative: gun gale online": "sword-art-online-alternative-ggo",
+        "sword art online: alicization": "sword-art-online-alicization",
+        "terror in resonance (zankyou no terror)": "terror-resonance",
+        "that time i got reincarnated as a slime (tensei shitara slime datta ken)": "time-i-got-reincarnated-slime",
+        "the ancient magus' bride (mahoutsukai no yome)": "ancient-magus-bride",
+        "the asterisk war (gakusen no asterisk)": "asterisk-war",
+        "the devil is a part-timer! (hataraku maou-sama!)": "devil-part-timer",
+        "the familiar of zero (zero no tsukaima)": "familiar-zero",
+        "the future diary (mirai nikki)": "future-diary",
+        "the god of high school (gat obeu hai seukul)": "god-high-school",
+        "the heroic legend of arslan (arslan senki)": "heroic-legend-arslan",
+        "the melancholy of haruhi suzumiya (suzumiya haruhi no yuuutsu)": "melancholy-haruhi-suzumiya",
+        "the prince of tennis (tenisu no ōjisama)": "prince-tennis-0",
+        "the promised neverland (yakusoku no neverland)": "promised-neverland",
+        "the rising of the shield hero (tate no yuusha no nariagari)": "rising-shield-hero",
+        "the seven deadly sins (nanatsu no taizai)": "nanatsu-no-taizai",
+        "thus spoke kishibe rohan": "chrono-crusade",
+        "to love ru": "love-ru",
+        "to love ru: darkness": "love-ru-darkness",
+        "to the abandoned sacred beasts (katsute kami datta kemono-tachi e)": "abandoned-sacred-beasts",
+        "to your eternity (fumetsu no anata e)": "your-eternity",
+        "tokyo ghoul": "tokyo-ghoul",
+        "tokyo ghoul:re": "tokyo-ghoul-re-0",
+        "tokyo mew mew": "tokyo-mew-mew",
+        "tokyo revengers": "tokyo-revengers",
+        "toradora!": "toradora",
+        "toriko": "toriko",
+        "trigun": "trigun",
+        "tsugumomo": "tsugumomo",
+        "tsukimonogatari": "tsukimonogatari",
+        "uq holder! magister negi magi! 2": "uq-holder-magister-negi-magi-2",
+        "urusei yatsura": "urusei-yatsura",
+        "vampire knight": "vampire-knight",
+        "vinland saga": "vinland-saga",
+        "we never learn!: bokuben (bokutachi wa benkyou ga dekinai)": "we-never-learn-bokuben",
+        "when they cry (higurashi no naku koro ni)": "when-they-cry",
+        "x": "x",
+        "yashahime: princess half-demon": "yashahime-princess-half-demon",
+        "yona of the dawn (akatsuki no yona)": "akatsuki-no-yona",
+        "your lie in april (shigatsu wa kimi no uso)": "your-lie-april",
+        "yowamushi pedal": "yowamushi-pedal",
+        "yu yu hakusho": "yuyu-hakusho",
+        "yu-gi-oh!": "yu-gi-oh",
+        "yu-gi-oh! 5d's": "yu-gi-oh-5ds",
+        "yu-gi-oh! arc-v": "yu-gi-oh-arc-v",
+        "yu-gi-oh! capsule monsters": "yu-gi-oh-capsule-monsters",
+        "yu-gi-oh! duel monsters": "yu-gi-oh-duel-monsters",
+        "yu-gi-oh! gx": "yu-gi-oh-gx",
+        "yu-gi-oh! sevens": "yu-gi-oh-sevens",
+        "yu-gi-oh! vrains": "yu-gi-oh-vrains",
+        "yu-gi-oh! zexal": "yu-gi-oh-zexal",
+        "yu-no: a girl who chants love at the bound of this world": "yu-no-girl-who-chants-love-bound-world",
+        "zatch bell! (konjiki no gash bell!!)": "zatch-bell"
+    },
+    "data": {
+        "86-eighty-six": {
+            "filler_id": "86-eighty-six",
+            "manga_canon": "1-9, 11-23",
+            "mixed_ep": null,
+            "filler_ep": "10",
+            "anime_canon": null
+        },
+        "certain-magical-index": {
+            "filler_id": "certain-magical-index",
+            "manga_canon": "1-74",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "sh%c5%8dnan-pure-love-gang": {
+            "filler_id": "sh%c5%8dnan-pure-love-gang",
+            "manga_canon": "2-12",
+            "mixed_ep": null,
+            "filler_ep": "1",
+            "anime_canon": null
+        },
+        "a-certain-scientific-railgun": {
+            "filler_id": "a-certain-scientific-railgun",
+            "manga_canon": "1, 4-12, 26-30, 32-40, 49-73",
+            "mixed_ep": "2",
+            "filler_ep": "3, 13-14, 17-19, 31, 41-48",
+            "anime_canon": "15-16, 20-25"
+        },
+        "super-dragon-ball-heroes": null,
+        "ace-attorney": {
+            "filler_id": "ace-attorney",
+            "manga_canon": "13, 30, 34-36, 38",
+            "mixed_ep": null,
+            "filler_ep": "1-12, 14-29, 31-33, 37, 39-47",
+            "anime_canon": null
+        },
+        "ace-diamond": {
+            "filler_id": "ace-diamond",
+            "manga_canon": "1-27, 29-75, 79-126",
+            "mixed_ep": null,
+            "filler_ep": "28, 76-78",
+            "anime_canon": null
+        },
+        "ace-diamond-act-ii": {
+            "filler_id": "ace-diamond-act-ii",
+            "manga_canon": "2-3, 5-28, 30-52",
+            "mixed_ep": "1, 4",
+            "filler_ep": "29",
+            "anime_canon": null
+        },
+        "ajin-demi-human": {
+            "filler_id": "ajin-demi-human",
+            "manga_canon": "1-9, 14-26",
+            "mixed_ep": null,
+            "filler_ep": "10-13",
+            "anime_canon": null
+        },
+        "akame-ga-kill": {
+            "filler_id": "akame-ga-kill",
+            "manga_canon": "1-18",
+            "mixed_ep": "19",
+            "filler_ep": "20-24",
+            "anime_canon": null
+        },
+        "angel-beats": {
+            "filler_id": "angel-beats",
+            "manga_canon": "1-16",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "angel-heart": {
+            "filler_id": "angel-heart",
+            "manga_canon": "1-23, 25-50",
+            "mixed_ep": null,
+            "filler_ep": "24",
+            "anime_canon": null
+        },
+        "another": {
+            "filler_id": "another",
+            "manga_canon": "0-7, 9-12",
+            "mixed_ep": null,
+            "filler_ep": "8",
+            "anime_canon": null
+        },
+        "aoashi": {
+            "filler_id": "aoashi",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "ansatsu-kyoushitsu-assassination-classroom": {
+            "filler_id": "ansatsu-kyoushitsu-assassination-classroom",
+            "manga_canon": "1-4, 6-47",
+            "mixed_ep": "5",
+            "filler_ep": "0",
+            "anime_canon": null
+        },
+        "attack-titan": {
+            "filler_id": "attack-titan",
+            "manga_canon": "1-21, 23-32, 34-37, 42-87",
+            "mixed_ep": null,
+            "filler_ep": "22, 33, 38-41",
+            "anime_canon": null
+        },
+        "attack-titan-ova-0": {
+            "filler_id": "attack-titan-ova-0",
+            "manga_canon": "1, 6-8",
+            "mixed_ep": "4-5",
+            "filler_ep": "2-3",
+            "anime_canon": null
+        },
+        "attack-on-titan-junior-high": {
+            "filler_id": "attack-on-titan-junior-high",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "bakemonogatari": {
+            "filler_id": "bakemonogatari",
+            "manga_canon": "1-15",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "beastars": {
+            "filler_id": "beastars",
+            "manga_canon": "1-24",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "beelzebub": {
+            "filler_id": "beelzebub",
+            "manga_canon": "1-10, 16, 18-26, 29-33, 35-38, 40-48, 50-51, 58-60",
+            "mixed_ep": null,
+            "filler_ep": "11-15, 17, 27-28, 34, 39, 49, 52-57",
+            "anime_canon": null
+        },
+        "berserk": {
+            "filler_id": "berserk",
+            "manga_canon": "2-25",
+            "mixed_ep": null,
+            "filler_ep": "1",
+            "anime_canon": null
+        },
+        "berserk-2016": {
+            "filler_id": "berserk-2016",
+            "manga_canon": "2, 4-24",
+            "mixed_ep": null,
+            "filler_ep": "1, 3",
+            "anime_canon": null
+        },
+        "berserk-golden-age-arc": {
+            "filler_id": "berserk-golden-age-arc",
+            "manga_canon": "1-3",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "beyblade-burst-all-seasons": {
+            "filler_id": "beyblade-burst-all-seasons",
+            "manga_canon": "2-3, 5, 11-13",
+            "mixed_ep": "1, 4, 7",
+            "filler_ep": "6, 10",
+            "anime_canon": "8-9"
+        },
+        "black-butler": {
+            "filler_id": "black-butler",
+            "manga_canon": "2-6, 13-15, 38-49",
+            "mixed_ep": "1, 37",
+            "filler_ep": "7-12, 16-36",
+            "anime_canon": null
+        },
+        "black-cat": {
+            "filler_id": "black-cat",
+            "manga_canon": "1-20",
+            "mixed_ep": null,
+            "filler_ep": "21-24",
+            "anime_canon": null
+        },
+        "black-clover": {
+            "filler_id": "black-clover",
+            "manga_canon": "1, 4-7, 10-11, 14-28, 31-54, 57-65, 67, 70-81, 83-101, 103-122, 126-129, 158-170",
+            "mixed_ep": "2, 8-9, 12, 30, 69, 102",
+            "filler_ep": "29, 66, 68, 82, 123-125, 131, 134-135, 142-148",
+            "anime_canon": "3, 13, 55-56, 130, 132-133, 136-141, 149-157"
+        },
+        "black-lagoon": {
+            "filler_id": "black-lagoon",
+            "manga_canon": "1-29",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "seirei-tsukai-no-blade-dance": {
+            "filler_id": "seirei-tsukai-no-blade-dance",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "blade-immortal-2019": {
+            "filler_id": "blade-immortal-2019",
+            "manga_canon": "1-24",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "bleach": {
+            "filler_id": "bleach",
+            "manga_canon": "1-7, 9-26, 28-31, 34-45, 47-49, 51-63, 110, 112-115, 117-118, 121-123, 125-127, 138-140, 142, 144-145, 150-155, 157-159, 162-167, 191-192, 194-203, 208, 210-212, 215-221, 224-227, 269-273, 275, 277-283, 286, 289, 292-294, 296-297, 300-302, 306-309, 344, 346-350, 352-354, 356, 358-366",
+            "mixed_ep": "8, 27, 32, 46, 109, 111, 116, 119-120, 124, 141, 143, 146, 156, 160-161, 190, 193, 206-207, 209, 222-223, 267-268, 274, 276, 285, 288, 290-291, 295, 310, 342-343, 345, 351, 357",
+            "filler_ep": "33, 50, 64-108, 128-137, 147-149, 168-189, 204-205, 213-214, 228-266, 287, 298-299, 303-305, 311-341, 355",
+            "anime_canon": "284"
+        },
+        "bleach-thousand-year-blood-war": {
+            "filler_id": "bleach-thousand-year-blood-war",
+            "manga_canon": "1",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "blood-blockade-battlefront": {
+            "filler_id": "blood-blockade-battlefront",
+            "manga_canon": "1-10, 13-24",
+            "mixed_ep": null,
+            "filler_ep": "11-12",
+            "anime_canon": null
+        },
+        "blue-exorcist": {
+            "filler_id": "blue-exorcist",
+            "manga_canon": "4-5, 7-10, 12-15, 26-37",
+            "mixed_ep": "1-3, 16-17",
+            "filler_ep": "6, 11, 18-25",
+            "anime_canon": null
+        },
+        "blue-period": {
+            "filler_id": "blue-period",
+            "manga_canon": "1-2",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "bobobo-bo-bobo": {
+            "filler_id": "bobobo-bo-bobo",
+            "manga_canon": "1-76",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "boruto-naruto-next-generations": {
+            "filler_id": "boruto-naruto-next-generations",
+            "manga_canon": "19-23, 39, 53-66, 148-151, 181-189, 192-208, 212-220",
+            "mixed_ep": "18, 93-95, 106-111, 127",
+            "filler_ep": "16-17, 40-41, 49-50, 67-69, 96-97, 112-114, 116-119, 138-140, 152-156, 256-258",
+            "anime_canon": "1-15, 24-38, 42-48, 51-52, 70-92, 98-105, 115, 120-126, 128-137, 141-147, 157-180, 190-191, 209-211, 221-255, 259-265"
+        },
+        "boruto-naruto-next-generations-manga-canon": {
+            "filler_id": "boruto-naruto-next-generations-manga-canon",
+            "manga_canon": "18-23, 39, 53-59, 61-66, 148-151, 181-189, 192-208, 212-220",
+            "mixed_ep": "1, 24, 210-211",
+            "filler_ep": "2-17, 25-38, 40-52, 67-147, 152-180, 190-191, 209, 221-264",
+            "anime_canon": "60"
+        },
+        "boruto-naruto-movie": {
+            "filler_id": "boruto-naruto-movie",
+            "manga_canon": "1",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "btooom": {
+            "filler_id": "btooom",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "bungo-stray-dogs": {
+            "filler_id": "bungo-stray-dogs",
+            "manga_canon": "1-5, 8-24, 26-37",
+            "mixed_ep": "6-7",
+            "filler_ep": "25",
+            "anime_canon": null
+        },
+        "burn-witch": {
+            "filler_id": "burn-witch",
+            "manga_canon": "1-3",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "buso-renkin": {
+            "filler_id": "buso-renkin",
+            "manga_canon": "1-26",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "campione": {
+            "filler_id": "campione",
+            "manga_canon": "4, 6-7, 9-10",
+            "mixed_ep": "1, 3, 8, 11-12",
+            "filler_ep": "2, 5, 13",
+            "anime_canon": null
+        },
+        "cardcaptor-sakura": {
+            "filler_id": "cardcaptor-sakura",
+            "manga_canon": "1-11, 16-18, 25-26, 35, 39, 41-42, 44-52, 54, 59, 65-93",
+            "mixed_ep": null,
+            "filler_ep": "12-15, 19-24, 27-34, 36-38, 40, 43, 53, 55-58, 60-64",
+            "anime_canon": null
+        },
+        "carnival-phantasm": {
+            "filler_id": "carnival-phantasm",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "detective-conan": {
+            "filler_id": "detective-conan",
+            "manga_canon": "1-5, 7-13, 15-16, 18, 20, 22-23, 27-28, 31-32, 34-35, 38-40, 42-43, 46, 48-50, 52, 54, 57-58, 60, 63, 68-70, 72, 75-78, 81-82, 84-86, 91, 96, 98-105, 112-118, 121-122, 128-134, 136-139, 141-142, 144-147, 153-154, 156-157, 162-164, 166-168, 170-174, 176-178, 188-195, 199-200, 205-206, 212-213, 217-224, 226-231, 233-234, 238-244, 246-247, 249-250, 253-254, 258-259, 263, 266-272, 274-275, 277-280, 284-293, 301-302, 304-313, 316-317, 323-327, 329-336, 338-341, 343-347, 350-351, 354-356, 358-359, 361-362, 366-367, 371-372, 374-375, 381-383, 385-387, 390-391, 394-396, 398-402, 406-408, 411-412, 415-417, 421-422, 425, 427-432, 435-436, 438, 443-447, 449, 453-455, 457-458, 460, 462-467, 469-470, 472-474, 476-477, 479, 481-482, 484-485, 487-488, 490-511, 513-517, 521-526, 528-535, 537-538, 542-543, 545-546, 549-552, 557-561, 563-564, 568-569, 571-576, 578-581, 583-587, 589-590, 592-593, 597-598, 600-601, 608-628, 632-633, 642-657, 659-662, 667-668, 671-676, 681-685, 690-691, 699-706, 710-715, 722-725, 727-728, 731-732, 734, 738-741, 744-749, 751-752, 754-756, 759-760, 763-766, 770-773, 779-783, 785-788, 792-793, 808-812, 814-815, 822-823, 827-828, 830-832, 836-837, 843-844, 847-850, 853-854, 861-864, 866-867, 872-874, 878-879, 881-882, 885-890, 894-897, 901-902, 909-910, 916-917, 919-920, 925-928, 941-942, 952-954, 971-974, 983-984, 993-995, 1000-1001, 1003-1005, 1011-1012, 1018-1020, 1024-1025, 1029, 1033-1035, 1038, 1042, 1045-1046, 1053-1054",
+            "mixed_ep": null,
+            "filler_ep": "6, 14, 17, 19, 21, 24-26, 29-30, 33, 36-37, 41, 44-45, 47, 51, 53, 55-56, 59, 61-62, 64-67, 71, 73-74, 79-80, 83, 87-90, 92-95, 97, 106-111, 119-120, 123-127, 135, 140, 143, 148-152, 155, 158-161, 165, 169, 175, 179-187, 196-198, 201-204, 207-211, 214-216, 225, 232, 235-237, 245, 248, 251-252, 255-257, 260-262, 264-265, 273, 276, 281-283, 294-300, 303, 314-315, 318-322, 328, 337, 342, 348-349, 352-353, 357, 360, 363-365, 368-370, 373, 376-380, 384, 388-389, 392-393, 397, 403-405, 409-410, 413-414, 418-420, 423-424, 426, 433-434, 437, 439-442, 448, 450-452, 456, 459, 461, 468, 471, 475, 478, 480, 483, 486, 489, 512, 518-520, 527, 536, 539-541, 544, 547-548, 553-556, 562, 565-567, 570, 577, 582, 588, 591, 594-596, 599, 602-607, 629-631, 634-641, 658, 663-666, 669-670, 677-680, 686-689, 692-698, 707-709, 716-721, 726, 729-730, 733, 735-737, 742-743, 750, 753, 757-758, 761-762, 767-769, 774-778, 784, 789-791, 794-807, 813, 816-821, 824-826, 829, 833-835, 838-842, 845-846, 851-852, 855-860, 865, 868-871, 875-877, 880, 883-884, 891-893, 898-900, 903-908, 911-915, 918, 921-924, 929-940, 943-951, 955-970, 975-982, 985-992, 996-999, 1002, 1006-1010, 1013-1017, 1021-1023, 1026-1028, 1030-1032, 1036-1037, 1039-1041, 1043-1044, 1047-1052",
+            "anime_canon": null
+        },
+        "cells-work": {
+            "filler_id": "cells-work",
+            "manga_canon": "1-13",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "cells-work-code-black": {
+            "filler_id": "cells-work-code-black",
+            "manga_canon": "1-13",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "charlotte": {
+            "filler_id": "charlotte",
+            "manga_canon": "1-14",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "city-hunter": {
+            "filler_id": "city-hunter",
+            "manga_canon": "1, 3-7",
+            "mixed_ep": null,
+            "filler_ep": "2",
+            "anime_canon": null
+        },
+        "clannad": {
+            "filler_id": "clannad",
+            "manga_canon": "1-12, 15, 19-23",
+            "mixed_ep": null,
+            "filler_ep": "13-14, 16-18",
+            "anime_canon": null
+        },
+        "classroom-elite": {
+            "filler_id": "classroom-elite",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "claymore": {
+            "filler_id": "claymore",
+            "manga_canon": "1-20",
+            "mixed_ep": "21-23",
+            "filler_ep": "24-26",
+            "anime_canon": null
+        },
+        "cobra-animation": {
+            "filler_id": "cobra-animation",
+            "manga_canon": "1-13",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "code-geass": {
+            "filler_id": "code-geass",
+            "manga_canon": "1-55",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "cowboy-bebop": {
+            "filler_id": "cowboy-bebop",
+            "manga_canon": "1-26",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "d-frag": {
+            "filler_id": "d-frag",
+            "manga_canon": "1-3, 5-8, 10-12",
+            "mixed_ep": null,
+            "filler_ep": "4, 9",
+            "anime_canon": null
+        },
+        "d-gray-man": {
+            "filler_id": "d-gray-man",
+            "manga_canon": "1-13, 19-24, 28, 37-40, 51-62, 65-116",
+            "mixed_ep": "26, 63-64",
+            "filler_ep": "14-18, 25, 27, 29-36, 41-50",
+            "anime_canon": null
+        },
+        "dagashi-kashi": {
+            "filler_id": "dagashi-kashi",
+            "manga_canon": "1-24",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "darwins-game": {
+            "filler_id": "darwins-game",
+            "manga_canon": "1-10",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "deadman-wonderland": {
+            "filler_id": "deadman-wonderland",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": "0",
+            "anime_canon": null
+        },
+        "death-note": {
+            "filler_id": "death-note",
+            "manga_canon": "2-24, 27-36",
+            "mixed_ep": null,
+            "filler_ep": "1, 25-26, 37",
+            "anime_canon": null
+        },
+        "death-parade": {
+            "filler_id": "death-parade",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "demon-slayer-kimetsu-no-yaiba": {
+            "filler_id": "demon-slayer-kimetsu-no-yaiba",
+            "manga_canon": "1-26, 28-44",
+            "mixed_ep": null,
+            "filler_ep": "27",
+            "anime_canon": null
+        },
+        "demon-slayer-kimetsu-no-yaiba-movie-mugen-train": {
+            "filler_id": "demon-slayer-kimetsu-no-yaiba-movie-mugen-train",
+            "manga_canon": "1",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "dennou-coil": {
+            "filler_id": "dennou-coil",
+            "manga_canon": "1-13",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "devilman-birth": {
+            "filler_id": "devilman-birth",
+            "manga_canon": "1-4",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "devilman-crybaby": {
+            "filler_id": "devilman-crybaby",
+            "manga_canon": "1-2, 7-10",
+            "mixed_ep": null,
+            "filler_ep": "3-6",
+            "anime_canon": null
+        },
+        "digimon-adventure": {
+            "filler_id": "digimon-adventure",
+            "manga_canon": "1-54",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "digimon-adventure-02": {
+            "filler_id": "digimon-adventure-02",
+            "manga_canon": "1-5",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "digimon-adventure-tri": {
+            "filler_id": "digimon-adventure-tri",
+            "manga_canon": "1-6",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "digimon-adventure-2020": {
+            "filler_id": "digimon-adventure-2020",
+            "manga_canon": "1-23",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "digimon-frontier": {
+            "filler_id": "digimon-frontier",
+            "manga_canon": "1-50",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "digimon-tamers": {
+            "filler_id": "digimon-tamers",
+            "manga_canon": "1-51",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "don%e2%80%99t-toy-me-miss-nagatoro": {
+            "filler_id": "don%e2%80%99t-toy-me-miss-nagatoro",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "dragon-ball-super-broly": {
+            "filler_id": "dragon-ball-super-broly",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "dororo": {
+            "filler_id": "dororo",
+            "manga_canon": "1-15",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "dr-stone": {
+            "filler_id": "dr-stone",
+            "manga_canon": "1-35",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "dragon-ball": {
+            "filler_id": "dragon-ball",
+            "manga_canon": "1-28, 34-41, 43, 46-78, 84-126, 133-148",
+            "mixed_ep": "29, 42, 44",
+            "filler_ep": "30-33, 45, 79-83, 127-132, 149-153",
+            "anime_canon": null
+        },
+        "dragon-ball-gt": {
+            "filler_id": "dragon-ball-gt",
+            "manga_canon": "1-65",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "dragon-ball-super": {
+            "filler_id": "dragon-ball-super",
+            "manga_canon": "3, 5-14, 18-21, 23-41, 47-49, 51, 53-67, 77, 82-88, 92-93, 96-131",
+            "mixed_ep": "1-2, 89",
+            "filler_ep": "4, 15, 42-46, 68-70, 73-76",
+            "anime_canon": "16-17, 22, 50, 52, 71-72, 78-81, 90-91, 94-95"
+        },
+        "dragon-ball-super-broly-0": {
+            "filler_id": "dragon-ball-super-broly-0",
+            "manga_canon": "1",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "dragon-ball-z": {
+            "filler_id": "dragon-ball-z",
+            "manga_canon": "1-8, 19, 21-38, 45-99, 101, 103-107, 118-123, 126-169, 172-173, 175-194, 200-201, 205-228, 230-250, 252-273, 275-286, 289-291",
+            "mixed_ep": "11, 17-18, 20, 44, 204, 229, 251, 287",
+            "filler_ep": "9-10, 12-16, 39-43, 100, 102, 108-117, 124-125, 170-171, 174, 195-199, 202-203, 274, 288",
+            "anime_canon": null
+        },
+        "dragon-ball-z-kai": {
+            "filler_id": "dragon-ball-z-kai",
+            "manga_canon": "1-6, 9, 12-18, 20-21, 24, 28-30, 35, 39-40, 48-49, 52, 54, 56, 62, 66, 75, 79-80, 99, 108-109, 116, 124, 161",
+            "mixed_ep": "7-8, 10-11, 19, 22-23, 25-27, 31-34, 36-38, 41-47, 50-51, 53, 55, 57-61, 63-65, 67-74, 76-78, 81-98, 100, 102-107, 110-115, 117-123, 125-138, 140-160, 162-164, 166-167",
+            "filler_ep": "101, 165",
+            "anime_canon": null
+        },
+        "dragon-quest-adventure-dai": {
+            "filler_id": "dragon-quest-adventure-dai",
+            "manga_canon": "1-17",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "drifters": {
+            "filler_id": "drifters",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "durarara": {
+            "filler_id": "durarara",
+            "manga_canon": "1-60",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "edens-zero": {
+            "filler_id": "edens-zero",
+            "manga_canon": "1-25",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "elemental-gelade": {
+            "filler_id": "elemental-gelade",
+            "manga_canon": "2-3",
+            "mixed_ep": "1, 4",
+            "filler_ep": "5",
+            "anime_canon": null
+        },
+        "elfen-lied": {
+            "filler_id": "elfen-lied",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": "13",
+            "anime_canon": null
+        },
+        "emma-victorian-romance": {
+            "filler_id": "emma-victorian-romance",
+            "manga_canon": "1-24",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "erased": {
+            "filler_id": "erased",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "excel-saga": {
+            "filler_id": "excel-saga",
+            "manga_canon": "1-26",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "fairy-tail": {
+            "filler_id": "fairy-tail",
+            "manga_canon": "1-8, 10-18, 21-48, 51-68, 76-124, 152-181, 184-200, 227-245, 247-254, 257-259, 261-267, 269, 271-311, 313-328",
+            "mixed_ep": "20, 49, 69, 151, 182-183, 201, 255, 260, 270, 312",
+            "filler_ep": "9, 19, 50, 70-75, 125-150, 202-226, 268",
+            "anime_canon": "246, 256"
+        },
+        "fate-apocrypha": {
+            "filler_id": "fate-apocrypha",
+            "manga_canon": "1-25",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "fatekaleid-liner-prisma-illya": {
+            "filler_id": "fatekaleid-liner-prisma-illya",
+            "manga_canon": "1-7, 9-20, 22, 26-29, 31-43",
+            "mixed_ep": "8, 21, 30",
+            "filler_ep": "23-25",
+            "anime_canon": null
+        },
+        "fatestay-night": {
+            "filler_id": "fatestay-night",
+            "manga_canon": "1-5, 7-16, 19-24",
+            "mixed_ep": null,
+            "filler_ep": "6, 17-18",
+            "anime_canon": null
+        },
+        "fatestay-night-unlimited-blade-works": {
+            "filler_id": "fatestay-night-unlimited-blade-works",
+            "manga_canon": "0-25",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "fate-zero": {
+            "filler_id": "fate-zero",
+            "manga_canon": "1-9, 11-17, 20-25",
+            "mixed_ep": null,
+            "filler_ep": "10, 18-19",
+            "anime_canon": null
+        },
+        "fighting-spirit": {
+            "filler_id": "fighting-spirit",
+            "manga_canon": "1-30, 32-51, 53-75",
+            "mixed_ep": null,
+            "filler_ep": "31, 52",
+            "anime_canon": null
+        },
+        "fire-force": {
+            "filler_id": "fire-force",
+            "manga_canon": "1-24, 26-48",
+            "mixed_ep": null,
+            "filler_ep": "25",
+            "anime_canon": null
+        },
+        "fist-of-the-blue-sky": {
+            "filler_id": "fist-of-the-blue-sky",
+            "manga_canon": "1-26",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "fist-of-the-blue-sky-regenesis": {
+            "filler_id": "fist-of-the-blue-sky-regenesis",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "hokuto-no-ken": {
+            "filler_id": "hokuto-no-ken",
+            "manga_canon": "1, 3, 11, 13, 28, 30-37, 39-40, 42-78, 83-97, 99-104, 106-108, 110, 112-152",
+            "mixed_ep": "2, 4-8, 12, 22-27, 29",
+            "filler_ep": "9-10, 14-21, 38, 41, 79-82, 98, 105, 109, 111",
+            "anime_canon": null
+        },
+        "shokugeki-no-soma": {
+            "filler_id": "shokugeki-no-soma",
+            "manga_canon": "1-24",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "food-wars-fifth-plate": {
+            "filler_id": "food-wars-fifth-plate",
+            "manga_canon": "1-13",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "food-wars-fourth-plate": {
+            "filler_id": "food-wars-fourth-plate",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "food-wars-second-plate-1": {
+            "filler_id": "food-wars-second-plate",
+            "manga_canon": "1-13",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "food-wars-third-plate-1": {
+            "filler_id": "food-wars-third-plate",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "fruits-basket-2001": {
+            "filler_id": "fruits-basket-2001",
+            "manga_canon": "1-24",
+            "mixed_ep": null,
+            "filler_ep": "25-26",
+            "anime_canon": null
+        },
+        "fruits-basket-2019": {
+            "filler_id": "fruits-basket-2019",
+            "manga_canon": "1-52",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "full-metal-panic": {
+            "filler_id": "full-metal-panic",
+            "manga_canon": "21, 37-49",
+            "mixed_ep": "1-12, 16-18, 20, 22-24",
+            "filler_ep": "13-15, 19, 25-36",
+            "anime_canon": null
+        },
+        "fullmetal-alchemist": {
+            "filler_id": "fullmetal-alchemist",
+            "manga_canon": "1-3, 6-7, 9, 13-15, 17-20, 23-28, 34",
+            "mixed_ep": "4, 10, 37",
+            "filler_ep": "5, 8, 11-12, 16, 21-22, 29-33, 35-36, 38-51",
+            "anime_canon": null
+        },
+        "fullmetal-alchemist-brotherhood": {
+            "filler_id": "fullmetal-alchemist-brotherhood",
+            "manga_canon": "2-3, 5-8, 10-12, 15-26, 28-64",
+            "mixed_ep": "4, 9, 13-14",
+            "filler_ep": "27",
+            "anime_canon": "1"
+        },
+        "gangsta": {
+            "filler_id": "gangsta",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "gantz": {
+            "filler_id": "gantz",
+            "manga_canon": "2-16, 18-21",
+            "mixed_ep": "1, 17",
+            "filler_ep": "22-26",
+            "anime_canon": null
+        },
+        "ghost-shell-arise": {
+            "filler_id": "ghost-shell-arise",
+            "manga_canon": "1-8, 11",
+            "mixed_ep": null,
+            "filler_ep": "9-10",
+            "anime_canon": null
+        },
+        "ghost-shell-stand-alone-complex": {
+            "filler_id": "ghost-shell-stand-alone-complex",
+            "manga_canon": "1-53",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "gintama": {
+            "filler_id": "gintama",
+            "manga_canon": "3-49, 51-56, 58-74, 76-81, 83-105, 107-110, 112-113, 115-119, 121-123, 126-134, 136, 138-149, 151-154, 156-163, 165, 167-170, 172, 175, 177-184, 186-208, 210-251, 253-366, 368-369",
+            "mixed_ep": "82, 111, 120, 367",
+            "filler_ep": "1-2, 50, 57, 75, 106, 114, 124-125, 135, 137, 150, 155, 164, 166, 171, 173-174, 176, 185, 209, 252",
+            "anime_canon": null
+        },
+        "girlfriend-girlfriend": {
+            "filler_id": "girlfriend-girlfriend",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "goblin-slayer": {
+            "filler_id": "goblin-slayer",
+            "manga_canon": "1-4, 6-9, 11-12",
+            "mixed_ep": null,
+            "filler_ep": "5, 10",
+            "anime_canon": null
+        },
+        "golden-kamuy": {
+            "filler_id": "golden-kamuy",
+            "manga_canon": "1-19",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "gosick": {
+            "filler_id": "gosick",
+            "manga_canon": "1-11, 13-24",
+            "mixed_ep": null,
+            "filler_ep": "12",
+            "anime_canon": null
+        },
+        "great-teacher-onizuka": {
+            "filler_id": "great-teacher-onizuka",
+            "manga_canon": "1-22, 24, 29-33, 35-41",
+            "mixed_ep": null,
+            "filler_ep": "23, 25-28, 34, 42-43",
+            "anime_canon": null
+        },
+        "gurren-lagann": {
+            "filler_id": "gurren-lagann",
+            "manga_canon": "1-15, 17-27",
+            "mixed_ep": null,
+            "filler_ep": "16",
+            "anime_canon": null
+        },
+        "haikyuu": {
+            "filler_id": "haikyuu",
+            "manga_canon": "1-85",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "hakyu-hoshin-engi": {
+            "filler_id": "hakyu-hoshin-engi",
+            "manga_canon": "1-23",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "hanamonogatari": {
+            "filler_id": "hanamonogatari",
+            "manga_canon": "1-5",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "handa-kun": {
+            "filler_id": "handa-kun",
+            "manga_canon": "1-7, 10-12",
+            "mixed_ep": "8",
+            "filler_ep": "9",
+            "anime_canon": null
+        },
+        "happy-go-lucky-days": {
+            "filler_id": "happy-go-lucky-days",
+            "manga_canon": "1",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "hayate-combat-butler": {
+            "filler_id": "hayate-combat-butler",
+            "manga_canon": "1-4, 17, 20, 40, 42, 47, 49, 52, 101",
+            "mixed_ep": "29, 32",
+            "filler_ep": "18-19, 26-28, 30-31, 33-39, 41, 45-46, 48, 50-51, 77",
+            "anime_canon": null
+        },
+        "heavens-lost-property": {
+            "filler_id": "heavens-lost-property",
+            "manga_canon": "5, 14, 28",
+            "mixed_ep": null,
+            "filler_ep": "1-4, 6-13, 15-27",
+            "anime_canon": null
+        },
+        "hell-girl": {
+            "filler_id": "hell-girl",
+            "manga_canon": "1-84",
+            "mixed_ep": null,
+            "filler_ep": "85-90",
+            "anime_canon": null
+        },
+        "hellsing": {
+            "filler_id": "hellsing",
+            "manga_canon": "1-3, 5-7, 10",
+            "mixed_ep": null,
+            "filler_ep": "4, 8-9, 11-13",
+            "anime_canon": null
+        },
+        "hellsing-ultimate": {
+            "filler_id": "hellsing-ultimate",
+            "manga_canon": "1-10",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "high-school-dxd": {
+            "filler_id": "high-school-dxd",
+            "manga_canon": "1-28, 30-32, 37-48",
+            "mixed_ep": "29, 33",
+            "filler_ep": "34-36",
+            "anime_canon": null
+        },
+        "highschoool-dead": {
+            "filler_id": "highschoool-dead",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": "13",
+            "anime_canon": null
+        },
+        "hikaru-no-go": {
+            "filler_id": "hikaru-no-go",
+            "manga_canon": "1-63, 68-75",
+            "mixed_ep": "65, 67",
+            "filler_ep": "64, 66",
+            "anime_canon": null
+        },
+        "hunter-x-hunter-1999": {
+            "filler_id": "hunter-x-hunter-1999",
+            "manga_canon": "1, 3, 8-10, 13-17, 21-25, 28-31, 35-45, 47-92",
+            "mixed_ep": "4-6, 11-12, 26-27, 32-34, 46",
+            "filler_ep": "2, 7, 18-20",
+            "anime_canon": null
+        },
+        "hunter-x-hunter": {
+            "filler_id": "hunter-x-hunter",
+            "manga_canon": "1-11, 14-25, 27-148",
+            "mixed_ep": "12",
+            "filler_ep": "13, 26",
+            "anime_canon": null
+        },
+        "initial-d": {
+            "filler_id": "initial-d",
+            "manga_canon": "1-81",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "inuyasha": {
+            "filler_id": "inuyasha",
+            "manga_canon": "1-25, 27-56, 60-62, 66-67, 70-71, 73-74, 80-82, 85-86, 88, 103-126, 131-132, 143, 145-146, 149-159, 161, 164-193",
+            "mixed_ep": "26, 57-58, 69, 83-84, 87, 102, 127-128, 135, 141-142, 144, 147-148, 160",
+            "filler_ep": "59, 63-65, 68, 72, 75-79, 89-101, 129-130, 133-134, 136-140, 162-163",
+            "anime_canon": null
+        },
+        "inuyashiki-last-hero": {
+            "filler_id": "inuyashiki-last-hero",
+            "manga_canon": "1-11",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "it-wrong-try-pick-girls-dungeon": {
+            "filler_id": "it-wrong-try-pick-girls-dungeon",
+            "manga_canon": "1-25",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "it-wrong-try-pick-girls-dungeon-side-sword-oratoria": {
+            "filler_id": "it-wrong-try-pick-girls-dungeon-side-sword-oratoria",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "jojos-biarre-adenture-ova": {
+            "filler_id": "jojos-biarre-adenture-ova",
+            "manga_canon": "1-13",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "jojos-bizarre-adventure-tv": {
+            "filler_id": "jojos-bizarre-adventure-tv",
+            "manga_canon": "1-164",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "jujutsu-kaisen": {
+            "filler_id": "jujutsu-kaisen",
+            "manga_canon": "1-24",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "k": {
+            "filler_id": "k",
+            "manga_canon": "1-26",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "k-seven-stories": {
+            "filler_id": "k-seven-stories",
+            "manga_canon": "1-6",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "kabaneri-iron-fortress": {
+            "filler_id": "kabaneri-iron-fortress",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "kakegurui": {
+            "filler_id": "kakegurui",
+            "manga_canon": "1-9",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "kamisama-kiss": {
+            "filler_id": "kamisama-kiss",
+            "manga_canon": "1-12, 14-30",
+            "mixed_ep": null,
+            "filler_ep": "13",
+            "anime_canon": null
+        },
+        "kenichi-mightiest-disciple": {
+            "filler_id": "kenichi-mightiest-disciple",
+            "manga_canon": "51-61",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "kill-la-kill": {
+            "filler_id": "kill-la-kill",
+            "manga_canon": "1-24",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "killing-bites": {
+            "filler_id": "killing-bites",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "kingdom": {
+            "filler_id": "kingdom",
+            "manga_canon": "1-104",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "kinnikuman": {
+            "filler_id": "kinnikuman",
+            "manga_canon": "1-4",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "kiznaiver": {
+            "filler_id": "kiznaiver",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "kizumonogatari": {
+            "filler_id": "kizumonogatari",
+            "manga_canon": "1-3",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "blue-period-0": {
+            "filler_id": "blue-period",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "konosuba-gods-blessing-wonderful-world": {
+            "filler_id": "konosuba-gods-blessing-wonderful-world",
+            "manga_canon": "1-20",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "kuroko%e2%80%99s-basketball": {
+            "filler_id": "kuroko%e2%80%99s-basketball",
+            "manga_canon": "1-75",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "land-lustrous": {
+            "filler_id": "land-lustrous",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "madan-no-ou-vanadis-lord-marksman-and-vanadis": {
+            "filler_id": "madan-no-ou-vanadis-lord-marksman-and-vanadis",
+            "manga_canon": "1-13",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "lupin-third-part-i": {
+            "filler_id": "lupin-third-part-i",
+            "manga_canon": "2",
+            "mixed_ep": null,
+            "filler_ep": "1, 23",
+            "anime_canon": null
+        },
+        "made-abyss": {
+            "filler_id": "made-abyss",
+            "manga_canon": "1-8, 10-11, 13",
+            "mixed_ep": null,
+            "filler_ep": "9, 12",
+            "anime_canon": null
+        },
+        "magi-labyrinth-magic": {
+            "filler_id": "magi-labyrinth-magic",
+            "manga_canon": "1-20, 26-50",
+            "mixed_ep": null,
+            "filler_ep": "21-25",
+            "anime_canon": null
+        },
+        "magi-adventure-sinbad-tv": {
+            "filler_id": "magi-adventure-sinbad-tv",
+            "manga_canon": "1-13",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "magic-knight-rayearth": {
+            "filler_id": "magic-knight-rayearth",
+            "manga_canon": "1, 4-5, 10, 13, 16, 18-23, 26, 38, 40, 42, 44, 47",
+            "mixed_ep": "2-3, 6, 12, 15, 27, 32, 39, 43, 45, 49",
+            "filler_ep": "7-9, 11, 14, 17, 24-25, 28-31, 33-37, 41, 46, 48",
+            "anime_canon": null
+        },
+        "maid-sama": {
+            "filler_id": "maid-sama",
+            "manga_canon": "1-26",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "masamune-kuns-revenge": {
+            "filler_id": "masamune-kuns-revenge",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "michiko-hatchin": {
+            "filler_id": "michiko-hatchin",
+            "manga_canon": "1-22",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "miraculous-ladybug": {
+            "filler_id": "miraculous-ladybug",
+            "manga_canon": "1-3",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "miss-kobayashis-dragon-maid": {
+            "filler_id": "miss-kobayashis-dragon-maid",
+            "manga_canon": "1-2, 5, 7-8, 12, 15-20",
+            "mixed_ep": "3-4, 6, 13-14",
+            "filler_ep": "9-11",
+            "anime_canon": null
+        },
+        "mob-psycho-100": {
+            "filler_id": "mob-psycho-100",
+            "manga_canon": "2-25",
+            "mixed_ep": null,
+            "filler_ep": "1",
+            "anime_canon": null
+        },
+        "mobile-suit-gundam": {
+            "filler_id": "mobile-suit-gundam",
+            "manga_canon": "1-14, 16-43",
+            "mixed_ep": null,
+            "filler_ep": "15",
+            "anime_canon": null
+        },
+        "mobile-suit-gundam-zz": {
+            "filler_id": "mobile-suit-gundam-zz",
+            "manga_canon": "1",
+            "mixed_ep": null,
+            "filler_ep": "2",
+            "anime_canon": null
+        },
+        "mobile-suit-zeta-gundam": {
+            "filler_id": "mobile-suit-zeta-gundam",
+            "manga_canon": "1-3",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "monogatari-series": {
+            "filler_id": "monogatari-series",
+            "manga_canon": "1-100",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "monogatari-series-second-season": {
+            "filler_id": "monogatari-series-second-season",
+            "manga_canon": "1-23",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "monster": {
+            "filler_id": "monster",
+            "manga_canon": "1-74",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "my-dress-darling": {
+            "filler_id": "my-dress-darling",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "my-hero-academia": {
+            "filler_id": "my-hero-academia",
+            "manga_canon": "1-31, 33-38, 40-53, 56-57, 59-63, 65-88, 90-103, 106-113",
+            "mixed_ep": "54-55, 89, 105",
+            "filler_ep": "39, 58, 64, 104",
+            "anime_canon": "32"
+        },
+        "my-hero-academia-movies": {
+            "filler_id": "my-hero-academia-movies",
+            "manga_canon": "2-3",
+            "mixed_ep": null,
+            "filler_ep": "1",
+            "anime_canon": null
+        },
+        "my-next-life-villainess-all-routes-lead-doom": {
+            "filler_id": "my-next-life-villainess-all-routes-lead-doom",
+            "manga_canon": "1-6, 10-13, 15-16, 21-24",
+            "mixed_ep": "14, 17",
+            "filler_ep": "7-9, 18-20",
+            "anime_canon": null
+        },
+        "nadia-secret-blue-water": {
+            "filler_id": "nadia-secret-blue-water",
+            "manga_canon": "27-28, 30",
+            "mixed_ep": "24, 26, 29, 32-34",
+            "filler_ep": "1-23, 25, 31, 35-39",
+            "anime_canon": null
+        },
+        "naruto": {
+            "filler_id": "naruto",
+            "manga_canon": "1-6, 8, 10-13, 17, 22, 25, 31-36, 42, 48, 50-51, 61-62, 64-65, 67-68, 73, 75-82, 84-96, 107-111, 115-125, 128-129, 132-135",
+            "mixed_ep": "7, 9, 14-16, 18-21, 23-24, 27-30, 37-41, 43-47, 49, 52-60, 63, 66, 69-72, 74, 83, 98, 100, 112-114, 126-127, 130-131, 141-142, 220",
+            "filler_ep": "26, 97, 101-106, 136-140, 143-219",
+            "anime_canon": "99"
+        },
+        "naruto-shippuden": {
+            "filler_id": "naruto-shippuden",
+            "manga_canon": "20-23, 26-27, 29-44, 46-48, 51-53, 55, 72-88, 113-114, 116-126, 129-143, 152-169, 172-175, 197-212, 214-222, 243-253, 255-256, 261-270, 272-278, 282-283, 297-302, 321-323, 325-326, 329, 332-337, 339-345, 363-375, 378-384, 387, 391-393, 414, 418, 420-421, 424-425, 459, 463, 470, 473-477, 484-500",
+            "mixed_ep": "1-19, 24-25, 45, 49-50, 54, 56, 71, 89-90, 112, 115, 127-128, 213, 254, 296, 324, 327-328, 330-331, 338, 346, 362, 385-386, 415, 419, 426, 451-458, 460-462, 469, 471-472, 478-479",
+            "filler_ep": "57-70, 91-111, 144-151, 170-171, 176-196, 223-242, 257-260, 271, 279-281, 284-295, 303-320, 347-361, 376-377, 388-390, 394-413, 416-417, 422-423, 427-450, 464-468, 480-483",
+            "anime_canon": "28"
+        },
+        "naruto-movie-legend-stone-gelel": {
+            "filler_id": "naruto-movie-legend-stone-gelel",
+            "manga_canon": "1",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "naruto-movie-ninja-clash-land-snow": {
+            "filler_id": "naruto-movie-ninja-clash-land-snow",
+            "manga_canon": "1",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "negima-ovaoad": {
+            "filler_id": "negima-ovaoad",
+            "manga_canon": "1-8",
+            "mixed_ep": null,
+            "filler_ep": "9",
+            "anime_canon": null
+        },
+        "magister-negi-magi": {
+            "filler_id": "magister-negi-magi",
+            "manga_canon": "1, 3-21",
+            "mixed_ep": "2, 22",
+            "filler_ep": "23-26",
+            "anime_canon": null
+        },
+        "noragami-aragoto": {
+            "filler_id": "noragami-aragoto",
+            "manga_canon": "1-26",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "nekomonogatari-kuro": {
+            "filler_id": "nekomonogatari-kuro",
+            "manga_canon": "1-4",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "neon-genesis-evangelion": {
+            "filler_id": "neon-genesis-evangelion",
+            "manga_canon": "1-26",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "nisekoi-false-love": {
+            "filler_id": "nisekoi-false-love",
+            "manga_canon": "1-32",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "nisemonogatari": {
+            "filler_id": "nisemonogatari",
+            "manga_canon": "1-11",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "no-game-no-life": {
+            "filler_id": "no-game-no-life",
+            "manga_canon": "0-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "noragami": {
+            "filler_id": "noragami",
+            "manga_canon": "1-9, 13-25",
+            "mixed_ep": "10",
+            "filler_ep": "11-12",
+            "anime_canon": null
+        },
+        "one-pace": {
+            "filler_id": "one-pace",
+            "manga_canon": "1-72, 74-75",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "one-piece": {
+            "filler_id": "one-piece",
+            "manga_canon": "1-45, 48-49, 52-53, 62-67, 70-92, 94-97, 100, 103-130, 144-195, 207-212, 217-219, 227-278, 284-290, 293-302, 304-316, 320-325, 337-353, 355-381, 385-405, 408-417, 422-425, 430-452, 459-488, 490-491, 493-496, 500-505, 507-519, 521-541, 543-573, 579-589, 591-624, 629-632, 634-652, 654-656, 658-678, 680-689, 691-730, 732-736, 739-746, 752-774, 776, 779, 783-788, 790-802, 804-806, 808-877, 880, 886, 891-894, 897-906, 908-923, 925-987, 990, 992-1028, 1031",
+            "mixed_ep": "46-47, 61, 68-69, 101, 354, 421, 489, 520, 574, 625, 628, 633, 653, 657, 679, 690, 731, 738, 751, 777-778, 789, 803, 807, 878-879, 881-885, 887-890, 924, 988-989, 991",
+            "filler_ep": "54-60, 98-99, 102, 131-143, 196-206, 220-226, 279-283, 291-292, 303, 317-319, 326-336, 382-384, 406-407, 426-429, 457-458, 492, 542, 575-578, 590, 626-627, 747-750, 780-782, 895-896, 907, 1029-1030",
+            "anime_canon": "50-51, 93, 213-216, 418-420, 453-456, 497-499, 506, 737, 775"
+        },
+        "one-piece-movies": {
+            "filler_id": "one-piece-movies",
+            "manga_canon": "2-3",
+            "mixed_ep": null,
+            "filler_ep": "1",
+            "anime_canon": null
+        },
+        "one-punch-man": {
+            "filler_id": "one-punch-man",
+            "manga_canon": "1-24",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "orange": {
+            "filler_id": "orange",
+            "manga_canon": "1-13",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "orient": {
+            "filler_id": "orient",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "ouran-high-school-host-club": {
+            "filler_id": "ouran-high-school-host-club",
+            "manga_canon": "1-4",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "outlaw-star": {
+            "filler_id": "outlaw-star",
+            "manga_canon": "9, 21-26",
+            "mixed_ep": "13-14, 16, 18-20",
+            "filler_ep": "1-8, 10-12, 15, 17",
+            "anime_canon": null
+        },
+        "overlord": {
+            "filler_id": "overlord",
+            "manga_canon": "1-39",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "owarimonogatari": {
+            "filler_id": "owarimonogatari",
+            "manga_canon": "1-9",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "parasyte-maxim": {
+            "filler_id": "parasyte-maxim",
+            "manga_canon": "1-24",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "platinum-end": {
+            "filler_id": "platinum-end",
+            "manga_canon": "1-24",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "your-eternity-0": {
+            "filler_id": "your-eternity-0",
+            "manga_canon": "1-20",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "pokemon": {
+            "filler_id": "pokemon",
+            "manga_canon": "1-5, 7, 10-18, 20-29, 31, 34-36, 42-43, 45, 47-48, 50, 52-53, 55-56, 58, 60-61, 63, 71-83, 90-92, 94, 98-99, 101-102, 104, 106-115, 117, 120-122, 125-128, 130, 132, 137-143, 147, 150, 153-157, 161, 165, 167, 170-172, 177-179, 183, 185, 190, 192, 195, 204-206, 209, 211-213, 216-224, 226-227, 231-234, 243, 246-250, 252-254, 256, 258-277, 281-289, 291-294, 296-297, 299-305, 307-310, 312-313, 316-317, 319-321, 323-325, 327-328, 330-332, 335, 337-343, 346-354, 356, 359-360, 362, 364, 366-370, 372, 374, 377, 379-380, 382-404, 407, 411-412, 415-419, 421-432, 435, 437-440, 442-443, 445-450, 454-455, 457-466, 468-482, 485-498, 500-501, 504-514, 519-528, 530-561, 563-573, 576-582, 584-592, 594-605, 608-615, 617-630, 632-656, 658-674, 676-677, 680-683, 685-701, 705-714, 716-736, 738-743, 745-746, 749-773, 775, 777, 779-780, 783-786, 788-798, 800-804, 808, 810-816, 818, 820-835, 837-838, 840, 842-861, 863-872, 875-876, 878-879, 881-885, 890-898, 900-901, 903-907, 909-913, 916-937, 939-942, 944-947, 949-954, 956-959, 962-988, 990-1001, 1003-1013, 1015-1016, 1018-1023, 1025-1043, 1045-1056, 1058-1084, 1086-1095, 1097-1099, 1102",
+            "mixed_ep": "6, 30, 40-41, 68, 1085, 1101",
+            "filler_ep": "8-9, 19, 32-33, 37-39, 44, 46, 49, 51, 54, 57, 59, 62, 64-67, 69-70, 84-89, 93, 95-97, 100, 103, 105, 116, 118-119, 123-124, 129, 131, 133-136, 144-146, 148-149, 151-152, 158-160, 162-164, 166, 168-169, 173-176, 180-182, 184, 186-189, 191, 193-194, 196-203, 207-208, 210, 214-215, 225, 228-230, 235-242, 244-245, 251, 255, 257, 278-280, 290, 295, 298, 306, 311, 314-315, 318, 322, 326, 329, 333-334, 336, 344-345, 355, 357-358, 361, 363, 365, 371, 373, 375-376, 378, 381, 405-406, 408-410, 413-414, 420, 433-434, 436, 441, 444, 451-453, 456, 467, 483-484, 499, 502-503, 515-518, 529, 562, 574-575, 583, 593, 606-607, 616, 631, 657, 675, 678-679, 684, 702-704, 715, 737, 744, 747-748, 774, 776, 778, 781-782, 787, 799, 805-807, 809, 817, 819, 836, 839, 841, 862, 873-874, 877, 880, 886-889, 899, 902, 908, 914-915, 938, 943, 948, 955, 960-961, 989, 1002, 1014, 1017, 1024, 1044, 1057, 1096, 1100",
+            "anime_canon": null
+        },
+        "pok%c3%a9mon-advanced-generation": {
+            "filler_id": "pok%c3%a9mon-advanced-generation",
+            "manga_canon": "26, 57, 61, 68, 86-87, 92, 102, 114, 144, 151",
+            "mixed_ep": "9-10, 29, 37-38, 42-43, 46, 49, 52, 64-65, 67, 75-76, 81, 88, 94, 104, 107, 109, 112, 136-137, 139-141, 145, 164-165, 167, 172, 182-184",
+            "filler_ep": "1-8, 11-25, 27-28, 30-36, 39-41, 44-45, 47-48, 50-51, 53-56, 58-60, 62-63, 66, 69-74, 77-80, 82-85, 89-91, 93, 95-101, 103, 105, 108-111, 113, 115-135, 138, 142-143, 146-150, 152-163, 166, 168-171, 173-181, 185-191",
+            "anime_canon": null
+        },
+        "pok%c3%a9mon-diamond-and-pearl": {
+            "filler_id": "pok%c3%a9mon-diamond-and-pearl",
+            "manga_canon": "28, 86",
+            "mixed_ep": "21, 23-24, 39, 42-43, 55-58, 69, 91",
+            "filler_ep": "1-20, 22, 25-27, 29-38, 40-41, 44-54, 59-68, 70-85, 87-90, 92-102",
+            "anime_canon": null
+        },
+        "pok%c3%a9mon-origins-0": {
+            "filler_id": "pok%c3%a9mon-origins-0",
+            "manga_canon": "1-4",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "pok%c3%a9mon-original-series": {
+            "filler_id": "pok%c3%a9mon-original-series",
+            "manga_canon": "33, 40, 48, 53, 88, 98, 121, 131, 133, 202, 205, 241",
+            "mixed_ep": "8, 20, 34, 37-38, 41-42, 47, 54, 60, 68-69, 73, 89-93, 99, 101-102, 105, 110, 123-124, 126, 129, 134, 136, 138-140, 149-151, 154, 156-157, 163, 163, 165, 167-168, 171, 173-175, 178, 180-181, 185-187, 191-193, 196, 198-199, 203-204, 206, 206, 208, 212-213, 219, 233-235, 240, 244-245, 247, 249, 256, 260",
+            "filler_ep": "1-7, 9-19, 21-32, 35-36, 39, 43-46, 48, 50-52, 55-59, 61-67, 70-72, 74-87, 94-97, 100, 103-104, 106-109, 111-120, 122, 125, 127-128, 130-131, 135, 137, 141-148, 152-153, 155, 158-162, 166, 169-170, 172, 176-177, 179, 182-184, 188-190, 194-195, 197, 200-201, 209-211, 214-218, 220-232, 236-239, 242-243, 246, 248, 250-255, 257-259, 261-274",
+            "anime_canon": null
+        },
+        "prison-school": {
+            "filler_id": "prison-school",
+            "manga_canon": "1-13",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "project-arms": {
+            "filler_id": "project-arms",
+            "manga_canon": "1-9, 12-16, 18-26, 28-51",
+            "mixed_ep": null,
+            "filler_ep": "10-11, 17, 27, 52-53",
+            "anime_canon": null
+        },
+        "psycho-pass": {
+            "filler_id": "psycho-pass",
+            "manga_canon": "1-44",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "puella-magi-madoka-magica": {
+            "filler_id": "puella-magi-madoka-magica",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "ranking-kings": {
+            "filler_id": "ranking-kings",
+            "manga_canon": "1",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "ranma-%c2%bd": {
+            "filler_id": "ranma-%c2%bd",
+            "manga_canon": "1-15, 18-20, 23-26, 28-33, 37-45, 47, 53, 61, 65, 67-69, 72, 75-76, 79-80, 82, 85, 88-89, 93, 95-96, 105-107, 110, 121-122, 125-126, 128-129, 132-133, 136, 141-144, 146, 149, 151, 154-155, 160-161",
+            "mixed_ep": "16, 22, 27, 34-36, 55, 130-131",
+            "filler_ep": "17, 21, 46, 48-52, 54, 56-60, 62-64, 66, 70-71, 73-74, 77-78, 81, 83-84, 86-87, 90-92, 94, 97-104, 108-109, 111-120, 123-124, 127, 134-135, 137-140, 145, 147-148, 150, 152-153, 156-159",
+            "anime_canon": null
+        },
+        "rave-master": {
+            "filler_id": "rave-master",
+            "manga_canon": "1-7, 9-40, 42-51",
+            "mixed_ep": "8",
+            "filler_ep": "41",
+            "anime_canon": null
+        },
+        "re-zero-starting-life-another-world": {
+            "filler_id": "re-zero-starting-life-another-world",
+            "manga_canon": "1-50",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "katekyo-hitman-reborn": {
+            "filler_id": "katekyo-hitman-reborn",
+            "manga_canon": "1-55, 57-96, 98-118, 120-140, 156-176, 191-200, 202-203",
+            "mixed_ep": "141, 155, 190",
+            "filler_ep": "56, 97, 119, 142-154, 177-189",
+            "anime_canon": null
+        },
+        "record-ragnarok": {
+            "filler_id": "record-ragnarok",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "redo-healer": {
+            "filler_id": "redo-healer",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "relife": {
+            "filler_id": "relife",
+            "manga_canon": "1-17",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "rosario-vampire": {
+            "filler_id": "rosario-vampire",
+            "manga_canon": "2-3, 5-6, 8-10",
+            "mixed_ep": "1, 7, 11-14, 20, 24",
+            "filler_ep": "4, 15-19, 21-23, 25-26",
+            "anime_canon": null
+        },
+        "rurouni-kenshin": {
+            "filler_id": "rurouni-kenshin",
+            "manga_canon": "2-12, 19-21, 23-24, 28-62, 95-98",
+            "mixed_ep": "1, 79-82",
+            "filler_ep": "13-18, 22, 25-27, 63-78, 83-94, 99-100",
+            "anime_canon": null
+        },
+        "rwby": {
+            "filler_id": "rwby",
+            "manga_canon": "1-40",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "sage-tanya-evil": {
+            "filler_id": "sage-tanya-evil",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "yakusoku-no-neverland": {
+            "filler_id": "yakusoku-no-neverland",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "sailor-moon": {
+            "filler_id": "sailor-moon",
+            "manga_canon": "1, 8, 10, 19, 22, 25, 33-35, 44-46, 60-61, 68, 72-75, 77, 82-88, 90, 92, 103, 105-106, 110-113, 119-126, 128, 130, 133, 135, 143, 148-150, 158, 160-174, 179-182, 187-191, 193-200",
+            "mixed_ep": "13-14, 23-24, 36, 42, 62, 70-71, 76, 81, 91, 93, 101-102, 109, 115",
+            "filler_ep": "2-7, 9, 11-12, 15-18, 20-21, 26-32, 37-41, 43, 47-59, 63-67, 69, 78-80, 89, 94-100, 104, 107-108, 114, 116-118, 127, 129, 131-132, 134, 136-142, 144-147, 151-157, 159, 175-178, 183-186, 192",
+            "anime_canon": null
+        },
+        "sailor-moon-crystal": {
+            "filler_id": "sailor-moon-crystal",
+            "manga_canon": "1-39",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "saint-seiya": {
+            "filler_id": "saint-seiya",
+            "manga_canon": "1-14, 23-24, 27, 29-31, 36-50, 52-53, 56-63, 65-73, 102-114",
+            "mixed_ep": "15, 25, 28, 32, 51, 100-101",
+            "filler_ep": "16-22, 26, 33-35, 54-55, 64, 74-99",
+            "anime_canon": null
+        },
+        "samurai-champloo": {
+            "filler_id": "samurai-champloo",
+            "manga_canon": "1-26",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "school-days": {
+            "filler_id": "school-days",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "seraph-end": {
+            "filler_id": "seraph-end",
+            "manga_canon": "1-24",
+            "mixed_ep": null,
+            "filler_ep": "25",
+            "anime_canon": null
+        },
+        "serial-experiments-lain": {
+            "filler_id": "serial-experiments-lain",
+            "manga_canon": "1-13",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "keroro-gunsou-sgtfrog": {
+            "filler_id": "keroro-gunsou-sgtfrog",
+            "manga_canon": "5, 13-14, 25, 34-35, 46, 48, 71, 80, 101-103, 133, 149, 160, 175, 178, 183, 243, 274, 323, 334-337, 358",
+            "mixed_ep": "1-4, 6-12, 15-22, 24, 26-32, 36, 39-43, 45, 49-51, 55-56, 58, 81-82, 85, 94, 97-98, 109-110, 112-113, 116, 122, 127, 132, 136, 141-142, 151, 156, 173, 191, 195, 228, 236, 240, 256-257, 282, 338-342, 345",
+            "filler_ep": "23, 33, 37-38, 44, 47, 52-54, 57, 59-70, 72-79, 83-84, 86-93, 95-96, 99-100, 104-108, 111, 114-115, 117-121, 123-126, 128-131, 134-135, 137-140, 143-148, 150, 152-155, 157-159, 161-172, 174, 176-177, 179, 181-182, 184-190, 192-194, 196-227, 229-235, 237-239, 241-242, 244-255, 258-273, 275-281, 283-322, 324-333, 343-344, 346-356",
+            "anime_canon": "180, 357"
+        },
+        "shaman-king-2021": {
+            "filler_id": "shaman-king-2021",
+            "manga_canon": "1-52",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "shugo-chara": {
+            "filler_id": "shugo-chara",
+            "manga_canon": "5, 7-10, 12, 17-18, 21-23, 25-26, 28-32, 34, 36-45, 49-56, 64-65, 67, 69-71, 74-83, 87-102",
+            "mixed_ep": "1-4, 6, 11, 13, 27, 33, 59, 61-62",
+            "filler_ep": "14-16, 19-20, 24, 35, 46-48, 57-58, 60, 63, 66, 68, 72, 84-86, 103-127",
+            "anime_canon": null
+        },
+        "silver-spoon": {
+            "filler_id": "silver-spoon",
+            "manga_canon": "1-4, 6-22",
+            "mixed_ep": null,
+            "filler_ep": "5",
+            "anime_canon": null
+        },
+        "sket-dance": {
+            "filler_id": "sket-dance",
+            "manga_canon": "1-25, 27-31, 33-54",
+            "mixed_ep": null,
+            "filler_ep": "26, 32",
+            "anime_canon": null
+        },
+        "skip-beat": {
+            "filler_id": "skip-beat",
+            "manga_canon": "1-25",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "slam-dunk-0": {
+            "filler_id": "slam-dunk-0",
+            "manga_canon": "1-46, 48-84, 87-89, 91, 93-94, 96",
+            "mixed_ep": "90",
+            "filler_ep": "47, 85-86, 92, 95, 97-101",
+            "anime_canon": null
+        },
+        "soul-eater": {
+            "filler_id": "soul-eater",
+            "manga_canon": "1-6, 8-16, 18-38",
+            "mixed_ep": "7",
+            "filler_ep": "17",
+            "anime_canon": "39-51"
+        },
+        "soul-eater-not": {
+            "filler_id": "soul-eater-not",
+            "manga_canon": "1, 4-5, 12",
+            "mixed_ep": null,
+            "filler_ep": "2-3, 6-11",
+            "anime_canon": null
+        },
+        "soul-hunter": {
+            "filler_id": "soul-hunter",
+            "manga_canon": "1-13",
+            "mixed_ep": "14-15",
+            "filler_ep": "16-26",
+            "anime_canon": null
+        },
+        "space-cobra": {
+            "filler_id": "space-cobra",
+            "manga_canon": "1-31",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "space-patrol-luloco": {
+            "filler_id": "space-patrol-luloco",
+            "manga_canon": "1-13",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "spy-x-family": {
+            "filler_id": "spy-x-family",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "steinsgate": {
+            "filler_id": "steinsgate",
+            "manga_canon": "1-24",
+            "mixed_ep": null,
+            "filler_ep": "25",
+            "anime_canon": null
+        },
+        "steins-gate-0": {
+            "filler_id": "steins-gate-0",
+            "manga_canon": "1-23",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "summertime-render": {
+            "filler_id": "summertime-render",
+            "manga_canon": "1-10",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "dragon-ball-heroes": {
+            "filler_id": "dragon-ball-heroes",
+            "manga_canon": "29",
+            "mixed_ep": null,
+            "filler_ep": "1-28, 30-40",
+            "anime_canon": null
+        },
+        "sword-art-online": {
+            "filler_id": "sword-art-online",
+            "manga_canon": "1-49",
+            "mixed_ep": null,
+            "filler_ep": "50",
+            "anime_canon": null
+        },
+        "sword-art-online-alternative-ggo": {
+            "filler_id": "sword-art-online-alternative-ggo",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "sword-art-online-alicization": {
+            "filler_id": "sword-art-online-alicization",
+            "manga_canon": "1-47",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "terror-resonance": {
+            "filler_id": "terror-resonance",
+            "manga_canon": "1-11",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "time-i-got-reincarnated-slime": {
+            "filler_id": "time-i-got-reincarnated-slime",
+            "manga_canon": "1-3, 5-23",
+            "mixed_ep": "4",
+            "filler_ep": "24",
+            "anime_canon": null
+        },
+        "ancient-magus-bride": {
+            "filler_id": "ancient-magus-bride",
+            "manga_canon": "1-24",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "asterisk-war": {
+            "filler_id": "asterisk-war",
+            "manga_canon": "1-7, 9-24",
+            "mixed_ep": null,
+            "filler_ep": "8",
+            "anime_canon": null
+        },
+        "devil-part-timer": {
+            "filler_id": "devil-part-timer",
+            "manga_canon": "1-13",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "familiar-zero": {
+            "filler_id": "familiar-zero",
+            "manga_canon": "1-49",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "future-diary": {
+            "filler_id": "future-diary",
+            "manga_canon": "1-27",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "god-high-school": {
+            "filler_id": "god-high-school",
+            "manga_canon": "1-13",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "heroic-legend-arslan": {
+            "filler_id": "heroic-legend-arslan",
+            "manga_canon": "1-25",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "melancholy-haruhi-suzumiya": {
+            "filler_id": "melancholy-haruhi-suzumiya",
+            "manga_canon": "1-9, 25-27, 29",
+            "mixed_ep": "10-11, 20-24",
+            "filler_ep": "12-19, 28",
+            "anime_canon": null
+        },
+        "prince-tennis-0": {
+            "filler_id": "prince-tennis-0",
+            "manga_canon": "1-9, 11-20, 25-26, 28-63, 65-69, 86, 91-97, 117-128, 177-178",
+            "mixed_ep": "10, 22-23, 27, 76-85",
+            "filler_ep": "21, 24, 64, 70-75, 87-90, 98-104, 106-116, 129-176",
+            "anime_canon": null
+        },
+        "promised-neverland": {
+            "filler_id": "promised-neverland",
+            "manga_canon": "1-14, 18",
+            "mixed_ep": "15-17, 19",
+            "filler_ep": "20-23",
+            "anime_canon": null
+        },
+        "rising-shield-hero": {
+            "filler_id": "rising-shield-hero",
+            "manga_canon": "1-6, 8-25",
+            "mixed_ep": null,
+            "filler_ep": "7",
+            "anime_canon": null
+        },
+        "nanatsu-no-taizai": {
+            "filler_id": "nanatsu-no-taizai",
+            "manga_canon": "1-19, 21, 23, 31-100",
+            "mixed_ep": "20, 22, 24, 29-30",
+            "filler_ep": "25-28",
+            "anime_canon": null
+        },
+        "chrono-crusade": {
+            "filler_id": "chrono-crusade",
+            "manga_canon": "1-4",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "love-ru": {
+            "filler_id": "love-ru",
+            "manga_canon": "27-38",
+            "mixed_ep": "1, 3, 6, 11, 17",
+            "filler_ep": "2, 4-5, 7-10, 12-16, 18-26",
+            "anime_canon": null
+        },
+        "love-ru-darkness": {
+            "filler_id": "love-ru-darkness",
+            "manga_canon": "1-26",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "abandoned-sacred-beasts": {
+            "filler_id": "abandoned-sacred-beasts",
+            "manga_canon": "3-12",
+            "mixed_ep": null,
+            "filler_ep": "1-2",
+            "anime_canon": null
+        },
+        "your-eternity": {
+            "filler_id": "your-eternity",
+            "manga_canon": "1-13",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "tokyo-ghoul": {
+            "filler_id": "tokyo-ghoul",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": "13-24",
+            "anime_canon": null
+        },
+        "tokyo-ghoul-re-0": {
+            "filler_id": "tokyo-ghoul-re-0",
+            "manga_canon": "1-24",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "tokyo-mew-mew": {
+            "filler_id": "tokyo-mew-mew",
+            "manga_canon": "1-3, 7, 10-13, 17-18, 25-28, 36, 38, 40-41, 44-52",
+            "mixed_ep": "4, 19, 21, 37",
+            "filler_ep": "5-6, 8-9, 14-16, 20, 22-24, 29-35, 39, 42-43",
+            "anime_canon": null
+        },
+        "tokyo-revengers": {
+            "filler_id": "tokyo-revengers",
+            "manga_canon": "1-24",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "toradora": {
+            "filler_id": "toradora",
+            "manga_canon": "1-25",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "toriko": {
+            "filler_id": "toriko",
+            "manga_canon": "2-41, 44-50, 52-68, 71-79, 83-85, 87-98, 100-111, 114-123, 126-129, 132-135, 137-145",
+            "mixed_ep": null,
+            "filler_ep": "1, 42-43, 51, 69-70, 80-82, 86, 99, 112-113, 124-125, 130-131, 136, 146-147",
+            "anime_canon": null
+        },
+        "trigun": {
+            "filler_id": "trigun",
+            "manga_canon": "5, 7-8, 14",
+            "mixed_ep": "4, 9, 12, 15, 18",
+            "filler_ep": "1-3, 6, 10-11, 13, 16-17, 19-26",
+            "anime_canon": null
+        },
+        "tsugumomo": {
+            "filler_id": "tsugumomo",
+            "manga_canon": "1-3, 5-12",
+            "mixed_ep": null,
+            "filler_ep": "4",
+            "anime_canon": null
+        },
+        "tsukimonogatari": {
+            "filler_id": "tsukimonogatari",
+            "manga_canon": "1-4",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "uq-holder-magister-negi-magi-2": {
+            "filler_id": "uq-holder-magister-negi-magi-2",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "urusei-yatsura": {
+            "filler_id": "urusei-yatsura",
+            "manga_canon": "1-10, 12-15, 17-52, 54-70, 72-74, 76-77, 79-83, 86-90, 92, 94, 96-97, 102, 108-111, 113-115, 117, 119, 121-125, 127-137, 140, 142, 144-145, 147-149",
+            "mixed_ep": "11, 16, 53, 85, 91, 116, 120, 139, 141, 146",
+            "filler_ep": "71, 75, 78, 84, 93, 95, 98-101, 103-107, 112, 118, 126, 138, 143",
+            "anime_canon": null
+        },
+        "vampire-knight": {
+            "filler_id": "vampire-knight",
+            "manga_canon": "1-26",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "vinland-saga": {
+            "filler_id": "vinland-saga",
+            "manga_canon": "1-4, 7-24",
+            "mixed_ep": "6",
+            "filler_ep": "5",
+            "anime_canon": null
+        },
+        "we-never-learn-bokuben": {
+            "filler_id": "we-never-learn-bokuben",
+            "manga_canon": "1-17",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "when-they-cry": {
+            "filler_id": "when-they-cry",
+            "manga_canon": "1-62",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "x": {
+            "filler_id": "x",
+            "manga_canon": "1-24",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "yashahime-princess-half-demon": {
+            "filler_id": "yashahime-princess-half-demon",
+            "manga_canon": "1-6",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "akatsuki-no-yona": {
+            "filler_id": "akatsuki-no-yona",
+            "manga_canon": "1, 3-22, 24",
+            "mixed_ep": null,
+            "filler_ep": "2",
+            "anime_canon": null
+        },
+        "your-lie-april": {
+            "filler_id": "your-lie-april",
+            "manga_canon": "3-11, 13-21",
+            "mixed_ep": null,
+            "filler_ep": "1-2, 12, 22",
+            "anime_canon": null
+        },
+        "yowamushi-pedal": {
+            "filler_id": "yowamushi-pedal",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": "13-14",
+            "anime_canon": null
+        },
+        "yuyu-hakusho": {
+            "filler_id": "yuyu-hakusho",
+            "manga_canon": "1-10, 12, 14-106, 110, 112-113",
+            "mixed_ep": "11, 13",
+            "filler_ep": "114",
+            "anime_canon": "107-109, 111"
+        },
+        "yu-gi-oh": {
+            "filler_id": "yu-gi-oh",
+            "manga_canon": "1-3, 5-7, 9-11, 13-14, 18, 21-27",
+            "mixed_ep": null,
+            "filler_ep": "4, 8, 12, 15-17, 19-20",
+            "anime_canon": null
+        },
+        "yu-gi-oh-5ds": {
+            "filler_id": "yu-gi-oh-5ds",
+            "manga_canon": "1-66, 71-72, 80, 83-85, 94, 107-114, 117-118, 132-138, 142-145, 147-155",
+            "mixed_ep": "73, 81-82, 87-89, 119-121, 123, 125-130, 139",
+            "filler_ep": "67-70, 74-79, 86, 90-93, 95-106, 115-116, 122, 124, 131, 140-141",
+            "anime_canon": null
+        },
+        "yu-gi-oh-arc-v": {
+            "filler_id": "yu-gi-oh-arc-v",
+            "manga_canon": "1-18",
+            "mixed_ep": null,
+            "filler_ep": "19-20",
+            "anime_canon": null
+        },
+        "yu-gi-oh-capsule-monsters": {
+            "filler_id": "yu-gi-oh-capsule-monsters",
+            "manga_canon": "1-12",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "yu-gi-oh-duel-monsters": {
+            "filler_id": "yu-gi-oh-duel-monsters",
+            "manga_canon": "2-12, 14-24, 26-32, 35-40, 46-52, 54-69, 71-73, 75-78, 81-97, 122-134, 138-143, 199-224",
+            "mixed_ep": "1, 34, 53, 70, 79, 135, 137",
+            "filler_ep": "13, 25, 33, 41-45, 74, 80, 98-121, 136, 144-198, 225",
+            "anime_canon": null
+        },
+        "yu-gi-oh-gx": {
+            "filler_id": "yu-gi-oh-gx",
+            "manga_canon": "1-4, 7-8, 12, 24-26, 29-33, 44-46, 51-53, 55-59, 65, 67-69, 83-84, 93-95, 97-98, 100-104, 106-155, 157-160, 168-180",
+            "mixed_ep": "5-6, 10-11, 21-22, 27-28, 36-37, 39-41, 43, 48-50, 61-62, 70, 73, 75-79, 82, 87-89, 96, 99",
+            "filler_ep": "9, 13-20, 23, 34-35, 38, 42, 47, 54, 60, 63-64, 66, 71-72, 74, 80-81, 85-86, 90-92, 105, 156, 161-167",
+            "anime_canon": null
+        },
+        "yu-gi-oh-sevens": {
+            "filler_id": "yu-gi-oh-sevens",
+            "manga_canon": "1-4",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "yu-gi-oh-vrains": {
+            "filler_id": "yu-gi-oh-vrains",
+            "manga_canon": "1-12, 14-28, 30-37, 39-56",
+            "mixed_ep": null,
+            "filler_ep": "13, 29, 38",
+            "anime_canon": null
+        },
+        "yu-gi-oh-zexal": {
+            "filler_id": "yu-gi-oh-zexal",
+            "manga_canon": "1-4, 9-14, 19-20, 22-25, 33-35, 40-43, 46-49, 54-123",
+            "mixed_ep": "5-8, 17-18, 26-32, 36-39, 50-53",
+            "filler_ep": "15-16, 21, 44-45",
+            "anime_canon": null
+        },
+        "yu-no-girl-who-chants-love-bound-world": {
+            "filler_id": "yu-no-girl-who-chants-love-bound-world",
+            "manga_canon": "1-26",
+            "mixed_ep": null,
+            "filler_ep": null,
+            "anime_canon": null
+        },
+        "zatch-bell": {
+            "filler_id": "zatch-bell",
+            "manga_canon": "1-30, 36-88, 101-138",
+            "mixed_ep": null,
+            "filler_ep": "31-35, 89-100, 139-150",
+            "anime_canon": null
+        }
+    }
+}

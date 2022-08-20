@@ -211,9 +211,13 @@ async def get_manga_details_embed(name: str, user: Member) -> Embed:
         inline=True
     )
 
+    genres = list(data["genres"])
+    if len(genres) <= 0:
+        genres = ["None"]
+
     embd.add_field(
         name="Genres",
-        value="\n".join(list(data["genres"])),
+        value="\n".join(genres),
         inline=True
     )
 
