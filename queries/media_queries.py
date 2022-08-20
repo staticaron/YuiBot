@@ -52,3 +52,17 @@ media_status_query = """
         }
     }
 """
+
+media_rate_query = """
+    mutation($mediaID:Int!, $rating:Float){
+        SaveMediaListEntry(mediaId:$mediaID, score:$rating){
+            media{
+                id
+                title{
+                    english
+                    native
+                }
+            }
+        }
+    }
+"""

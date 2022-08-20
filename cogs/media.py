@@ -1,7 +1,7 @@
 from discord.ext import commands
-from discord import Interaction
 
 from helpers import general_helper, media_helper
+from config import ERROR_COLOR
 
 
 class MediaModule(commands.Cog):
@@ -66,14 +66,23 @@ class MediaModule(commands.Cog):
             return await ctx.reply("Please provide a valid subcommand. Try ```yui help rate```")
 
     @rate.command(name="anime", description="Rate anime", case_insensitive=True)
-    async def rate_anime(self, ctx: commands.Context, *anime):
+    async def rate_anime(self, ctx: commands.Context, *inputs):
 
         await ctx.trigger_typing()
 
-        anime = " ".join(anime)
+        rating = None
+        anime = None
+
+        try:
+            rating = float(inputs[-1])
+            anime = " ".join(inputs[:-1])
+        except Exception as e:
+            return await ctx.reply(embed=await general_helper.get_information_embed("Last parameter must be a decimal value representing the new score.", color=ERROR_COLOR))
 
         async def selection_reply():
             anime_id = data_elements[paginator.current_page].anilist_id
+
+            return await media_helper.rate_media(str(ctx.author.id), anime_id, rating)
 
         selection_result = await general_helper.get_media_selection_paginator(anime, selection_reply)
 
@@ -81,7 +90,7 @@ class MediaModule(commands.Cog):
         data_elements = selection_result.data_elements
 
         if selection_result.length() <= 0:
-            await ctx.reply(embed=selection_result.get_error_embed())
+            await ctx.reply(embed=await selection_result.get_error_embed())
         else:
             await paginator.send(ctx)
 
