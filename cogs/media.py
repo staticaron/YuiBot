@@ -94,6 +94,35 @@ class MediaModule(commands.Cog):
         else:
             await paginator.send(ctx)
 
+    @rate.command(name="manga", description="Rate manga", case_insensitive=True)
+    async def rate_anime(self, ctx: commands.Context, *inputs):
+
+        await ctx.trigger_typing()
+
+        rating = None
+        manga = None
+
+        try:
+            rating = float(inputs[-1])
+            manga = " ".join(inputs[:-1])
+        except Exception as e:
+            return await ctx.reply(embed=await general_helper.get_information_embed("Last parameter must be a decimal value representing the new score.", color=ERROR_COLOR))
+
+        async def selection_reply():
+            manga_id = data_elements[paginator.current_page].anilist_id
+
+            return await media_helper.rate_media(str(ctx.author.id), manga_id, rating)
+
+        selection_result = await general_helper.get_media_selection_paginator(manga, selection_reply, "MANGA")
+
+        paginator = selection_result.paginator
+        data_elements = selection_result.data_elements
+
+        if selection_result.length() <= 0:
+            await ctx.reply(embed=await selection_result.get_error_embed())
+        else:
+            await paginator.send(ctx)
+
 
 def setup(bot: commands.Bot):
     bot.add_cog(MediaModule())
