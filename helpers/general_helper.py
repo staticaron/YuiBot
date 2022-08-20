@@ -7,19 +7,21 @@ import jwt
 from views.select_view import SelectPaginator
 from managers import mongo_manager
 from helpers import general_helper
+from queries.search_queries import media_selection_query, character_selection_query
 import config
 
 """Just a way to transmit paginator and ids at the same time. Please no bully"""
 
+
 class MediaData:
-    anilist_id:int = None
+    anilist_id: int = None
     type = None
-    titles:list = None
-    genre:list = None
-    url:str = None
+    titles: list = None
+    genre: list = None
+    url: str = None
     image_link = None
 
-    def __init__(self, media_id:int, media_type:str="ANIME", title:list=None, genre:list=None, url:str=None, image_link:str=None):
+    def __init__(self, media_id: int, media_type: str = "ANIME", title: list = None, genre: list = None, url: str = None, image_link: str = None):
         self.anilist_id = media_id
         self.type = media_type
         self.titles = title
@@ -32,13 +34,14 @@ class MediaData:
             if title is not None:
                 return title
 
-class CharacterData:
-    anilist_id:int = None
-    titles:list = None
-    url:str = None
-    image_link:str = None
 
-    def __init__(self, character_id:int, character_titles:list=None, url:str=None, image_link:str=None) -> None:
+class CharacterData:
+    anilist_id: int = None
+    titles: list = None
+    url: str = None
+    image_link: str = None
+
+    def __init__(self, character_id: int, character_titles: list = None, url: str = None, image_link: str = None) -> None:
         self.anilist_id = character_id
         self.titles = character_titles
         self.url = url
@@ -49,12 +52,13 @@ class CharacterData:
             if i is not None:
                 return i
 
-class DataInclusivePaginator:
-    paginator:SelectPaginator = None
-    data_elements:list = None
-    data_type:str = None
 
-    def __init__(self, paginator, data_elements:list, data_type:str):
+class DataInclusivePaginator:
+    paginator: SelectPaginator = None
+    data_elements: list = None
+    data_type: str = None
+
+    def __init__(self, paginator, data_elements: list, data_type: str):
         self.paginator = paginator
         self.data_elements = data_elements
         self.data_type = data_type
@@ -65,15 +69,18 @@ class DataInclusivePaginator:
     async def get_error_embed(self):
         return await general_helper.get_information_embed(
             title="Damn",
-            description="No {} were found for that input".format(self.data_type),
+            description="No {} were found for that input".format(
+                self.data_type),
             color=config.ERROR_COLOR
         )
 
+
 """Returns an embed with specified details"""
 
-async def get_information_embed(title:str, color=config.NORMAL_COLOR, url:str=None, description:str=None, user:Member=None, thumbnail_link:str=None, fields:list=None) -> Embed:
 
-    embd:Embed = Embed(title=title, color=color)
+async def get_information_embed(title: str, color=config.NORMAL_COLOR, url: str = None, description: str = None, user: Member = None, thumbnail_link: str = None, fields: list = None) -> Embed:
+
+    embd: Embed = Embed(title=title, color=color)
     embd.timestamp = datetime.now()
 
     if url is not None:
@@ -83,7 +90,8 @@ async def get_information_embed(title:str, color=config.NORMAL_COLOR, url:str=No
         embd.description = description
 
     if user is not None:
-        embd.set_footer(icon_url=user.avatar.url, text="Requested by {}".format(user.name))
+        embd.set_footer(icon_url=user.avatar.url,
+                        text="Requested by {}".format(user.name))
 
     if thumbnail_link is not None:
         embd.set_thumbnail(url=thumbnail_link)
@@ -103,7 +111,8 @@ async def get_information_embed(title:str, color=config.NORMAL_COLOR, url:str=No
 
 """Returns the aniList id from anilist username"""
 
-async def get_id_from_anilist_username(username:str) -> int:
+
+async def get_id_from_anilist_username(username: str) -> int:
 
     query = """
         query($username:String){
@@ -114,10 +123,11 @@ async def get_id_from_anilist_username(username:str) -> int:
     """
 
     variables = {
-        "username" : username
+        "username": username
     }
 
-    resp = requests.post(config.ANILIST_BASE, json={"query" : query, "variables" : variables})
+    resp = requests.post(config.ANILIST_BASE, json={
+                         "query": query, "variables": variables})
 
     try:
         return resp.json()["data"]["User"]["id"]
@@ -127,15 +137,17 @@ async def get_id_from_anilist_username(username:str) -> int:
 
 """Returns the aniList Id from token"""
 
-async def get_id_from_token(token:str) -> str:
+
+async def get_id_from_token(token: str) -> str:
     data = jwt.decode(token, options={"verify_signature": False})
 
     return data["sub"]
 
 """Returns the aniList id from userID"""
 
-async def get_id_from_userID(userID:str) -> str:
-    
+
+async def get_id_from_userID(userID: str) -> str:
+
     data = await mongo_manager.manager.get_user(userID)
 
     if data is not None:
@@ -145,7 +157,8 @@ async def get_id_from_userID(userID:str) -> str:
 
 """Returns a formatted time string"""
 
-async def get_time_str_from_seconds(seconds:int, front_limit:int=None, back_limit:int=None):
+
+async def get_time_str_from_seconds(seconds: int, front_limit: int = None, back_limit: int = None):
 
     time_str = ""
 
@@ -169,7 +182,7 @@ async def get_time_str_from_seconds(seconds:int, front_limit:int=None, back_limi
         for i in range(len(time_markers) - ((len(time_markers) - front_limit))):
             if time_vals[i] > 0:
                 time_str += "{} {} ".format(time_vals[i], time_markers[i])
-        
+
         return (time_str if time_str != "" else "1 seconds")
 
     for i in range(len(time_vals)):
@@ -180,7 +193,8 @@ async def get_time_str_from_seconds(seconds:int, front_limit:int=None, back_limi
 
 """Check whether the user is registered with AniList account or not"""
 
-async def validate_user(ctx:commands.Context):
+
+async def validate_user(ctx: commands.Context):
 
     command_user = ctx.author
 
@@ -193,49 +207,27 @@ async def validate_user(ctx:commands.Context):
 
 """Short Cooldown Decorator"""
 
+
 def short_cooldown():
 
     return commands.cooldown(rate=1, per=5, type=commands.BucketType.user)
 
+
 """Returns a list of medias to select from"""
 
-async def get_media_selection_paginator(media_name:str, select_callback:callable, media_type="ANIME") -> DataInclusivePaginator:
 
-    media_query = """
-        query($search:String, $type:MediaType){
-            Page(page:0, perPage:5){
-                pageInfo{
-                    total
-                }
-                media(search:$search, sort:SEARCH_MATCH, type:$type){
-                    id 
-                    title{
-                        english
-                        romaji
-                    }
-                    siteUrl
-                    genres
-                    coverImage{
-                        medium
-                    }
-                    episodes
-                    chapters
-                    status
-                }
-            }
-        }
-    """
+async def get_media_selection_paginator(media_name: str, select_callback: callable, media_type="ANIME") -> DataInclusivePaginator:
 
     variables = {
-        "search" : media_name,
-        "type" : media_type
+        "search": media_name,
+        "type": media_type
     }
 
     anime_resp = requests.post(
         url=config.ANILIST_BASE,
         json={
-            "query" : media_query,
-            "variables" : variables
+            "query": media_selection_query,
+            "variables": variables
         }
     ).json()
 
@@ -251,13 +243,15 @@ async def get_media_selection_paginator(media_name:str, select_callback:callable
         )
 
         embd.description = "**Name** : [{name}]({url})\n**Episodes** : {episodes}\n**Status** : {status}".format(
-            name=(page_data["title"]["english"] if page_data["title"]["english"] is not None else page_data["title"]["romaji"]),
+            name=(page_data["title"]["english"] if page_data["title"]
+                  ["english"] is not None else page_data["title"]["romaji"]),
             url=page_data["siteUrl"],
             episodes=page_data["episodes"],
             status=page_data["status"]
         )
 
-        genres = ("\n".join(["{bullet}**{genre}**".format(bullet=config.BULLET_EMOTE, genre=genre) for genre in page_data["genres"]]) if len(page_data["genres"]) > 0 else None)
+        genres = ("\n".join(["{bullet}**{genre}**".format(bullet=config.BULLET_EMOTE, genre=genre)
+                  for genre in page_data["genres"]]) if len(page_data["genres"]) > 0 else None)
         embd.add_field(
             name="Genres",
             value=genres,
@@ -268,56 +262,28 @@ async def get_media_selection_paginator(media_name:str, select_callback:callable
 
         pages.append(embd)
         media_list.append(MediaData(page_data["id"]))
-        
+
     if len(pages) > 0:
         paginator = SelectPaginator(pages, select_callback)
     else:
-        paginator=None
+        paginator = None
 
     return DataInclusivePaginator(paginator, media_list, media_type)
 
 """Returns a list of characters to select from"""
 
-async def get_character_selection_paginator(character_name:str, select_callback:callable) -> DataInclusivePaginator:
-    
-    character_query = """
-        query($name:String){
-	        Page(page:0, perPage:5){
-                pageInfo{
-                    total
-                }
-                characters(search:$name, sort:SEARCH_MATCH){
-                    id
-                    name{
-                        full
-                        native
-                    }
-                    dateOfBirth {
-                        year
-                        month
-                        day
-                    }
-                    image{
-                        medium
-                    }
-                    siteUrl
-                    favourites
-                    gender
-                    age
-                }
-            } 
-        }
-    """
+
+async def get_character_selection_paginator(character_name: str, select_callback: callable) -> DataInclusivePaginator:
 
     variables = {
-        "name" : character_name
+        "name": character_name
     }
 
     ch_response = requests.post(
         url=config.ANILIST_BASE,
         json={
-            "query" : character_query,
-            "variables" : variables
+            "query": character_selection_query,
+            "variables": variables
         }
     ).json()
 
@@ -339,17 +305,18 @@ async def get_character_selection_paginator(character_name:str, select_callback:
             favorites=page_data["favourites"],
             age=page_data["age"],
             gender=page_data["gender"],
-            dob="{d} {m}".format(d=page_data["dateOfBirth"]["day"], m=page_data["dateOfBirth"]["month"])
+            dob="{d} {m}".format(
+                d=page_data["dateOfBirth"]["day"], m=page_data["dateOfBirth"]["month"])
         )
 
         embd.set_thumbnail(url=page_data["image"]["medium"])
 
         pages.append(embd)
         media_list.append(CharacterData(page_data["id"]))
-        
+
     if len(pages) > 0:
         paginator = SelectPaginator(pages, select_callback)
     else:
-        paginator=None
+        paginator = None
 
     return DataInclusivePaginator(paginator, media_list, "CHARACTER")

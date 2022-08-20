@@ -151,3 +151,57 @@ top_genre_query = """
     }
 
 """
+
+media_selection_query = """
+    query($search:String, $type:MediaType){
+        Page(page:0, perPage:5){
+            pageInfo{
+                total
+            }
+            media(search:$search, sort:SEARCH_MATCH, type:$type){
+                id 
+                title{
+                    english
+                    romaji
+                }
+                siteUrl
+                genres
+                coverImage{
+                    medium
+                }
+                episodes
+                chapters
+                status
+            }
+        }
+        }
+"""
+
+character_selection_query = """
+    query($name:String){
+        Page(page:0, perPage:5){
+            pageInfo{
+                total
+            }
+            characters(search:$name, sort:SEARCH_MATCH){
+                id
+                name{
+                    full
+                    native
+                }
+                dateOfBirth {
+                    year
+                    month
+                    day
+                }
+                image{
+                    medium
+                }
+                siteUrl
+                favourites
+                gender
+                age
+            }
+        } 
+    }
+"""

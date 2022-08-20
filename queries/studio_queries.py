@@ -1,4 +1,4 @@
-query = """
+studio_query = """
     query($search : String){
         Studio(search : $search){
             id

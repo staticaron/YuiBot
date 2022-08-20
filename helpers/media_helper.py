@@ -3,6 +3,7 @@ import requests
 
 from managers import mongo_manager
 from helpers import general_helper
+from queries.media_queries import progress_update_query
 import config
 
 
@@ -10,24 +11,10 @@ async def set_progress(userID: str, mediaID: int, progress: int) -> Embed:
 
     anilist_user = await mongo_manager.manager.get_user(userID)
 
-    query = """
-        mutation($mediaID:Int!, $progress:Int!){
-            SaveMediaListEntry(mediaId:$mediaID, progress:$progress){
-                mediaId
-                media{
-                    title{
-                        english
-                        native
-                    }
-                }
-            }
-        }
-        """
-
     resp = requests.post(
         url=config.ANILIST_BASE,
         json={
-            "query": query,
+            "query": progress_update_query,
             "variables": {
                 "mediaID": mediaID,
                 "progress": progress

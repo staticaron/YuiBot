@@ -58,6 +58,33 @@ class MediaModule(commands.Cog):
         else:
             await paginator.send(ctx)
 
+    """Rate Anime"""
+
+    @commands.group(name="rate", description="Group Container of rate commands", case_insensitive=True)
+    async def rate(self, ctx: commands.Context):
+        if ctx.subcommand_passed is None:
+            return await ctx.reply("Please provide a valid subcommand. Try ```yui help rate```")
+
+    @rate.command(name="anime", description="Rate anime", case_insensitive=True)
+    async def rate_anime(self, ctx: commands.Context, *anime):
+
+        await ctx.trigger_typing()
+
+        anime = " ".join(anime)
+
+        async def selection_reply():
+            anime_id = data_elements[paginator.current_page].anilist_id
+
+        selection_result = await general_helper.get_media_selection_paginator(anime, selection_reply)
+
+        paginator = selection_result.paginator
+        data_elements = selection_result.data_elements
+
+        if selection_result.length() <= 0:
+            await ctx.reply(embed=selection_result.get_error_embed())
+        else:
+            await paginator.send(ctx)
+
 
 def setup(bot: commands.Bot):
     bot.add_cog(MediaModule())

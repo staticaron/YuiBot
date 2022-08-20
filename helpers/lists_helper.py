@@ -4,7 +4,9 @@ from discord import Embed, Member
 from views.scroller import Scroller
 from managers import mongo_manager
 from helpers import general_helper
-from queries import fav_queries
+from queries.list_queries import list_query
+from queries.media_queries import media_status_query
+from queries.fav_queries import *
 import config
 
 all_lists = ["ptw", "ptr", "planning", "crt", "current", "watching", "wtc",
@@ -37,21 +39,12 @@ async def add_to_list(list_name: str, mediaID: int, user: Member, media_type: st
     if lst == "FAVOURITE":
         return await add_to_fav(mediaID, user, media_type)
 
-    list_query = """
-        mutation($id:Int!, $list:MediaListStatus){
-            SaveMediaListEntry(mediaId:$id, status:$list){
-                id 
-                status
-            }
-        }
-    """
-
     token = (await mongo_manager.manager.get_user(str(user.id)))["token"]
 
     list_resp = requests.post(
         url=config.ANILIST_BASE,
         json={
-            "query": list_query,
+            "query": media_status_query,
             "variables": {
                 "id": mediaID,
                 "list": lst
@@ -81,11 +74,11 @@ async def add_to_fav(mediaID: int, user: Member, media_type: str = "ANIME"):
     data = await mongo_manager.manager.get_user(str(user.id))
 
     if media_type == "ANIME":
-        fav_query = fav_queries.anime_query
+        fav_query = anime_query
     elif media_type == "MANGA":
-        fav_query = fav_queries.manga_query
+        fav_query = manga_query
     elif media_type == "CHARACTER":
-        fav_query = fav_queries.character_query
+        fav_query = character_query
 
     resp = requests.post(
         url=config.ANILIST_BASE,
@@ -119,34 +112,6 @@ async def add_to_fav(mediaID: int, user: Member, media_type: str = "ANIME"):
 async def get_list_paginator(target: Member, media_type: str = "ANIME", list_name: str = "CURRENT"):
 
     anilistID = await general_helper.get_id_from_userID(str(target.id))
-
-    list_query = """
-        query($id:Int!, $status:MediaListStatus, $media:MediaType){
-            MediaListCollection(userId:$id, type:$media, status:$status, sort:UPDATED_TIME_DESC){
-                lists{
-                    name
-                    entries{
-                        media{
-                            title{
-                                english
-                                romaji
-                            }
-                            siteUrl
-                            episodes
-                          	chapters
-                        }
-                        progress
-                    }
-                    isCustomList
-                }
-                user{
-                    avatar{
-                        medium
-                  }
-                }
-            }
-        }
-    """
 
     list_resp = requests.post(
         url=config.ANILIST_BASE,
@@ -218,9 +183,9 @@ async def get_list_paginator(target: Member, media_type: str = "ANIME", list_nam
 async def get_fav_paginator(target: Member, fav_type: str) -> Scroller:
 
     if fav_type == "ANIME":
-        fav_query = fav_queries.anime_list_query
+        fav_query = anime_list_query
     elif fav_type == "MANGA":
-        fav_query = fav_queries.manga_list_query
+        fav_query = manga_list_query
 
     anilistID = await general_helper.get_id_from_userID(str(target.id))
 
