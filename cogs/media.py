@@ -158,6 +158,27 @@ class MediaModule(commands.Cog):
         else:
             await paginator.send(ctx)
 
+    """Anime watch order"""
+    @commands.command(name="watch_order", aliases=["wo", "order"], description="Returns the watch order of the selected anime")
+    async def watch_order(self, ctx: commands.Context, *inputs):
+
+        anime = " ".join(inputs)
+
+        async def reply_callback():
+            mal_id = data_elements[paginator.current_page].mal_id
+
+            return await media_helper.get_watch_order_embd(mal_id, anime)
+
+        selector = await general_helper.get_media_selection_paginator(anime, reply_callback)
+
+        paginator = selector.paginator
+        data_elements = selector.data_elements
+
+        if selector.length() <= 0:
+            await ctx.reply(embed=await selector.get_error_embed())
+        else:
+            await paginator.send(ctx)
+
 
 def setup(bot: commands.Bot):
     bot.add_cog(MediaModule())

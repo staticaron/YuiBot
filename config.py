@@ -15,6 +15,8 @@ INVITE = None
 ANILIST_BASE = "https://graphql.anilist.co"
 ANILIST_LOGIN = "https://anilist.co/api/v2/oauth/authorize?client_id={client_id}&response_type=token"
 
+CHIAKI_BASE = "https://chiaki.vercel.app/get?group_id={}"
+
 # Colors
 NORMAL_COLOR = Color.dark_theme()
 INFO_COLOR = Color.gold()
