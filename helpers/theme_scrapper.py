@@ -29,15 +29,33 @@ async def get_themes_link(malID: int):
 
     for theme in opening_themes:
 
-        name = theme.find("span", attrs={"class": "theme-song-title"}).contents
-        url = theme.find("input", value=re.compile("spotify"))["value"]
+        name_container = theme.find(
+            "span", attrs={"class": "theme-song-title"})
+
+        if name_container is None:
+            continue
+
+        name = name_container.contents
+
+        url_container = theme.find("input", value=re.compile("spotify"))
+
+        url = url_container["value"] if url_container is not None else ""
 
         links["op"][name[0]] = url
 
     for theme in ending_themes:
 
-        name = theme.find("span", attrs={"class": "theme-song-title"}).contents
-        url = theme.find("input", value=re.compile("spotify"))["value"]
+        name_container = theme.find(
+            "span", attrs={"class": "theme-song-title"})
+
+        if name_container is None:
+            continue
+
+        name = name_container.contents
+
+        url_container = theme.find("input", value=re.compile("spotify"))
+
+        url = url_container["value"] if url_container is not None else ""
 
         links["ed"][name[0]] = url
 
@@ -62,13 +80,13 @@ async def get_themes_embed(malID: int) -> Embed:
 
     embd.add_field(
         name="Openings",
-        value=op_themes,
+        value=(op_themes if op_themes != "" else "Not Available"),
         inline=False
     )
 
     embd.add_field(
         name="Endings",
-        value=ed_themes,
+        value=(ed_themes if ed_themes != "" else "Not Available"),
         inline=False
     )
 
