@@ -160,6 +160,7 @@ media_selection_query = """
             }
             media(search:$search, sort:SEARCH_MATCH, type:$type){
                 id 
+                idMal
                 title{
                     english
                     romaji
@@ -174,7 +175,7 @@ media_selection_query = """
                 status
             }
         }
-        }
+    }
 """
 
 character_selection_query = """
