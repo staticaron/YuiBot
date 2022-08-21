@@ -1,6 +1,6 @@
 from discord.ext import commands
 
-from helpers import general_helper, media_helper
+from helpers import general_helper, media_helper, theme_scrapper
 from config import ERROR_COLOR
 
 
@@ -132,6 +132,29 @@ class MediaModule(commands.Cog):
 
         if selection_result.length() <= 0:
             await ctx.reply(embed=await selection_result.get_error_embed())
+        else:
+            await paginator.send(ctx)
+
+    """Get Anime Op/Ed"""
+    @commands.command(name="theme", aliases=["song", "op", "ed", "music"], description="Returns the links to opening and ending music of the provided anime")
+    async def get_themes(self, ctx: commands.Context, *inputs):
+
+        await ctx.trigger_typing()
+
+        anime = " ".join(inputs)
+
+        async def reply_callback():
+            selected_id = data_elements[paginator.current_page].mal_id
+
+            return await theme_scrapper.get_themes_embed(selected_id)
+
+        anime_selector = await general_helper.get_media_selection_paginator(anime, reply_callback)
+
+        paginator = anime_selector.paginator
+        data_elements = anime_selector.data_elements
+
+        if anime_selector.length() <= 0:
+            await ctx.reply(embed=await anime_selector.get_error_embed)
         else:
             await paginator.send(ctx)
 

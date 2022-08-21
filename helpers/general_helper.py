@@ -15,14 +15,16 @@ import config
 
 class MediaData:
     anilist_id: int = None
+    mal_id: int = None
     type = None
     titles: list = None
     genre: list = None
     url: str = None
     image_link = None
 
-    def __init__(self, media_id: int, media_type: str = "ANIME", title: list = None, genre: list = None, url: str = None, image_link: str = None):
+    def __init__(self, media_id: int, mal_id: int, media_type: str = "ANIME", title: list = None, genre: list = None, url: str = None, image_link: str = None):
         self.anilist_id = media_id
+        self.mal_id = mal_id
         self.type = media_type
         self.titles = title
         self.genre = genre
@@ -261,7 +263,7 @@ async def get_media_selection_paginator(media_name: str, select_callback: callab
         embd.set_thumbnail(url=page_data["coverImage"]["medium"])
 
         pages.append(embd)
-        media_list.append(MediaData(page_data["id"]))
+        media_list.append(MediaData(page_data["id"], page_data["idMal"]))
 
     if len(pages) > 0:
         paginator = SelectPaginator(pages, select_callback)
