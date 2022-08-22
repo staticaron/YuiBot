@@ -14,9 +14,10 @@ class ListsModule(commands.Cog):
     """
 
     @commands.group(name="anime", description="Commands about your anime lists")
+    @commands.check(general_helper.validate_user)
     async def anime_group(self, ctx: commands.Context):
         if ctx.subcommand_passed == None:
-            await ctx.reply("Please provide a valid subcommand. Try ```yui help anime```")
+            await ctx.reply("Please provide a valid subcommand.")
 
     """View Favorite Anime"""
 
@@ -44,6 +45,7 @@ class ListsModule(commands.Cog):
 
     @commands.command(name="addanime", aliases=["aa"], case_insensitive=True, description="Adds anime to your mentioned list")
     @commands.check(general_helper.validate_user)
+    @general_helper.short_cooldown()
     async def addanime(self, ctx: commands.Context, list_name: str, *anime):
 
         await ctx.trigger_typing()
@@ -80,6 +82,7 @@ class ListsModule(commands.Cog):
 
     @anime_group.command(name="ptw", aliases=["planning"], case_insensitive=True, description="Returns the planning list of the user/member")
     @commands.check(general_helper.validate_user)
+    @general_helper.short_cooldown()
     async def anime_planning_list(self, ctx: commands.Context, user: Member = None):
 
         await ctx.trigger_typing()
@@ -102,6 +105,7 @@ class ListsModule(commands.Cog):
 
     @anime_group.command(name="wtc", aliases=["watching"], case_insensitive=True, description="Returns the watching list of the user/member")
     @commands.check(general_helper.validate_user)
+    @general_helper.short_cooldown()
     async def anime_watching_list(self, ctx: commands.Context, user: Member = None):
 
         await ctx.trigger_typing()
@@ -124,6 +128,7 @@ class ListsModule(commands.Cog):
 
     @anime_group.command(name="comp", aliases=["completed"], case_insensitive=True, description="Returns the completed list of the user/member")
     @commands.check(general_helper.validate_user)
+    @general_helper.short_cooldown()
     async def anime_completed_list(self, ctx: commands.Context, user: Member = None):
 
         await ctx.trigger_typing()
@@ -146,6 +151,7 @@ class ListsModule(commands.Cog):
 
     @anime_group.command(name="drp", aliases=["dropped"], case_insensitive=True, description="Returns the dropped list of the user/member")
     @commands.check(general_helper.validate_user)
+    @general_helper.short_cooldown()
     async def anime_dropped_list(self, ctx: commands.Context, user: Member = None):
 
         await ctx.trigger_typing()
@@ -168,6 +174,7 @@ class ListsModule(commands.Cog):
 
     @anime_group.command(name="psd", aliases=["paused"], case_insensitive=True, description="Returns the paused list of the user/member")
     @commands.check(general_helper.validate_user)
+    @general_helper.short_cooldown()
     async def anime_paused_list(self, ctx: commands.Context, user: Member = None):
 
         await ctx.trigger_typing()
@@ -193,9 +200,11 @@ class ListsModule(commands.Cog):
     """
 
     @commands.group(name="manga", description="Commands about your manga lists")
+    @commands.check(general_helper.validate_user)
+    @general_helper.short_cooldown()
     async def manga_group(self, ctx: commands.Context):
         if ctx.subcommand_passed == None:
-            await ctx.reply("Please provide a valid subcommand. Try ```yui help manga```")
+            await ctx.reply("Please provide a valid subcommand.")
 
     """View Favorite Manga"""
 
@@ -223,6 +232,7 @@ class ListsModule(commands.Cog):
 
     @commands.command(name="addmanga", aliases=["am"], case_insensitive=True, description="Adds anime to your mentioned list")
     @commands.check(general_helper.validate_user)
+    @general_helper.short_cooldown()
     async def addmanga(self, ctx: commands.Context, list_name: str, *manga):
 
         await ctx.trigger_typing()
@@ -259,6 +269,7 @@ class ListsModule(commands.Cog):
 
     @manga_group.command(name="ptr", aliases=["planning"], case_insensitive=True, description="Returns the planning list of the user/member")
     @commands.check(general_helper.validate_user)
+    @general_helper.short_cooldown()
     async def manga_planning_list(self, ctx: commands.Context, user: Member = None):
 
         await ctx.trigger_typing()
@@ -281,6 +292,7 @@ class ListsModule(commands.Cog):
 
     @manga_group.command(name="rd", aliases=["reading"], case_insensitive=True, description="Returns the watching list of the user/member")
     @commands.check(general_helper.validate_user)
+    @general_helper.short_cooldown()
     async def manga_reading_list(self, ctx: commands.Context, user: Member = None):
 
         await ctx.trigger_typing()
@@ -303,6 +315,7 @@ class ListsModule(commands.Cog):
 
     @manga_group.command(name="comp", aliases=["completed"], case_insensitive=True, description="Returns the completed list of the user/member")
     @commands.check(general_helper.validate_user)
+    @general_helper.short_cooldown()
     async def manga_completed_list(self, ctx: commands.Context, user: Member = None):
 
         await ctx.trigger_typing()
@@ -325,6 +338,7 @@ class ListsModule(commands.Cog):
 
     @manga_group.command(name="drp", aliases=["dropped"], case_insensitive=True, description="Returns the dropped list of the user/member")
     @commands.check(general_helper.validate_user)
+    @general_helper.short_cooldown()
     async def manga_dropped_list(self, ctx: commands.Context, user: Member = None):
 
         await ctx.trigger_typing()
@@ -347,6 +361,7 @@ class ListsModule(commands.Cog):
 
     @manga_group.command(name="psd", aliases=["paused"], case_insensitive=True, description="Returns the paused list of the user/member")
     @commands.check(general_helper.validate_user)
+    @general_helper.short_cooldown()
     async def manga_paused_list(self, ctx: commands.Context, user: Member = None):
 
         await ctx.trigger_typing()
