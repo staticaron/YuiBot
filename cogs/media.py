@@ -162,6 +162,8 @@ class MediaModule(commands.Cog):
     @commands.command(name="watch_order", aliases=["wo", "order"], description="Returns the watch order of the selected anime")
     async def watch_order(self, ctx: commands.Context, *inputs):
 
+        await ctx.trigger_typing()
+
         anime = " ".join(inputs)
 
         async def reply_callback():
