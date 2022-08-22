@@ -19,6 +19,7 @@ class Bot(commands.Bot):
 
     def __init__(self):
         super().__init__(command_prefix=self.prefix_callable, intents=self.intents)
+        self.remove_command("help")
 
         # load extensions
         for file in os.listdir("cogs"):
@@ -36,4 +37,6 @@ class Bot(commands.Bot):
             embd = Embed(title="Ya-Ho :wave:",
                          description=f"Prefix : **yui**\nLatency : **{round(self.latency * 1000, 2)} ms**\nInvite : [Click Here]({config.INVITE})", color=config.NORMAL_COLOR).set_thumbnail(url=self.user.avatar.url)
 
-            await message.channel.send(embed=embd)
+            return await message.channel.send(embed=embd)
+
+        await self.process_commands(message)
