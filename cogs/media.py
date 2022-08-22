@@ -19,7 +19,7 @@ class MediaModule(commands.Cog):
         anime = None
 
         try:
-            ep = float(inputs[-1])
+            ep = int(inputs[-1])
             anime = " ".join(inputs[:-1])
         except Exception as e:
             return await ctx.reply(embed=await general_helper.get_information_embed("Last parameter must be a decimal value representing the new score.", color=ERROR_COLOR))
@@ -53,7 +53,7 @@ class MediaModule(commands.Cog):
         anime = None
 
         try:
-            ep = float(inputs[-1])
+            ep = int(inputs[-1])
             anime = " ".join(inputs[:-1])
         except Exception as e:
             return await ctx.reply(embed=await general_helper.get_information_embed("Last parameter must be a decimal value representing the new score.", color=ERROR_COLOR))
@@ -113,7 +113,7 @@ class MediaModule(commands.Cog):
             await paginator.send(ctx)
 
     @rate.command(name="manga", description="Rate manga", case_insensitive=True)
-    async def rate_anime(self, ctx: commands.Context, *inputs):
+    async def rate_manga(self, ctx: commands.Context, *inputs):
 
         await ctx.trigger_typing()
 
