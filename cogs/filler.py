@@ -2,6 +2,7 @@ from discord.ext import commands
 from discord import Embed
 
 from views.scroller import Scroller
+from helpers import general_helper
 import config
 
 
@@ -91,7 +92,8 @@ class FillerModule(commands.Cog):
 
         return embds
 
-    @ commands.command(name="filler", description="Returns a list of all the recorded filler episodes of the anime")
+    @commands.command(name="filler", description="Returns a list of all the recorded filler episodes of the anime")
+    @general_helper.short_cooldown()
     async def filler(self, ctx: commands.Context, *anime):
         anime = " ".join(anime)
 

@@ -3,11 +3,13 @@ from discord.ext import commands
 
 from helpers import user_helper, general_helper
 
+
 class UserModule(commands.Cog):
 
     @commands.command(name="user", aliases=["info"], description="Returns the details of mentioned AniList user")
     @commands.check(general_helper.validate_user)
-    async def user_info(self, ctx:commands.Context, user:Member=None):
+    @general_helper.short_cooldown()
+    async def user_info(self, ctx: commands.Context, user: Member = None):
 
         await ctx.trigger_typing()
 
@@ -19,7 +21,8 @@ class UserModule(commands.Cog):
 
     @commands.command(name="follow", aliases=["addfollow"], description="Add the mentioned user to the following list.")
     @commands.check(general_helper.validate_user)
-    async def follow_user(self, ctx:commands.Context, target:Member):
+    @general_helper.short_cooldown()
+    async def follow_user(self, ctx: commands.Context, target: Member):
 
         await ctx.trigger_typing()
 
@@ -29,7 +32,7 @@ class UserModule(commands.Cog):
 
     @commands.command(name="unfollow", aliases=["removefollow"], description="Add the mentioned user to the following list.")
     @commands.check(general_helper.validate_user)
-    async def unfollow_user(self, ctx:commands.Context, target:Member):
+    async def unfollow_user(self, ctx: commands.Context, target: Member):
 
         await ctx.trigger_typing()
 
@@ -38,8 +41,9 @@ class UserModule(commands.Cog):
         await ctx.reply(embed=reply)
 
     @commands.command(name="animestats", aliases=["as", "statistics"], description="Returns the anime stats of a user")
+    @commands.check(general_helper.validate_user)
     @general_helper.short_cooldown()
-    async def anime_stats(self, ctx:commands.Context, target:Member=None):
+    async def anime_stats(self, ctx: commands.Context, target: Member = None):
 
         await ctx.trigger_typing()
 
@@ -50,8 +54,9 @@ class UserModule(commands.Cog):
         await ctx.send(embed=reply)
 
     @commands.command(name="mangastats", aliases=["ms"], description="Returns the manga stats of a user")
+    @commands.check(general_helper.validate_user)
     @general_helper.short_cooldown()
-    async def manga_stats(self, ctx:commands.Context, target:Member=None):
+    async def manga_stats(self, ctx: commands.Context, target: Member = None):
 
         await ctx.trigger_typing()
 
@@ -61,5 +66,6 @@ class UserModule(commands.Cog):
 
         await ctx.send(embed=reply)
 
-def setup(bot:commands.Bot):
+
+def setup(bot: commands.Bot):
     bot.add_cog(UserModule())

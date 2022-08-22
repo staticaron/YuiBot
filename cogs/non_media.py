@@ -7,6 +7,8 @@ from helpers import general_helper, non_media_helper
 class Non_Media_Module(commands.Cog):
 
     @commands.group(name="character", aliases=["char"], description="Commands related to managing characters in your anilist", case_insensitive=True)
+    @commands.check(general_helper.validate_user)
+    @general_helper.short_cooldown()
     async def character(self, ctx: commands.Context):
         if ctx.subcommand_passed == None:
             await ctx.reply("Please provide valid subcommand. Try ```yui help character```")

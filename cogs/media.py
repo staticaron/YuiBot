@@ -9,6 +9,8 @@ class MediaModule(commands.Cog):
     """Update the anime progress"""
 
     @commands.command(name="update_anime", aliases=["ua"], description="Sets the progress for the provided anime")
+    @commands.check(general_helper.validate_user)
+    @general_helper.short_cooldown()
     async def update_anime(self, ctx: commands.Context, *inputs):
 
         await ctx.trigger_typing()
@@ -41,6 +43,8 @@ class MediaModule(commands.Cog):
     """Update the manga progress"""
 
     @commands.command(name="update_manga", aliases=["um"], description="Sets the progress for the provided anime")
+    @commands.check(general_helper.validate_user)
+    @general_helper.short_cooldown()
     async def update_manga(self, ctx: commands.Context, *inputs):
 
         await ctx.trigger_typing()
@@ -73,6 +77,8 @@ class MediaModule(commands.Cog):
     """Rate Anime"""
 
     @commands.group(name="rate", description="Group Container of rate commands", case_insensitive=True)
+    @commands.check(general_helper.validate_user)
+    @general_helper.short_cooldown()
     async def rate(self, ctx: commands.Context):
         if ctx.subcommand_passed is None:
             return await ctx.reply("Please provide a valid subcommand. Try ```yui help rate```")
@@ -137,6 +143,7 @@ class MediaModule(commands.Cog):
 
     """Get Anime Op/Ed"""
     @commands.command(name="theme", aliases=["song", "op", "ed", "music"], description="Returns the links to opening and ending music of the provided anime")
+    @general_helper.short_cooldown()
     async def get_themes(self, ctx: commands.Context, *inputs):
 
         await ctx.trigger_typing()
@@ -160,7 +167,10 @@ class MediaModule(commands.Cog):
 
     """Anime watch order"""
     @commands.command(name="watch_order", aliases=["wo", "order"], description="Returns the watch order of the selected anime")
+    @general_helper.short_cooldown()
     async def watch_order(self, ctx: commands.Context, *inputs):
+
+        await ctx.trigger_typing()
 
         anime = " ".join(inputs)
 

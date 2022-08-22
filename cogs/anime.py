@@ -7,7 +7,7 @@ import config
 class AnimeModule(commands.Cog):
 
     @commands.command(name="quote", description="Returns a random anime quote")
-    @commands.cooldown(rate=5, per=30*60, type=commands.BucketType.user)
+    @general_helper.short_cooldown()
     async def anime_quote(self, ctx: commands.Context):
 
         await ctx.trigger_typing()

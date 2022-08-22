@@ -1,7 +1,7 @@
 from discord.ext import commands
 
 from managers import cache_manager
-from helpers import search_helper
+from helpers import search_helper, general_helper
 import config
 
 
@@ -10,6 +10,7 @@ class SearchModule(commands.Cog):
     """Find Group"""
 
     @commands.group(name="search", aliases=["find"], description="Commands for searching Anime and Manga")
+    @general_helper.short_cooldown()
     async def search_group(self, ctx: commands.Context):
         await ctx.trigger_typing()
         if ctx.subcommand_passed is None:
