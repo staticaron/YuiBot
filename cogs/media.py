@@ -146,7 +146,7 @@ class MediaModule(commands.Cog):
     """Get Anime Op/Ed"""
     @commands.command(name="theme", aliases=["song", "op", "ed", "music"], description="Returns the links to opening and ending music of the provided anime")
     @general_helper.short_cooldown()
-    async def get_themes(self, ctx: commands.Context, *inputs):
+    async def themes(self, ctx: commands.Context, *inputs):
 
         await ctx.trigger_typing()
 

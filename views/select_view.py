@@ -22,13 +22,14 @@ class SelectView(View):
 
     async def main_callback(self, interaction: Interaction):
 
+        await interaction.response.defer()
+
         reply = await self.reply_callback()
 
         if isinstance(reply, Embed):
-            await interaction.response.send_message(embed=reply)
+            await interaction.followup.send(embed=reply)
         elif isinstance(reply, pages.Paginator):
             await reply.respond(interaction)
-
 
 class SelectPaginator(pages.Paginator):
 
