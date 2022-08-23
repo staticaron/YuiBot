@@ -10,6 +10,10 @@ ANILIST_TOKEN = None
 MONGO_SRV = None
 DB = "youranimedb"
 INVITE = None
+SUPPORT_SERVER_LINK = "https://discord.gg/AbfZPyx5MH"
+
+# Loggers
+SERVER_LOG_CHANNEL = 1011530425023344722
 
 # URL Bases
 ANILIST_BASE = "https://graphql.anilist.co"
