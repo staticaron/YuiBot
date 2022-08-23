@@ -41,7 +41,7 @@ class ListsModule(commands.Cog):
             )
             )
 
-    """Add Anime to Lists/Fav"""
+    """Add Anime to Lists"""
 
     @commands.command(name="addanime", aliases=["aa"], case_insensitive=True, description="Adds anime to your mentioned list")
     @commands.check(general_helper.validate_user)

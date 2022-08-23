@@ -29,6 +29,9 @@ class Scroller(pages.Paginator):
         if show_all_btns:
             buttons.append(last_btn)
 
+        for i in range(len(pages)):
+            pages[i].set_footer(text=f"Page {i+1} of {len(pages)}")
+
         super().__init__(
             pages,
             loop_pages=True,
