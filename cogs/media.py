@@ -19,10 +19,11 @@ class MediaModule(commands.Cog):
         anime = None
 
         try:
-            ep = int(inputs[-1])
             anime = " ".join(inputs[:-1])
+            ep = int(inputs[-1])
         except Exception as e:
-            return await ctx.reply(embed=await general_helper.get_information_embed("Last parameter must be a decimal value representing the new score.", color=ERROR_COLOR))
+            ep = -1
+            anime = inputs[-1]
 
         async def reply_callback():
 
@@ -50,13 +51,14 @@ class MediaModule(commands.Cog):
         await ctx.trigger_typing()
 
         ep = None
-        anime = None
+        manga = None
 
         try:
+            manga = " ".join(inputs[:-1])
             ep = int(inputs[-1])
-            anime = " ".join(inputs[:-1])
         except Exception as e:
-            return await ctx.reply(embed=await general_helper.get_information_embed("Last parameter must be a decimal value representing the new score.", color=ERROR_COLOR))
+            ep = -1
+            manga = inputs[-1]
 
         async def reply_callback():
 
@@ -64,7 +66,7 @@ class MediaModule(commands.Cog):
 
             return await media_helper.set_progress(str(ctx.author.id), mediaID, ep)
 
-        data_inclusive_paginator = await general_helper.get_media_selection_paginator(anime, reply_callback, "MANGA")
+        data_inclusive_paginator = await general_helper.get_media_selection_paginator(manga, reply_callback, "MANGA")
 
         paginator = data_inclusive_paginator.paginator
         data_elements = data_inclusive_paginator.data_elements

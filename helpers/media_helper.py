@@ -4,13 +4,31 @@ import requests
 from views.scroller import Scroller
 from managers import mongo_manager
 from helpers import general_helper
-from queries.media_queries import progress_update_query, media_rate_query
+from queries.media_queries import progress_query, progress_update_query, media_rate_query
 import config
 
 
 async def set_progress(userID: str, mediaID: int, progress: int) -> Embed:
 
     anilist_user = await mongo_manager.manager.get_user(userID)
+
+    if progress == -1:
+        progress_resp = requests.post(
+            url=config.ANILIST_BASE,
+            json={
+                "query" : progress_query,
+                "variables" : {
+                    "mediaID" : mediaID
+                }
+            },
+            headers={
+                "Authorization" : anilist_user["token"]
+            }
+        ).json()
+
+        data = progress_resp["data"]["Media"]["mediaListEntry"]
+
+        progress = data["progress"] + 1
 
     resp = requests.post(
         url=config.ANILIST_BASE,
