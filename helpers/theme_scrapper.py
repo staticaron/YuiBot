@@ -1,14 +1,14 @@
-from discord import Embed
 from bs4 import BeautifulSoup as bs
 import requests
 import re
 
+from views.scroller import Scroller
 from helpers import general_helper
 
 
 async def get_themes_link(malID: int):
     links = {
-        "name": {},
+        "name": "",
         "op": {},
         "ed": {}
     }
@@ -16,7 +16,7 @@ async def get_themes_link(malID: int):
     html = requests.get(f"https://myanimelist.net/anime/{malID}/").text
     soup = bs(html, "html.parser")
 
-    links["name"] = name = soup.find("div", id="myanimelist").find(
+    links["name"] = soup.find("div", id="myanimelist").find(
         "div", class_="wrapper").find("div", id="contentWrapper").find("strong").string
 
     ending_divs = soup.find(
@@ -62,32 +62,27 @@ async def get_themes_link(malID: int):
     return links
 
 
-async def get_themes_embed(malID: int) -> Embed:
+async def get_themes_embed(malID: int) -> Scroller:
 
     links = await get_themes_link(malID)
-
-    embd = (await general_helper.get_information_embed(
-        title="Op/Ed for {}".format(links["name"].capitalize())))
 
     op_themes = ""
     ed_themes = ""
 
     for name, url in links["op"].items():
-        op_themes += "**{}** : [Spotify]({}) \n".format(name, url)
+        op_themes += "**{}**: [Spotify]({}) \n".format(name, url)
 
     for name, url in links["ed"].items():
-        ed_themes += "**{}** : [Spotify]({}) \n".format(name, url)
+        ed_themes += "**{}**: [Spotify]({}) \n".format(name, url)
 
-    embd.add_field(
-        name="Openings",
-        value=(op_themes if op_themes != "" else "Not Available"),
-        inline=False
-    )
+    op_embd = (await general_helper.get_information_embed(
+        title="Openings for {}".format(links["name"].capitalize())))
 
-    embd.add_field(
-        name="Endings",
-        value=(ed_themes if ed_themes != "" else "Not Available"),
-        inline=False
-    )
+    op_embd.description = op_themes
 
-    return embd
+    ed_embd = (await general_helper.get_information_embed(
+        title="Endings for {}".format(links["name"].capitalize())))
+
+    ed_embd.description = ed_themes
+
+    return Scroller(pages=[op_embd, ed_embd], show_all_btns=False)

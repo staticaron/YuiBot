@@ -1,3 +1,13 @@
+progress_query = """
+    query($mediaID:Int!){
+        Media(id:$mediaID){
+            mediaListEntry{
+                progress
+            }
+        }
+    }
+"""
+
 progress_update_query = """
     mutation($mediaID:Int!, $progress:Int!){
         SaveMediaListEntry(mediaId:$mediaID, progress:$progress){

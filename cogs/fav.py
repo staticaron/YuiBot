@@ -11,6 +11,9 @@ class FavModule(commands.Cog):
 
     @toggle_fav.command(name="anime", aliases=["a"], description="Adds/Removes anime to favs", case_insensitive=True)
     async def fav_anime(self, ctx:commands.Context, *inputs):
+
+        await ctx.trigger_typing()
+
         anime = " ".join(inputs)
 
         async def reply_callback():
@@ -31,6 +34,9 @@ class FavModule(commands.Cog):
 
     @toggle_fav.command(name="manga", aliases=["m"], description="Adds/Removes manga to favs", case_insensitive=True)
     async def fav_manga(self, ctx:commands.Context, *inputs):
+        
+        await ctx.trigger_typing()
+
         manga = " ".join(inputs)
 
         async def reply_callback():
@@ -51,6 +57,9 @@ class FavModule(commands.Cog):
 
     @toggle_fav.command(name="character", aliases=["c", "char"], description="Adds/Removes characters to favs", case_insensitive=True)
     async def fav_char(self, ctx:commands.Context, *inputs):
+
+        await ctx.trigger_typing()
+
         char = " ".join(inputs)
 
         async def reply_callback():
