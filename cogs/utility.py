@@ -1,5 +1,6 @@
 from discord.ext import commands
 
+from helpers import general_helper
 import config
 
 
@@ -15,7 +16,15 @@ class UtilityModule(commands.Cog):
     async def invite(self, ctx: commands.Context):
 
         await ctx.trigger_typing()
-        await ctx.reply(f"Invite Yui with this link : {config.INVITE}")
+
+        await ctx.send(embed=await general_helper.get_information_embed(title="Invite Me!", description="[Click Here]({}) to invite me to your server.".format(config.INVITE), thumbnail_link=ctx.bot.user.avatar.url))
+
+    @commands.command(name="support", aliases=["server"], description="Sends Link to join the official support server.")
+    async def support(self, ctx: commands.Context):
+
+        await ctx.trigger_typing()
+
+        await ctx.send(embed=await general_helper.get_information_embed(title="Support Server!", description="[Click Here]({}) to join the support server.".format(config.SUPPORT_SERVER_LINK), thumbnail_link=ctx.bot.user.avatar.url))
 
 
 def setup(bot: commands.Bot):
