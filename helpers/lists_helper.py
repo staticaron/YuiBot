@@ -25,8 +25,6 @@ lists = {
     "completed": "COMPLETED",
     "drp": "DROPPED",
     "dropped": "DROPPED",
-    "fav": "FAVOURITE",
-    "favorite": "FAVOURITE"
 }
 
 """Adds specified anime to the specified list"""
@@ -35,9 +33,6 @@ lists = {
 async def add_to_list(list_name: str, mediaID: int, user: Member, media_type: str = "ANIME") -> Embed:
 
     lst = lists[list_name]
-
-    if lst == "FAVOURITE":
-        return await add_to_fav(mediaID, user, media_type)
 
     token = (await mongo_manager.manager.get_user(str(user.id)))["token"]
 
@@ -73,11 +68,16 @@ async def add_to_fav(mediaID: int, user: Member, media_type: str = "ANIME"):
 
     data = await mongo_manager.manager.get_user(str(user.id))
 
+    entity_type = ""
+
     if media_type == "ANIME":
+        entity_type = "anime"
         fav_query = anime_query
     elif media_type == "MANGA":
+        entity_type = "manga"
         fav_query = manga_query
     elif media_type == "CHARACTER":
+        entity_type = "characters"
         fav_query = character_query
 
     resp = requests.post(
@@ -103,9 +103,11 @@ async def add_to_fav(mediaID: int, user: Member, media_type: str = "ANIME"):
             color=config.ERROR_COLOR
         )
 
+    new_fav_list = [fav["id"] for fav in fav_data["ToggleFavourite"][entity_type]["nodes"]]
+
     return await general_helper.get_information_embed(
         title="Done",
-        description="That {} was added to your favourite. ".format(media_type)
+        description="`{}` was **{}** ".format(media_type, "added to Favorites" if int(mediaID) in new_fav_list else "removed from Favorites")
     )
 
 
@@ -208,7 +210,7 @@ async def get_fav_paginator(target: Member, fav_type: str) -> Scroller:
 
     pages = []
 
-    current_embd = Embed(
+    current_embd = await general_helper.get_information_embed(
         title="Favourite {}".format(fav_type.capitalize()),
         description="Total : {} \n\n".format(len(entries))
     )
@@ -219,7 +221,7 @@ async def get_fav_paginator(target: Member, fav_type: str) -> Scroller:
 
         if current_entries_count > MAX_ENTRIES_PER_PAGE:
             pages.append(current_embd)
-            current_embd = Embed(
+            current_embd = await general_helper.get_information_embed(
                 title="Favourite {}".format(fav_type.capitalize()),
                 description="Total : {} \n\n".format(entries_size)
             )

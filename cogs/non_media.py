@@ -14,33 +14,13 @@ class Non_Media_Module(commands.Cog):
             await ctx.reply("Please provide valid subcommand. Try ```yui help character```")
 
     @character.command(name="fav", description="Returns your favorite characters if no param is provided else adds the provided character to favorites", case_insensitive=True)
-    async def favorite(self, ctx: commands.Context, *character):
+    async def favorite(self, ctx: commands.Context):
 
         await ctx.trigger_typing()
 
-        if len(character) <= 0:
+        fav_scroller = await non_media_helper.get_fav_character_scroller(ctx.author)
 
-            fav_scroller = await non_media_helper.get_fav_character_scroller(ctx.author)
-
-            return await fav_scroller.send(ctx)
-
-        character = " ".join(character)
-
-        async def character_selection_callback():
-            character_id = ids[response.paginator.current_page]
-
-            return await non_media_helper.add_fav_character(ctx.author, int(character_id))
-
-        response = await general_helper.get_character_selection_paginator(character, character_selection_callback)
-
-        paginator: pages.Paginator = response.paginator
-        ids = [str(data_element.anilist_id)
-               for data_element in response.data_elements]
-
-        if response.length() > 0:
-            await paginator.send(ctx)
-        else:
-            await ctx.reply(embed=await response.get_error_embed())
+        return await fav_scroller.send(ctx)
 
 
 def setup(bot: commands.Bot):
