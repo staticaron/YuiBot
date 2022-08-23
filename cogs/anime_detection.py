@@ -1,5 +1,7 @@
 from discord.ext import commands
+from discord import Embed
 
+from views.scroller import Scroller
 from helpers import anime_detection_helper, general_helper
 
 
@@ -11,10 +13,12 @@ class AnimeDetection(commands.Cog):
 
         await ctx.trigger_typing()
 
-        embd = await anime_detection_helper.get_embed(url)
+        output = await anime_detection_helper.get_all_detected_anime_scroller(url)
 
-        await ctx.reply(embed=embd)
-
+        if isinstance(output, Embed):
+            await ctx.reply(embed=output)
+        elif isinstance(output, Scroller):
+            await output.send(ctx)
 
 def setup(bot: commands.Bot):
     bot.add_cog(AnimeDetection())

@@ -1,62 +1,44 @@
 from discord import Embed
-import requests
-import urllib.parse
-import re
+import tracemoepy
+from tracemoepy.errors import *
 
+from views.scroller import Scroller
 from helpers import general_helper
 from config import NORMAL_COLOR, ERROR_COLOR
 
-async def get_embed(url:str) -> Embed:
 
-    resp = requests.get("https://api.trace.moe/search?url={}".format(urllib.parse.quote_plus(url))).json()
+"""Returns a list of matched anime"""
 
-    try:
-        top_result = resp["result"][0]
-    except Exception as e:
 
-        if resp["error"].startswith("Failed to fetch image"):
-            return await general_helper.get_information_embed("Unable to Fetch Image from the url.", description="The url doesn't leads to a valid image. Url ending with `.jpg`, `.png`, `.gif` are supported.", color=ERROR_COLOR)
+async def get_all_detected_anime_scroller(url: str):
 
-        return await general_helper.get_information_embed("Unable to detect.", color=ERROR_COLOR, description="The following error occurred : ```{}```".format(resp["error"]))
+    async with tracemoepy.AsyncTrace() as tracemoe:
+        try:
+            results = await tracemoe.search(url, is_url=True)
+        except TooManyRequests as t:
+            return await general_helper.get_information_embed(title="Too Many Requests", color=ERROR_COLOR)
+        except ServerError as s:
+            return await general_helper.get_information_embed(title="Image Error", color=ERROR_COLOR)
+        else:
+            embds = []
 
-    name = top_result["filename"]
-    name = name.replace("-", "")
+            sfw_results = [x for x in results.result if x.anilist.isAdult is False]
 
-    if getLeadingGateStuff(name) is not None:
-        name = name.replace(getLeadingGateStuff(name), "")
-    
-    if getTrailingParenthesisStuff(name) is not None:
-        name = name.replace(getTrailingParenthesisStuff(name), "")
+            for result in sfw_results:
 
-    name = name.removesuffix(".mp4").strip()
-    name = name.removesuffix("RAW").strip()
+                name = result.anilist.title.english or result.anilist.title.native
 
-    image = top_result["image"]
-    similarity = str(int(top_result["similarity"] * 100)) + "%"
-    url = "https://anilist.co/anime/{}/".format(top_result["anilist"])
-    video = top_result["video"]
+                image = result.image
+                similarity = str(round(result.similarity * 100, 3)) + "%"
+                url = "https://anilist.co/anime/{}/".format(result.anilist.id)
+                video = result.video
 
-    embd = Embed(title="Detected", color=NORMAL_COLOR, description="")
-    embd.description += "**Name** : [{}]({})\n**Similarity** : {}\n**Reference : [click here]({})**".format(name, url, similarity, video)
+                embd = Embed(title="Detected", color=NORMAL_COLOR, description="")
+                embd.description += "**Name** : [{}]({})\n**Similarity** : {}\n**Reference : [click here]({})**".format(
+                    name, url, similarity, video)
 
-    embd.set_image(url=image)
+                embd.set_image(url=image)
 
-    return embd
+                embds.append(embd)
 
-def getLeadingGateStuff(input):
-    regex = r"\[(.*?)\]"
-    matches = re.findall(regex, input)
-
-    if len(matches) > 0:
-        return "[" + matches[-1] + "]"
-    else:
-        return None
-
-def getTrailingParenthesisStuff(input):
-    regex = r"\((.*?)\)"
-    matches = re.findall(regex, input)
-
-    if len(matches) > 0:
-        return "(" + matches[-1] + ")"
-    else:
-        return None
+            return Scroller(pages=embds, show_all_btns=True)
