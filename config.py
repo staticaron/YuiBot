@@ -11,6 +11,7 @@ MONGO_SRV = None
 DB = "youranimedb"
 INVITE = None
 SUPPORT_SERVER_LINK = "https://discord.gg/AbfZPyx5MH"
+VOTE_LINK = "https://top.gg/bot/991739924250362047"
 
 # Loggers
 SERVER_LOG_CHANNEL = 1011530425023344722

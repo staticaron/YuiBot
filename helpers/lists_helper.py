@@ -1,6 +1,7 @@
 import requests
 from discord import Embed, Member
 
+from utils.errors.UserNotFound import UserNotFound
 from views.scroller import Scroller
 from managers import mongo_manager
 from helpers import general_helper
@@ -34,7 +35,8 @@ async def add_to_list(list_name: str, mediaID: int, user: Member, media_type: st
 
     lst = lists[list_name]
 
-    token = (await mongo_manager.manager.get_user(str(user.id)))["token"]
+    anilist_user = await mongo_manager.manager.get_user(str(user.id))
+    token = anilist_user["token"]
 
     list_resp = requests.post(
         url=config.ANILIST_BASE,
@@ -114,6 +116,9 @@ async def add_to_fav(mediaID: int, user: Member, media_type: str = "ANIME"):
 async def get_list_paginator(target: Member, media_type: str = "ANIME", list_name: str = "CURRENT"):
 
     anilistID = await general_helper.get_id_from_userID(str(target.id))
+
+    if anilistID is None:
+        raise UserNotFound(user=target)
 
     list_resp = requests.post(
         url=config.ANILIST_BASE,

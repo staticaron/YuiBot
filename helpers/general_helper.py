@@ -4,6 +4,7 @@ from datetime import datetime
 import requests
 import jwt
 
+from utils.errors.UserNotFound import UserNotFound
 from views.select_view import SelectPaginator
 from managers import mongo_manager
 from helpers import general_helper
@@ -155,7 +156,7 @@ async def get_id_from_userID(userID: str) -> str:
     if data is not None:
         return data["anilistID"]
     else:
-        return None
+        raise UserNotFound(user_id=userID)
 
 """Returns a formatted time string"""
 
