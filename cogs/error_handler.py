@@ -4,6 +4,7 @@ import traceback
 import sys
 
 from helpers import general_helper
+from utils.errors.UserNotFound import UserNotFound
 import config
 
 
@@ -35,6 +36,12 @@ class ErrorHandlerModule(commands.Cog):
                 await ctx.author.send(f'{ctx.command} can not be used in Private Messages.')
             except:
                 pass
+
+        elif isinstance(error, UserNotFound):
+            if error.user is not None:
+                await ctx.reply(embed=await general_helper.get_information_embed(title="Whoops", description=f"{error.user.mention} haven't logged in yet. Ask them to log in first.", color=config.ERROR_COLOR))
+            else:  
+                await ctx.reply(embed=await general_helper.get_information_embed(title="Whoops", description=f"<@{error.user_id}> haven't logged in yet. Ask them to log in first.", color=config.ERROR_COLOR))
 
         elif isinstance(error, commands.CommandOnCooldown):
             time = int(ctx.command.get_cooldown_retry_after(ctx))

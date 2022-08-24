@@ -9,13 +9,13 @@ class UserModule(commands.Cog):
     @commands.command(name="user", aliases=["info"], description="Returns the details of mentioned AniList user")
     @commands.check(general_helper.validate_user)
     @general_helper.short_cooldown()
-    async def user_info(self, ctx: commands.Context, user: Member = None):
+    async def user_info(self, ctx: commands.Context, target: Member = None):
 
         await ctx.trigger_typing()
 
-        user = (ctx.author if user is None else user)
+        target = (ctx.author if target is None else target)
 
-        reply = await user_helper.get_user_embed(str(user.id))
+        reply = await user_helper.get_user_embed(str(target.id))
 
         await ctx.send(embed=reply)
 

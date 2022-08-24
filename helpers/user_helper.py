@@ -4,6 +4,7 @@ import requests
 from managers import mongo_manager
 from helpers import general_helper
 from queries.user_query import *
+from utils.errors.UserNotFound import UserNotFound
 import config
 
 """Check whether user is following the target on AniList"""
@@ -33,9 +34,12 @@ async def is_following(current_user_token: str, targetID: str) -> bool:
 """Get user information from AniList"""
 
 
-async def get_user_embed(userID: str) -> Embed:
+async def get_user_embed(targetID: str) -> Embed:
 
-    data = await mongo_manager.manager.get_user(userID)
+    data = await mongo_manager.manager.get_user(targetID)
+
+    if data is None:
+        raise UserNotFound(user_id=targetID)
 
     anilistID = int(data["anilistID"])
 
@@ -135,12 +139,7 @@ async def follow_user(user: Member, target: Member) -> Embed:
     target_data = await mongo_manager.manager.get_user(str(target.id))
 
     if target_data is None:
-        return await general_helper.get_information_embed(
-            title="Hold It",
-            description="<@{}> has not linked his account yet. Ask them to link their AniList account using `login` command.".format(
-                target.id),
-            color=config.ERROR_COLOR
-        )
+        raise UserNotFound(user=user)
 
     target_anilistID = target_data["anilistID"]
 
@@ -196,6 +195,10 @@ async def unfollow_user(user: Member, target: Member) -> Embed:
 
     # Get the target's anilist ID
     target_data = await mongo_manager.manager.get_user(str(target.id))
+
+    if target_data is None:
+        raise UserNotFound(user=target)
+
     target_anilistID = target_data["anilistID"]
 
     # Get the current user's token
