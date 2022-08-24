@@ -23,7 +23,7 @@ class MediaModule(commands.Cog):
             ep = int(inputs[-1])
         except Exception as e:
             ep = -1
-            anime = inputs[-1]
+            anime = " ".join(inputs)
 
         async def reply_callback():
 
@@ -58,7 +58,7 @@ class MediaModule(commands.Cog):
             ep = int(inputs[-1])
         except Exception as e:
             ep = -1
-            manga = inputs[-1]
+            manga = " ".join(inputs)
 
         async def reply_callback():
 
