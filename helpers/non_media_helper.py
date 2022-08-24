@@ -57,7 +57,7 @@ async def get_fav_character_scroller(user:Member) -> Scroller:
 
     pages = []
 
-    current_embd = Embed(
+    current_embd = await general_helper.get_information_embed(
         title="Favourite Characters",
         description="Total : {} \n\n".format(len(entries))
     )
@@ -68,7 +68,7 @@ async def get_fav_character_scroller(user:Member) -> Scroller:
 
         if current_entries_count > MAX_ENTRIES_PER_PAGE:
             pages.append(current_embd)
-            current_embd = Embed(
+            current_embd = await general_helper.get_information_embed(
                 title="Favourite Characters",
                 description="Total : {} \n\n".format(entries_size)
             )
