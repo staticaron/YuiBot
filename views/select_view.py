@@ -36,9 +36,9 @@ class SelectPaginator(pages.Paginator):
     def __init__(self, pages: list, reply_callable: callable, timeout: int = 30):
 
         prev_btn: PaginatorButton = PaginatorButton(
-            "prev", None, PREV_EMOTE, ButtonStyle.blurple)
+            "prev", None, PREV_EMOTE, ButtonStyle.gray)
         next_btn: PaginatorButton = PaginatorButton(
-            "next", None, NEXT_EMOTE, ButtonStyle.blurple)
+            "next", None, NEXT_EMOTE, ButtonStyle.gray)
 
         buttons = []
         buttons.append(prev_btn)
