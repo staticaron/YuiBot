@@ -26,22 +26,39 @@ async def get_media_details(name: str, type: MediaType, user: Member) -> dict:
     anilist_user = await mongo_manager.manager.get_user(str(user.id))
 
     if type is MediaType.ANIME:
-        query = anime_query
+        if anilist_user is not None:
+            query = anime_query_with_stats
+        else:
+            query = anime_query_without_stats
     else:
-        query = manga_query
+        if anilist_user is not None:
+            query = manga_query_with_stats
+        else:
+            query = manga_query_without_stats
 
-    resp = requests.post(
-        url=config.ANILIST_BASE,
-        json={
-            "query": query,
-            "variables": {
-                "search": name
+    try:
+        resp = requests.post(
+            url=config.ANILIST_BASE,
+            json={
+                "query": query,
+                "variables": {
+                    "search": name
+                }
+            },
+            headers={
+                "Authorization": anilist_user["token"]
             }
-        },
-        headers={
-            "Authorization": anilist_user["token"]
-        }
-    )
+        )
+    except:
+        resp = requests.post(
+            url=config.ANILIST_BASE,
+            json={
+                "query": query,
+                "variables": {
+                    "search": name
+                }
+            }
+        )
 
     return resp.json()
 
@@ -55,7 +72,7 @@ async def get_character_details(name: str, user: Member) -> dict:
     }
 
     resp = requests.post(config.ANILIST_BASE, json={
-                         "query": character_query, "variables": variables}, headers={"Authorization": anilist_user["token"]})
+                         "query": character_query_with_stats, "variables": variables}, headers={"Authorization": anilist_user["token"]})
 
     return resp.json()
 
@@ -172,20 +189,23 @@ async def get_anime_details_embed(name: str, user: Member) -> Embed:
     )
 
     # Footer
-    isFav = (f"🔘FAV : Yes" if data["isFavourite"] is True else "")
-    status = ("STATUS : " + data["mediaListEntry"]["status"]
-              if data["mediaListEntry"] is not None else "")
-    score = ((f"🔘SCORE : " + str(data["mediaListEntry"]["score"]) if data["mediaListEntry"]
-             ["score"] != 0 else "") if data["mediaListEntry"] is not None else "")
-    progress = (f"🔘PROGRESS : " + str(data["mediaListEntry"]
-                ["progress"] if data["mediaListEntry"] is not None else ""))
-    total = ("/" + str(data["mediaListEntry"]["media"]["episodes"]
-             if data["mediaListEntry"] is not None else ""))
+    try:
+        isFav = (f"🔘FAV : Yes" if data["isFavourite"] is True else "")
+        status = ("STATUS : " + data["mediaListEntry"]["status"]
+                if data["mediaListEntry"] is not None else "")
+        score = ((f"🔘SCORE : " + str(data["mediaListEntry"]["score"]) if data["mediaListEntry"]
+                ["score"] != 0 else "") if data["mediaListEntry"] is not None else "")
+        progress = (f"🔘PROGRESS : " + str(data["mediaListEntry"]
+                    ["progress"] if data["mediaListEntry"] is not None else ""))
+        total = ("/" + str(data["mediaListEntry"]["media"]["episodes"]
+                if data["mediaListEntry"] is not None else ""))
 
-    if not (isFav == "" and status == ""):
-        embd.set_footer(text="{status}{fav}{score}{progress}{total}".format(
-            status=status, fav=isFav, score=score, progress=progress, total=total))
-
+        if not (isFav == "" and status == ""):
+            embd.set_footer(text="{status}{fav}{score}{progress}{total}".format(
+                status=status, fav=isFav, score=score, progress=progress, total=total))
+    except:
+        pass
+    
     return embd
 
 

@@ -1,4 +1,4 @@
-anime_query = '''
+anime_query_with_stats = '''
         query ($search : String) { 
             Media (search:$search, type: ANIME, sort:SEARCH_MATCH) { 
                 id
@@ -50,7 +50,7 @@ anime_query = '''
         }
     '''
 
-manga_query = """
+manga_query_with_stats = """
     query ($search : String) { 
         Media (search:$search, type: MANGA, sort:SEARCH_MATCH) { 
             id
@@ -96,7 +96,7 @@ manga_query = """
     }
 """
 
-character_query = """
+character_query_with_stats = """
     query($search : String){
         Character(search :$search, sort:SEARCH_MATCH){
             id
@@ -130,6 +130,121 @@ character_query = """
             favourites
 
             isFavourite
+        }
+    }
+"""
+
+anime_query_without_stats = '''
+        query ($search : String) { 
+            Media (search:$search, type: ANIME, sort:SEARCH_MATCH) { 
+                id
+                title { 
+                    romaji
+                    english
+                    native
+                }
+                description(asHtml: false)
+                isAdult
+                trailer{
+                    id
+                    site
+                }
+                siteUrl
+                genres
+                episodes
+                duration
+                status
+                coverImage {
+                    large
+                }
+                startDate{
+                    day
+                    month
+                    year
+                }
+                averageScore
+                meanScore
+                favourites
+                format
+                studios{
+                    nodes{
+                        name
+                        siteUrl
+                    }
+                }
+            }
+        }
+    '''
+
+manga_query_without_stats = """
+    query ($search : String) { 
+        Media (search:$search, type: MANGA, sort:SEARCH_MATCH) { 
+            id
+            title {
+                romaji
+                english
+                native
+            }
+            description(asHtml: false)
+            isAdult
+            trailer{
+                id
+                site
+            }
+            siteUrl
+            genres
+            chapters
+            volumes
+            status
+            coverImage {
+                large
+            }
+            startDate{
+                day
+                month
+                year
+            }
+            averageScore
+            meanScore
+            favourites
+            format
+            popularity
+        }
+    }
+"""
+
+character_query_without_stats = """
+    query($search : String){
+        Character(search :$search, sort:SEARCH_MATCH){
+            id
+            name{
+                full
+                native
+                alternative
+            }
+            image{
+                medium
+            }
+            description(asHtml : false)
+            gender
+            dateOfBirth{
+                day
+                month
+                year
+            }
+            media(sort:POPULARITY_DESC){
+                nodes{
+                    title{
+                        english
+                        romaji
+                    }
+                    siteUrl
+                }
+            }
+            age
+            bloodType
+            siteUrl
+            favourites
         }
     }
 """
