@@ -26,22 +26,39 @@ async def get_media_details(name: str, type: MediaType, user: Member) -> dict:
     anilist_user = await mongo_manager.manager.get_user(str(user.id))
 
     if type is MediaType.ANIME:
-        query = anime_query
+        if anilist_user is not None:
+            query = anime_query_with_stats
+        else:
+            query = anime_query_without_stats
     else:
-        query = manga_query
+        if anilist_user is not None:
+            query = manga_query_with_stats
+        else:
+            query = manga_query_without_stats
 
-    resp = requests.post(
-        url=config.ANILIST_BASE,
-        json={
-            "query": query,
-            "variables": {
-                "search": name
+    try:
+        resp = requests.post(
+            url=config.ANILIST_BASE,
+            json={
+                "query": query,
+                "variables": {
+                    "search": name
+                }
+            },
+            headers={
+                "Authorization": anilist_user["token"]
             }
-        },
-        headers={
-            "Authorization": anilist_user["token"]
-        }
-    )
+        )
+    except:
+        resp = requests.post(
+            url=config.ANILIST_BASE,
+            json={
+                "query": query,
+                "variables": {
+                    "search": name
+                }
+            }
+        )
 
     return resp.json()
 
@@ -51,11 +68,22 @@ async def get_character_details(name: str, user: Member) -> dict:
     anilist_user = await mongo_manager.manager.get_user(str(user.id))
 
     variables = {
-        "search": name
-    }
+            "search": name
+        }
 
-    resp = requests.post(config.ANILIST_BASE, json={
-                         "query": character_query, "variables": variables}, headers={"Authorization": anilist_user["token"]})
+    if anilist_user is None:
+        resp = requests.post(config.ANILIST_BASE, json={
+                        "query": character_query_without_stats, 
+                        "variables": variables
+                    })
+    else:
+        resp = requests.post(config.ANILIST_BASE, json={
+                        "query": character_query_with_stats, 
+                        "variables": variables
+                    }, 
+                    headers={
+                        "Authorization": anilist_user["token"]
+                    })
 
     return resp.json()
 
@@ -100,32 +128,32 @@ async def get_anime_details_embed(name: str, user: Member) -> Embed:
         list(data["genres"])) > 0 else None)
     embd.add_field(
         name="Genres",
-        value=genres,
+        value=genres or "None",
         inline=True
     )
 
     startDate = [str(x) for x in list(data["startDate"].values())]
     embd.add_field(
         name="Start Date",
-        value="\n".join(startDate),
+        value="\n".join(startDate) or "None",
         inline=True
     )
 
     embd.add_field(
         name="Average Score",
-        value=str(data["averageScore"]),
+        value=str(data["averageScore"]) or "None",
         inline=True
     )
 
     embd.add_field(
         name="Mean Score",
-        value=str(data["meanScore"]),
+        value=str(data["meanScore"]) or "None",
         inline=True
     )
 
     embd.add_field(
         name="Favourites",
-        value=str(data["favourites"]),
+        value=str(data["favourites"]) or "None",
         inline=True
     )
 
@@ -137,19 +165,19 @@ async def get_anime_details_embed(name: str, user: Member) -> Embed:
 
     embd.add_field(
         name="Duration",
-        value=str(data["duration"]),
+        value=str(data["duration"]) or "None",
         inline=True
     )
 
     embd.add_field(
         name="Status",
-        value=data["status"],
+        value=data["status"] or "None",
         inline=True
     )
 
     embd.add_field(
         name="Format",
-        value=data["format"],
+        value=data["format"] or "None",
         inline=True
     )
 
@@ -159,7 +187,7 @@ async def get_anime_details_embed(name: str, user: Member) -> Embed:
         name=studio["name"], url=studio["siteUrl"] if studio["siteUrl"] is not None else "") for studio in studios])
     embd.add_field(
         name="Studios",
-        value=studios_str,
+        value=studios_str or "None",
         inline=True
     )
 
@@ -172,20 +200,23 @@ async def get_anime_details_embed(name: str, user: Member) -> Embed:
     )
 
     # Footer
-    isFav = (f"🔘FAV : Yes" if data["isFavourite"] is True else "")
-    status = ("STATUS : " + data["mediaListEntry"]["status"]
-              if data["mediaListEntry"] is not None else "")
-    score = ((f"🔘SCORE : " + str(data["mediaListEntry"]["score"]) if data["mediaListEntry"]
-             ["score"] != 0 else "") if data["mediaListEntry"] is not None else "")
-    progress = (f"🔘PROGRESS : " + str(data["mediaListEntry"]
-                ["progress"] if data["mediaListEntry"] is not None else ""))
-    total = ("/" + str(data["mediaListEntry"]["media"]["episodes"]
-             if data["mediaListEntry"] is not None else ""))
+    try:
+        isFav = (f"🔘FAV : Yes" if data["isFavourite"] is True else "")
+        status = ("STATUS : " + data["mediaListEntry"]["status"]
+                if data["mediaListEntry"] is not None else "")
+        score = ((f"🔘SCORE : " + str(data["mediaListEntry"]["score"]) if data["mediaListEntry"]
+                ["score"] != 0 else "") if data["mediaListEntry"] is not None else "")
+        progress = (f"🔘PROGRESS : " + str(data["mediaListEntry"]
+                    ["progress"] if data["mediaListEntry"] is not None else ""))
+        total = ("/" + str(data["mediaListEntry"]["media"]["episodes"]
+                if data["mediaListEntry"] is not None else ""))
 
-    if not (isFav == "" and status == ""):
-        embd.set_footer(text="{status}{fav}{score}{progress}{total}".format(
-            status=status, fav=isFav, score=score, progress=progress, total=total))
-
+        if not (isFav == "" and status == ""):
+            embd.set_footer(text="{status}{fav}{score}{progress}{total}".format(
+                status=status, fav=isFav, score=score, progress=progress, total=total))
+    except:
+        pass
+    
     return embd
 
 
@@ -208,7 +239,7 @@ async def get_manga_details_embed(name: str, user: Member) -> Embed:
     titles = [x if x is not None else "" for x in list(data["title"].values())]
     embd.add_field(
         name="Titles",
-        value="\n".join(titles),
+        value="\n".join(titles) or "None",
         inline=True
     )
 
@@ -218,62 +249,62 @@ async def get_manga_details_embed(name: str, user: Member) -> Embed:
 
     embd.add_field(
         name="Genres",
-        value="\n".join(genres),
+        value="\n".join(genres) or "None",
         inline=True
     )
 
     startDate = [str(x) for x in list(data["startDate"].values())]
     embd.add_field(
         name="Start Date",
-        value="\n".join(startDate),
+        value="\n".join(startDate) or "None",
         inline=True
     )
 
     embd.add_field(
         name="Average Score",
-        value=str(data["averageScore"]),
+        value=str(data["averageScore"]) or "None",
         inline=True
     )
 
     embd.add_field(
         name="Mean Score",
-        value=str(data["meanScore"]),
+        value=str(data["meanScore"]) or "None",
         inline=True
     )
 
     embd.add_field(
         name="Favorites",
-        value=str(data["favourites"]),
+        value=str(data["favourites"]) or "None",
         inline=True
     )
 
     embd.add_field(
         name="Chapters",
-        value=str(data["chapters"]),
+        value=str(data["chapters"]) or "None",
         inline=True
     )
 
     embd.add_field(
         name="Volumes",
-        value=str(data["volumes"]),
+        value=str(data["volumes"]) or "None",
         inline=True
     )
 
     embd.add_field(
         name="Status",
-        value=data["status"],
+        value=data["status"] or "None",
         inline=True
     )
 
     embd.add_field(
         name="Format",
-        value=data["format"],
+        value=data["format"] or "None",
         inline=True
     )
 
     embd.add_field(
         name="Popularity",
-        value=data["popularity"],
+        value=data["popularity"] or "None",
         inline=True
     )
 
@@ -281,24 +312,28 @@ async def get_manga_details_embed(name: str, user: Member) -> Embed:
                     if data["trailer"] is not None and data["trailer"]["site"] == "youtube" else "Not Available")
     embd.add_field(
         name="Trailer",
-        value=trailer_link,
+        value=trailer_link or "None",
         inline=True
     )
 
-    # Footer
-    isFav = (f"🔘FAV : Yes" if data["isFavourite"] is True else "")
-    status = ("STATUS : " + data["mediaListEntry"]["status"]
-              if data["mediaListEntry"] is not None else "")
-    score = ((f"🔘SCORE : " + str(data["mediaListEntry"]["score"]) if data["mediaListEntry"]
-             ["score"] != 0 else "") if data["mediaListEntry"] is not None else "")
-    progress = (f"🔘PROGRESS : " + str(data["mediaListEntry"]
-                ["progress"] if data["mediaListEntry"] is not None else ""))
-    total = ("/" + str(data["mediaListEntry"]["media"]["chapters"]
-             if data["mediaListEntry"] is not None else ""))
+    try:
+        # Footer
+        isFav = (f"🔘FAV : Yes" if data["isFavourite"] is True else "")
+        status = ("STATUS : " + data["mediaListEntry"]["status"]
+                if data["mediaListEntry"] is not None else "")
+        score = ((f"🔘SCORE : " + str(data["mediaListEntry"]["score"]) if data["mediaListEntry"]
+                ["score"] != 0 else "") if data["mediaListEntry"] is not None else "")
+        progress = (f"🔘PROGRESS : " + str(data["mediaListEntry"]
+                    ["progress"] if data["mediaListEntry"] is not None else ""))
+        total = ("/" + str(data["mediaListEntry"]["media"]["chapters"]
+                if data["mediaListEntry"] is not None else ""))
 
-    if not (isFav == "" and status == ""):
-        embd.set_footer(text="{status}{fav}{score}{progress}{total}".format(
-            status=status, fav=isFav, score=score, progress=progress, total=total))
+        if not (isFav == "" and status == ""):
+            embd.set_footer(text="{status}{fav}{score}{progress}{total}".format(
+                status=status, fav=isFav, score=score, progress=progress, total=total))
+    except:
+        #Don't set the footer if data is not available 
+        pass
 
     return embd
 
@@ -326,32 +361,32 @@ async def get_character_details_embed(name: str, user: Member) -> Embed:
 
     embd.add_field(
         name="Names",
-        value=name_str,
+        value=name_str or "None",
         inline=True
     )
 
     embd.add_field(
         name="Gender",
-        value=data["gender"],
+        value=data["gender"] or "None",
         inline=True
     )
 
     embd.add_field(
         name="Favorites",
-        value=data["favourites"],
+        value=data["favourites"] or "None",
         inline=True
     )
 
     embd.add_field(
         name="Age",
-        value=data["age"],
+        value=data["age"] or "None",
         inline=True
     )
 
     dateOfBirth = [str(date) for date in list(data["dateOfBirth"].values())]
     embd.add_field(
         name="Date Of Birth",
-        value="\n".join(dateOfBirth),
+        value="\n".join(dateOfBirth) or "None",
         inline=True
     )
 
@@ -359,12 +394,15 @@ async def get_character_details_embed(name: str, user: Member) -> Embed:
                                 ["romaji"], url=media["siteUrl"] if media["siteUrl"] is not None else "") for media in data["media"]["nodes"][:3]])
     embd.add_field(
         name="Appearances",
-        value=appearances_str,
+        value=appearances_str or "None",
         inline=True
     )
-
-    if data["isFavourite"]:
-        embd.set_footer(text="FAVORITE : Yes")
+    
+    try:
+        if data["isFavourite"]:
+            embd.set_footer(text="FAVORITE : Yes")
+    except:
+        pass
 
     return embd
 
