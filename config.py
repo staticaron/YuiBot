@@ -3,6 +3,9 @@ from os import environ
 import json
 import traceback
 import sys
+from dotenv import load_dotenv
+
+load_dotenv()
 
 DISCORD_TOKEN = None
 ANILIST_ID = None
