@@ -27,9 +27,8 @@ class AuthModule(commands.Cog):
 
         auth_embd = await general_helper.get_information_embed(
             title="Login with your AniList Account",
-            description="**Steps (read carefully)** \n" +
-                        f"{BULLET_EMOTE} 1. Click on this [link]({ANILIST_LOGIN.format(client_id=ANILIST_ID)}) \n" +
-                        f"{BULLET_EMOTE} 2. Enter your details and click Authorize. \n" +
+            description="**Steps\n**" +
+                        f"{BULLET_EMOTE} 1. Grab the authentication token using this [link]({ANILIST_LOGIN.format(client_id=ANILIST_ID)}) \n" +
                         f"{BULLET_EMOTE} 3. Copy the token and send it **here** after this message\n\n" +
                         "__**Note**__ : You can terminate the login process by sending `stop` instead of the token."
         )
@@ -51,12 +50,17 @@ class AuthModule(commands.Cog):
             return
         else:
             token = token_msg.content
+
+            if len(token) < 500:
+                await ctx.author.send("Authetication Terminated! Please enter a valid token.")
+                return
+
             await ctx.author.send("TOKEN RECEIVED!")
             await ctx.author.send("**Please delete this message now for your own safety!**", reference=token_msg)
 
         await ctx.author.send(f"Authentication Successful {YUI_SHY_EMOTE}")
 
-        anilistID = await general_helper.get_id_from_token(token)
+        anilistID = await general_helper.get_id_from_token(token, ctx.author)
 
         await mongo_manager.manager.add_user(str(ctx.author.id), anilistID, token)
 

@@ -5,6 +5,7 @@ import sys
 
 from helpers import general_helper
 from utils.errors.UserNotFound import UserNotFound
+from utils.errors.InvalidToken import InvalidToken
 import config
 
 
@@ -36,6 +37,9 @@ class ErrorHandlerModule(commands.Cog):
                 await ctx.author.send(f'{ctx.command} can not be used in Private Messages.')
             except:
                 pass
+
+        elif isinstance(error, InvalidToken):
+            await error.user.send(embed=await general_helper.get_information_embed(title="Invalid Token received!", description="Try again using `yui login` command.", color=config.ERROR_COLOR))
 
         elif isinstance(error, UserNotFound):
             if error.user is not None:

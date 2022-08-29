@@ -5,6 +5,7 @@ import requests
 import jwt
 
 from utils.errors.UserNotFound import UserNotFound
+from utils.errors.InvalidToken import InvalidToken
 from views.select_view import SelectPaginator
 from managers import mongo_manager
 from helpers import general_helper
@@ -141,8 +142,12 @@ async def get_id_from_anilist_username(username: str) -> int:
 """Returns the aniList Id from token"""
 
 
-async def get_id_from_token(token: str) -> str:
-    data = jwt.decode(token, options={"verify_signature": False})
+async def get_id_from_token(token: str, user:Member) -> str:
+
+    try:
+        data = jwt.decode(token, options={"verify_signature": False})
+    except:
+        raise InvalidToken(user=user)
 
     return data["sub"]
 
