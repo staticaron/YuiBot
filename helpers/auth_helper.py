@@ -1,8 +1,5 @@
-import requests
-
 from managers import mongo_manager
 from helpers import general_helper
-from config import ANILIST_BASE
 
 async def logout(userID:str):
 
