@@ -215,6 +215,10 @@ def short_cooldown():
 
     return commands.cooldown(rate=1, per=5, type=commands.BucketType.user)
 
+def long_cooldown():
+
+    return commands.cooldown(rate=2, per=5*60, type=commands.BucketType.user)
+
 
 """Returns a list of medias to select from"""
 
