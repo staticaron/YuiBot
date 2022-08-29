@@ -17,7 +17,9 @@ class PictureModule(commands.Cog):
     @commands.command(name="gif", aliases=["react"], description="Returns a gif of valid reaction")
     @general_helper.short_cooldown()
     async def cry(self, ctx: commands.Context, reaction: str, target: Member = None):
+        
         await ctx.trigger_typing()
+
         reply = await picture_helper.get_reaction_embed(reaction, ctx.author, target)
 
         await ctx.send(embed=reply)

@@ -68,7 +68,7 @@ async def get_reaction_embed(reaction:str, user:Member, target:Member):
     if reaction not in all_single_reactions and reaction not in all_double_reactions:
         return await general_helper.get_information_embed(
             title="Not Found",
-            description="This reaction type was not found.",
+            description="This reaction type was not found.\nValid Reactions include : \n\n**Single** : `{}`\n\n**Pair** : `{}`".format(" ,".join(list(reactions_single.keys())), " ,".join(reactions_double.keys())),
             color=config.ERROR_COLOR
         )
 
