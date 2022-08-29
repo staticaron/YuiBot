@@ -5,6 +5,7 @@ from helpers import lists_helper, general_helper
 class FavModule(commands.Cog):
     
     @commands.group(name="togglefav", aliases=["tf"], description="Toggles the media/character fav", case_insensitive=True)
+    @commands.check(general_helper.validate_user)
     async def toggle_fav(self, ctx:commands.Context):
         if ctx.subcommand_passed is None:
             await ctx.reply("Provide a valid subcommand")
