@@ -73,5 +73,5 @@
 
 <hr />
 <h2 align="center">
-  <a href="https://discord.com/api/oauth2/authorize?client_id=991739924250362047&permissions=173946555456&scope=applications.commands%20bot">Invite</a> | <a href="https://top.gg/bot/908384747393286174/vote">Vote</a> | <a href="https://discord.gg/AbfZPyx5MH">Support Server</a>
+  <a href="https://discord.com/api/oauth2/authorize?client_id=991739924250362047&permissions=173946555456&scope=applications.commands%20bot">Invite</a> | <a href="https://top.gg/bot/991739924250362047/vote">Vote</a> | <a href="https://discord.gg/AbfZPyx5MH">Support Server</a>
 </h2>
