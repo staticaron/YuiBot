@@ -105,7 +105,7 @@ async def get_watch_order_embd(malID: int, anime: str) -> Scroller:
     embds = []
     current_count = 0
 
-    embd = (await general_helper.get_information_embed(title="{}'s watch order".format(anime.capitalize()), description="Anime that appear on top are to be watched first."))
+    embd = (await general_helper.get_information_embed(title="{}'s watch order".format(anime.title()), description="Anime that appear on top are to be watched first."))
 
     for data_element in resp:
 
@@ -120,7 +120,7 @@ async def get_watch_order_embd(malID: int, anime: str) -> Scroller:
 
         if current_count >= MAX_PER_PAGE:
             embds.append(embd)
-            embd = (await general_helper.get_information_embed(title="{}'s watch order".format(anime.capitalize()), description="Anime that appear on top are to be watched first."))
+            embd = (await general_helper.get_information_embed(title="{}'s watch order".format(anime.title()), description="Anime that appear on top are to be watched first."))
             current_count = 0
 
     embds.append(embd)

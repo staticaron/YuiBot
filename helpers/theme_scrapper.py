@@ -76,12 +76,12 @@ async def get_themes_embed(malID: int) -> Scroller:
         ed_themes += "**{}**: [Spotify]({}) \n".format(name, url)
 
     op_embd = (await general_helper.get_information_embed(
-        title="Openings for {}".format(links["name"].capitalize())))
+        title="Openings for {}".format(links["name"].title())))
 
     op_embd.description = op_themes
 
     ed_embd = (await general_helper.get_information_embed(
-        title="Endings for {}".format(links["name"].capitalize())))
+        title="Endings for {}".format(links["name"].title())))
 
     ed_embd.description = ed_themes
 
