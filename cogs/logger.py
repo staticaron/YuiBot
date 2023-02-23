@@ -20,6 +20,7 @@ class Logger(commands.Cog):
     @commands.Cog.listener("on_ready")
     async def load(self):
         self.server_log_channel = self.bot.get_channel(SERVER_LOG_CHANNEL)
+
         self.welcome_embd = await general_helper.get_information_embed(title="Arigatou!", description=f"Thanks for inviting me to this server. {YUI_SHY_EMOTE}\n\nYourAnimeBot is your most powerful anilist companion bot which allows anyone to fetch/modify/display their anilist data without leaving discord. It is packed with easy to use and intuitive commands. \n\n**Prefix** : yui and {self.bot.user.mention}\n**Help Command** : yui help\n\n*Try `yui info` to get started. Make sure you first use `yui login` to log in with your anilist account.* \n\n**Support Server** : [Click Here]({SUPPORT_SERVER_LINK})\n**Vote** : [Click Here]({VOTE_LINK})", thumbnail_link=self.bot.user.avatar.url)
 
     @commands.Cog.listener("on_guild_join")

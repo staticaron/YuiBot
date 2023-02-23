@@ -83,19 +83,6 @@ class MongoManager:
         for i in await list_of_entries:
             pprint.pprint(i)
 
-        # results = {
-        #     "https://i.waifu.pics/W13nei-.jpg" : 1,
-        #     "https://i.waifu.pics/KAWTYus.jpg" : 0,
-        #     "https://i.waifu.pics/zxSlO-7.png" : 2
-        # }
-
-        # for entry in all_entries:
-        #     print("entry found")
-
-        # print("Done")
-
-        # await self.smash_collection.update_many({}, {"$inc" : results})
-
         pass
 
 

@@ -76,7 +76,7 @@ def initialize_config_vars() -> str:
         MONGO_SRV = environ["MONGO_SRV"]
         INVITE = environ["INVITE"]
 
-        with (open("data/filler_data.json", "r", encoding="utf8") as filler_data):
+        with open("data/filler_data.json", "r", encoding="utf8") as filler_data:
             FILLER_DATA = json.load(filler_data)
 
     except Exception as e:
