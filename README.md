@@ -63,7 +63,6 @@
 ## Resources
 ***Basic Bot Example*** : [Click Here](https://gist.github.com/EvieePy/d78c061a4798ae81be9825468fe146be)<br>
 ***Basic Error Handler Example*** : [Click Here](https://gist.github.com/EvieePy/7822af90858ef65012ea500bcecf1612)<br>
-***Basic Music Bot Example*** : [Click Here](https://gist.github.com/EvieePy/ab667b74e9758433b3eb806c53a19f34)
 
 ## Tech Stack
 <br>
