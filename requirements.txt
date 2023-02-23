@@ -4,3 +4,4 @@ motor[srv]
 pyjwt
 bs4
 tracemoepy
+python-dotenv
