@@ -26,6 +26,8 @@ lists = {
     "completed": "COMPLETED",
     "drp": "DROPPED",
     "dropped": "DROPPED",
+    "psd" : "PAUSED",
+    "paused" : "PAUSED"
 }
 
 """Adds specified anime to the specified list"""
