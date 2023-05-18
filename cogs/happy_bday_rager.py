@@ -9,11 +9,9 @@ class BDay(commands.Cog):
     count = 0
 
     bot : commands.Bot = None
-    channel:TextChannel = None
 
     def __init__(self, bot) -> None:
         self.bot = bot
-        self.channel = self.bot.get_channel(1108822435589013624)
         self.update_presence.start()
 
     def cog_unload(self):
@@ -30,12 +28,12 @@ class BDay(commands.Cog):
         await self.bot.wait_until_ready()
 
     async def set_presence(self):
-        
-        self.channel.send("A very Happy Birthday from your cute Yui-chan <@926194062590099466>!!!!")
+        channel = self.bot.get_channel(1108822435589013624)
+        await channel.send("A very Happy Birthday from your cute Yui-chan <@926194062590099466>!!!!")
 
         self.count = self.count + 1
 
-        if self.count == 100:
+        if self.count == 1000:
             self.presence_change_time = 15
 
             self.update_presence.change_interval(seconds=15)
