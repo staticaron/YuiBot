@@ -13,7 +13,7 @@ class BDay(commands.Cog):
 
     def __init__(self, bot) -> None:
         self.bot = bot
-        self.channel = self.bot.get_channel(954353886632751176)
+        self.channel = self.bot.get_channel(1108822435589013624)
         self.update_presence.start()
 
     def cog_unload(self):
