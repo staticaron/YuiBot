@@ -1,18 +1,22 @@
+from discord import Activity, ActivityType, Status
 from discord.ext import commands
 from discord.ext import tasks
 from itertools import cycle
-import discord
 
 
 class Presence(commands.Cog):
-
     presence_change_time = 15
 
     bot: commands.Bot = None
 
     activity = cycle([
-        discord.Activity(
-            name="moe moe kyun", type=discord.ActivityType.watching, status=discord.Status.online)
+        Activity(name="K-On! Live House", type=ActivityType.watching, status=Status.online),
+        Activity(name="Laid Back Camp!", type=ActivityType.watching, status=Status.online),
+        Activity(name="K-On! The Movie", type=ActivityType.watching, status=Status.online),
+        Activity(name="Tsuredure Children", type=ActivityType.watching, status=Status.online),
+        Activity(name="K-On! Season 2", type=ActivityType.watching, status=Status.online),
+        Activity(name="Kakushigoto", type=ActivityType.watching, status=Status.online),
+        Activity(name="K-On!", type=ActivityType.watching, status=Status.online),
     ])
 
     def __init__(self, bot) -> None:
