@@ -41,4 +41,4 @@ async def get_all_detected_anime_scroller(url: str):
 
                 embds.append(embd)
 
-            return Scroller(pages=embds, show_all_btns=True)
+            return Scroller(embed_pages=embds, show_all_btns=True)

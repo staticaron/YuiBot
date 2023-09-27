@@ -85,4 +85,4 @@ async def get_themes_embed(malID: int) -> Scroller:
 
     ed_embd.description = ed_themes
 
-    return Scroller(pages=[op_embd, ed_embd], show_all_btns=False)
+    return Scroller(embed_pages=[op_embd, ed_embd], show_all_btns=False)

@@ -46,28 +46,32 @@ FILLER_DATA = None
 ALL_GENRE = ["action", "adventure", "comedy", "drama", "ecchi", "fantasy", "hentai", "horror", "mecha",
              "music", "mystery", "psychological", "romance", "sci-fi", "sol", "sports", "supernatural", "thriller"]
 
-ALL_GENRE_ALTS = {"action": "Action",
-                  "adventure": "Adventure",
-                  "comedy": "Comedy",
-                  "drama": "Drama",
-                  "ecchi": "Ecchi",
-                  "fantasy": "Fantasy",
-                  "hentai": "Hentai",
-                  "horror": "Horror",
-                  "mecha": "Mecha",
-                  "music": "Music",
-                  "mystery": "Mystery",
-                  "psychological": "Psychological",
-                  "romance": "Romance",
-                  "sci-fi": "Sci-Fi",
-                  "sol": "Slice of Life",
-                  "sports": "Sports",
-                  "supernatural": "Supernatural",
-                  "thriller": "Thriller"}
+ALL_GENRE_ALTS = {
+    "action": "Action",
+    "adventure": "Adventure",
+    "comedy": "Comedy",
+    "drama": "Drama",
+    "ecchi": "Ecchi",
+    "fantasy": "Fantasy",
+    "hentai": "Hentai",
+    "horror": "Horror",
+    "mecha": "Mecha",
+    "music": "Music",
+    "mystery": "Mystery",
+    "psychological": "Psychological",
+    "romance": "Romance",
+    "sci-fi": "Sci-Fi",
+    "sol": "Slice of Life",
+    "sports": "Sports",
+    "supernatural": "Supernatural",
+    "thriller": "Thriller"
+}
+
+SECRET_KEY = ""
 
 
 def initialize_config_vars() -> str:
-    global DISCORD_TOKEN, ANILIST_ID, ANILIST_TOKEN, INVITE, MONGO_SRV, FILLER_DATA
+    global DISCORD_TOKEN, ANILIST_ID, ANILIST_TOKEN, INVITE, MONGO_SRV, FILLER_DATA, SECRET_KEY
 
     try:
         DISCORD_TOKEN = environ["TOKEN"]
@@ -79,9 +83,11 @@ def initialize_config_vars() -> str:
         with open("data/filler_data.json", "r", encoding="utf8") as filler_data:
             FILLER_DATA = json.load(filler_data)
 
+        with open("secret.key", "rb") as secret_key_file:
+            SECRET_KEY = secret_key_file.read()
+
     except Exception as e:
         print(f"Error occurred while trying to cache Config Vars! \n{e}")
-        traceback.print_exception(
-            type(e), e, e.__traceback__, file=sys.stderr)
+        traceback.print_exception(type(e), e, e.__traceback__, file=sys.stderr)
     else:
         print("Config Vars were cached successfully!")

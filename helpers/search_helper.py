@@ -491,4 +491,4 @@ async def get_top_by_genre(genres: list, media_type: str = "ANIME") -> Scroller:
                 description=""
             )
 
-    return Scroller(pages=pages, show_all_btns=True)
+    return Scroller(embed_pages=pages, show_all_btns=True)

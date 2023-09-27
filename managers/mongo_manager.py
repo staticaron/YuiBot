@@ -1,7 +1,8 @@
 from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase, AsyncIOMotorCollection
+from helpers import general_helper
+import pdb
 
 import config
-import pprint
 
 
 class MongoManager:
@@ -26,9 +27,13 @@ class MongoManager:
 
         cursor = await self.user_collection.find_one(query)
 
+        cursor["token"] = await general_helper.decrypt_token(cursor.get("token"))
+
         return cursor
 
     async def add_user(self, userID: str, anilistID: str, token: str) -> None:
+
+        encrypted_token = await general_helper.encrypt_token(token)
 
         try:
             existing_user = await self.get_user(userID)
@@ -40,7 +45,7 @@ class MongoManager:
             document = {
                 "userID": userID,
                 "anilistID": anilistID,
-                "token": token
+                "token": encrypted_token
             }
 
             await self.user_collection.insert_one(document)
@@ -59,10 +64,13 @@ class MongoManager:
             if anilistID is not None:
                 updates["anilistID"] = anilistID
 
+            encrypted_token = await general_helper.encrypt_token(token)
+
             if token is not None:
-                updates["token"] = token
+                updates["token"] = encrypted_token
 
             await self.user_collection.update_one(query, {"$set": updates})
+
         except Exception as e:
             print(e)
 
@@ -74,20 +82,8 @@ class MongoManager:
 
         await self.user_collection.delete_one(delete_query)
 
-    async def update_smash_leaderboard(self, results: dict = None):
-
-        all_entries = self.smash_collection.find({})
-
-        list_of_entries = all_entries.to_list(length=2)
-
-        for i in await list_of_entries:
-            pprint.pprint(i)
-
-        pass
-
 
 manager: MongoManager = None
-
 
 def init_motor():
     global manager
