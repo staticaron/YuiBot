@@ -79,12 +79,10 @@ def initialize_config_vars() -> str:
         ANILIST_ID = environ["ANILIST_ID"]
         MONGO_SRV = environ["MONGO_SRV"]
         INVITE = environ["INVITE"]
+        SECRET_KEY = environ["SECRET_KEY"]
 
         with open("data/filler_data.json", "r", encoding="utf8") as filler_data:
             FILLER_DATA = json.load(filler_data)
-
-        with open("secret.key", "rb") as secret_key_file:
-            SECRET_KEY = secret_key_file.read()
 
     except Exception as e:
         print(f"Error occurred while trying to cache Config Vars! \n{e}")
