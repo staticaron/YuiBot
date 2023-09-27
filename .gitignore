@@ -6,6 +6,8 @@ __pycache__/
 # Pycharm
 .idea
 
+secret.key
+
 # C extensions
 *.so
 

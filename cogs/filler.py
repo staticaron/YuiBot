@@ -108,7 +108,7 @@ class FillerModule(commands.Cog):
         if len(embds) == 1:
             await ctx.send(embed=embds[0])
         else:
-            scroller = Scroller(pages=embds, show_all_btns=True)
+            scroller = Scroller(embed_pages=embds, show_all_btns=True)
             await scroller.send(ctx)
 
 

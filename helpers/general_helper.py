@@ -3,6 +3,7 @@ from discord.ext import commands
 from datetime import datetime
 import requests
 import jwt
+from cryptography.fernet import Fernet
 
 from utils.errors.UserNotFound import UserNotFound
 from utils.errors.InvalidToken import InvalidToken
@@ -79,10 +80,10 @@ class DataInclusivePaginator:
         )
 
 
-"""Returns an embed with specified details"""
 
 
 async def get_information_embed(title: str, color=config.NORMAL_COLOR, url: str = None, description: str = None, user: Member = None, thumbnail_link: str = None, fields: list = None) -> Embed:
+    """Returns an embed with specified details"""
 
     embd: Embed = Embed(title=title, color=color)
     embd.timestamp = datetime.now()
@@ -113,10 +114,9 @@ async def get_information_embed(title: str, color=config.NORMAL_COLOR, url: str 
 
     return embd
 
-"""Returns the aniList id from anilist username"""
-
 
 async def get_id_from_anilist_username(username: str) -> int:
+    """Returns the aniList id from anilist username"""
 
     query = """
         query($username:String){
@@ -139,10 +139,9 @@ async def get_id_from_anilist_username(username: str) -> int:
         print(e)
         return None
 
-"""Returns the aniList Id from token"""
-
 
 async def get_id_from_token(token: str, user:Member) -> str:
+    """Returns the aniList Id from token"""
 
     try:
         data = jwt.decode(token, options={"verify_signature": False})
@@ -151,10 +150,9 @@ async def get_id_from_token(token: str, user:Member) -> str:
 
     return data["sub"]
 
-"""Returns the aniList id from userID"""
-
 
 async def get_id_from_userID(userID: str) -> str:
+    """Returns the aniList id from userID"""
 
     data = await mongo_manager.manager.get_user(userID)
 
@@ -163,10 +161,9 @@ async def get_id_from_userID(userID: str) -> str:
     else:
         raise UserNotFound(user_id=userID)
 
-"""Returns a formatted time string"""
-
 
 async def get_time_str_from_seconds(seconds: int, front_limit: int = None, back_limit: int = None):
+    """Returns a formatted time string"""
 
     time_str = ""
 
@@ -199,10 +196,9 @@ async def get_time_str_from_seconds(seconds: int, front_limit: int = None, back_
 
     return (time_str if time_str != "" else "1 seconds")
 
-"""Check whether the user is registered with AniList account or not"""
-
 
 async def validate_user(ctx: commands.Context):
+    """Check whether the user is registered with AniList account or not"""
 
     command_user = ctx.author
 
@@ -213,10 +209,9 @@ async def validate_user(ctx: commands.Context):
 
     return True
 
-"""Short Cooldown Decorator"""
-
 
 def short_cooldown():
+    """Short Cooldown Decorator"""
 
     return commands.cooldown(rate=1, per=5, type=commands.BucketType.user)
 
@@ -225,10 +220,8 @@ def long_cooldown():
     return commands.cooldown(rate=2, per=5*60, type=commands.BucketType.user)
 
 
-"""Returns a list of medias to select from"""
-
-
 async def get_media_selection_paginator(media_name: str, select_callback: callable, media_type="ANIME") -> DataInclusivePaginator:
+    """Returns a list of medias to select from"""
 
     variables = {
         "search": media_name,
@@ -282,10 +275,9 @@ async def get_media_selection_paginator(media_name: str, select_callback: callab
 
     return DataInclusivePaginator(paginator, media_list, media_type)
 
-"""Returns a list of characters to select from"""
-
 
 async def get_character_selection_paginator(character_name: str, select_callback: callable) -> DataInclusivePaginator:
+    """Returns a list of characters to select from"""
 
     variables = {
         "name": character_name
@@ -332,3 +324,20 @@ async def get_character_selection_paginator(character_name: str, select_callback
         paginator = None
 
     return DataInclusivePaginator(paginator, media_list, "CHARACTER")
+
+async def encrypt_token(token:str) -> str:
+    """ Encrypts the token using the stored key """
+
+    cipher_suit = Fernet(config.SECRET_KEY)
+
+    encrypted_token = cipher_suit.encrypt(token.encode())
+
+    return encrypted_token.decode()
+
+async def decrypt_token(encrypted_token:str) -> str:
+
+    cipher_suit = Fernet(config.SECRET_KEY)
+
+    decrypted_token = cipher_suit.decrypt(encrypted_token.encode())
+
+    return decrypted_token.decode()

@@ -1,20 +1,20 @@
+from asyncio import TimeoutError
 from discord.ext import commands
 from discord import Message
-from asyncio import TimeoutError
 
 from views.confirmation_view import ConfirmationView
-from managers import mongo_manager
-from helpers import general_helper, auth_helper
 from managers import mongo_manager
 from helpers import general_helper, auth_helper
 from config import ANILIST_LOGIN, ANILIST_ID, BULLET_EMOTE, LOADING_EMOTE, YUI_SHY_EMOTE
 
 
 class AuthModule(commands.Cog):
+    """ Commands related to user authentication """
 
     @commands.command(name="register", aliases=["login"], description="Login with Anilist to enable more features")
     @general_helper.short_cooldown()
     async def login(self, ctx: commands.Context):
+        """ Command to take authentication code from users """
 
         await ctx.trigger_typing()
 
