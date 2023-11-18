@@ -27,6 +27,9 @@ class MongoManager:
 
         cursor = await self.user_collection.find_one(query)
 
+        if cursor is None:
+            return None
+
         cursor["token"] = await general_helper.decrypt_token(cursor.get("token"))
 
         return cursor
@@ -39,7 +42,7 @@ class MongoManager:
             existing_user = await self.get_user(userID)
 
             if existing_user is not None:
-                await self.update_user(userID, anilistID, token)
+                await self.update_user(userID, anilistID, encrypted_token)
                 return
 
             document = {
