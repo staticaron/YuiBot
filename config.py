@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 DISCORD_TOKEN = None
+DISCORD_TEST_TOKEN = None
 ANILIST_ID = None
 ANILIST_TOKEN = None
 MONGO_SRV = None
@@ -71,10 +72,11 @@ SECRET_KEY = ""
 
 
 def initialize_config_vars() -> str:
-    global DISCORD_TOKEN, ANILIST_ID, ANILIST_TOKEN, INVITE, MONGO_SRV, FILLER_DATA, SECRET_KEY
+    global DISCORD_TOKEN, DISCORD_TEST_TOKEN, ANILIST_ID, ANILIST_TOKEN, INVITE, MONGO_SRV, FILLER_DATA, SECRET_KEY
 
     try:
         DISCORD_TOKEN = environ["TOKEN"]
+        DISCORD_TEST_TOKEN = environ["TEST_TOKEN"]
         ANILIST_TOKEN = environ["ANILIST_TOKEN"]
         ANILIST_ID = environ["ANILIST_ID"]
         MONGO_SRV = environ["MONGO_SRV"]

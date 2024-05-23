@@ -350,11 +350,12 @@ class ListsModule(commands.Cog):
         if reply is not None:
             await reply.send(ctx)
         else:
-            await ctx.reply(embed=await general_helper.get_information_embed(
-                title="Hold It!",
-                description="No Media entries were found in this list.",
-                color=config.INFO_COLOR
-            )
+            await ctx.reply(
+                embed=await general_helper.get_information_embed(
+                    title="Hold It!",
+                    description="No Media entries were found in this list.",
+                    color=config.INFO_COLOR
+                )
             )
 
     """View Paused Lists"""
@@ -373,11 +374,12 @@ class ListsModule(commands.Cog):
         if reply is not None:
             await reply.send(ctx)
         else:
-            await ctx.reply(embed=await general_helper.get_information_embed(
-                title="Hold It!",
-                description="No Media entries were found in this list.",
-                color=config.INFO_COLOR
-            )
+            await ctx.reply(
+                embed=await general_helper.get_information_embed(
+                    title="Hold It!",
+                    description="No Media entries were found in this list.",
+                    color=config.INFO_COLOR
+                )
             )
 
 
