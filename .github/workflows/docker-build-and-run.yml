@@ -43,4 +43,4 @@ jobs:
           docker stop yui-bot || true
           docker rm yui-bot || true
           
-          docker run --rm -d --env-file /root/yuibot/.env --name yui-bot --restart always docker.io/staticaron/yui-bot:latest
+          docker run -d --env-file /root/yuibot/.env --name yui-bot --restart always docker.io/staticaron/yui-bot:latest
