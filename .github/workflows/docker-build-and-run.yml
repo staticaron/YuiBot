@@ -1,0 +1,41 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "edge" ]
+
+jobs:
+
+  build-and-run:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: staticaron
+        password: ${{ secrets.DOCKER_PASSWORD }}
+    
+    - name: Build the Docker image
+      run: docker build -t staticaron/yui-bot:latest .
+
+    - name: Push the Image
+      run: docker push staticaron/yui-bot:latest
+
+    - name: Log into the VPS
+      uses: appleboy/ssh-action@v1.2.0
+      with:
+        host: ${{ secrets.VPS_HOST }}
+        username: ${{ secrets.VPS_USERNAME }}
+        key: ${{ secrets.VPS_KEY }}
+        port: 22
+        script: |
+          docker pull staticaron/yui-bot:latest
+
+          docker stop yui-bot || true
+          docker rm yui-bot || true
+          
+          docker run --rm -d --name yui-bot staticaron/yui-bot:latest
