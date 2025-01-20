@@ -25,13 +25,16 @@ jobs:
     - name: Push the Image
       run: docker push staticaron/yui-bot:latest
 
+    - name: Set up SSH private key
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.VPS_PRIVATE_KEY }}
+
     - name: Log into the VPS
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.VPS_HOST }}
         username: ${{ secrets.VPS_USERNAME }}
-        key: ${{ secrets.VPS_KEY }}
-        ssh-private-key: ${{ secrets.VPS_PRIVATE_KEY }}
         port: 22
         script: |
           docker pull staticaron/yui-bot:latest
