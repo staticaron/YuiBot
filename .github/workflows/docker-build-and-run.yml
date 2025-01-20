@@ -38,9 +38,9 @@ jobs:
         key: ${{ secrets.VPS_PRIVATE_KEY }}
         port: 22
         script: |
-          docker pull staticaron/yui-bot:latest
+          docker pull docker.io/staticaron/yui-bot:latest
 
           docker stop yui-bot || true
           docker rm yui-bot || true
           
-          docker run --rm -d --name yui-bot staticaron/yui-bot:latest
+          docker run --rm -d --name yui-bot docker.io/staticaron/yui-bot:latest
