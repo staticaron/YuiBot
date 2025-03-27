@@ -74,6 +74,8 @@ SECRET_KEY = ""
 def initialize_config_vars() -> str:
     global DISCORD_TOKEN, DISCORD_TEST_TOKEN, ANILIST_ID, ANILIST_TOKEN, INVITE, MONGO_SRV, FILLER_DATA, SECRET_KEY
 
+    load_dotenv()
+
     try:
         DISCORD_TOKEN = environ["TOKEN"]
         DISCORD_TEST_TOKEN = environ["TEST_TOKEN"]
