@@ -10,13 +10,7 @@ class Presence(commands.Cog):
     bot: commands.Bot = None
 
     activity = cycle([
-        Activity(name="K-On! Live House", type=ActivityType.watching, status=Status.online),
-        Activity(name="Laid Back Camp!", type=ActivityType.watching, status=Status.online),
-        Activity(name="K-On! The Movie", type=ActivityType.watching, status=Status.online),
-        Activity(name="Tsuredure Children", type=ActivityType.watching, status=Status.online),
-        Activity(name="K-On! Season 2", type=ActivityType.watching, status=Status.online),
-        Activity(name="Kakushigoto", type=ActivityType.watching, status=Status.online),
-        Activity(name="K-On!", type=ActivityType.watching, status=Status.online),
+        Activity(name="you!", type=ActivityType.watching, status=Status.online),
     ])
 
     def __init__(self, bot) -> None:
