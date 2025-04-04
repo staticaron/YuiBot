@@ -250,21 +250,21 @@ character_query_without_stats = """
 """
 
 top_genre_query = """
-    query ($genre: [String], $type:MediaType) {
-        Page(page: 0, perPage: 30) {
+    query ($genre: [String], $type: MediaType) {
+        Page(page: 0, perPage: 50) {
             pageInfo {
-                total
+            total
             }
-            media(genre_in: $genre, sort: POPULARITY_DESC, type:$type) {
-                title {
-                    english
-                    romaji
-                }
-                siteUrl
+            media(genre_in: $genre, sort: SCORE_DESC, type: $type) {
+            title {
+                english
+                romaji
+            }
+            siteUrl
+            meanScore
             }
         }
     }
-
 """
 
 media_selection_query = """
