@@ -1,5 +1,8 @@
 from discord.ext import commands
+from discord import Embed
+from discord import Interaction
 
+from views import warning_view, media_info_view
 from managers import cache_manager
 from helpers import search_helper, general_helper
 import config
@@ -25,9 +28,21 @@ class SearchModule(commands.Cog):
 
         name = " ".join(name)
 
-        embd = await search_helper.get_anime_details_embed(name, ctx.author)
+        result = await search_helper.get_anime_details_embed(name, ctx.author)
 
-        await ctx.send(embed=embd)
+        info_view = media_info_view.MediaInfoView(result["embeds"])
+
+        if result.get("isAdult") is False:
+            return await ctx.send(embed=result["embeds"]["details"], view=info_view)
+            
+        async def proceed_callback(interaction:Interaction):
+            return await interaction.followup.send(embed=result["embeds"]["details"], ephemeral=True, view=info_view)
+            
+        confirmation_embd = Embed(title="Watch Out!", description="This media entry is marked as **18+**.")
+        confirmation_view = warning_view.WarningView(proceed_callback)
+        
+        await ctx.send(embed=confirmation_embd, view=confirmation_view)
+
 
     """Manga Search"""
 
@@ -38,9 +53,18 @@ class SearchModule(commands.Cog):
 
         name = " ".join(name)
 
-        embd = await search_helper.get_manga_details_embed(name, ctx.author)
+        result = await search_helper.get_manga_details_embed(name, ctx.author)
 
-        await ctx.send(embed=embd)
+        if result.get("isAdult") is False:
+            return await ctx.send(embed=result["embed"])
+            
+        async def proceed_callback(interaction:Interaction):
+            return await interaction.followup.send(embed=result["embed"], ephemeral=True)
+            
+        confirmation_embd = Embed(title="Watch Out!", description="This media entry is marked as **18+**.")
+        confirmation_view = warning_view.WarningView(proceed_callback)
+        
+        await ctx.send(embed=confirmation_embd, view=confirmation_view)
 
     """Character Search"""
 

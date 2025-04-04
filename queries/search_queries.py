@@ -46,6 +46,11 @@ anime_query_with_stats = '''
                     score
                 }
                 isFavourite
+                tags {
+                    name
+                    rank
+                    isAdult
+                }
             }
         }
     '''
