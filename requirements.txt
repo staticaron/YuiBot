@@ -4,5 +4,9 @@ motor[srv]
 pyjwt
 bs4
 tracemoepy
+<<<<<<< HEAD
 python-dotenv
 cryptography
+=======
+python-dotenv
+>>>>>>> main

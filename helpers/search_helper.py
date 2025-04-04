@@ -476,8 +476,8 @@ async def get_top_by_genre(genres: list, media_type: str = "ANIME") -> Scroller:
 
         title = (media["title"]["english"] if media["title"]
                  ["english"] is not None else media["title"]["romaji"])
-        embd.description += "{number}. [{name}]({link})".format(
-            number=total_entry_count, name=title, link=media["siteUrl"]) + "\n"
+        embd.description += "{number}. [{name}]({link}) - {meanScore}".format(
+            number=total_entry_count, name=title, link=media["siteUrl"], meanScore=media["meanScore"]) + "\n"
 
         entry_count += 1
         total_entry_count += 1

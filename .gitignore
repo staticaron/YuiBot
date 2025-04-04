@@ -11,6 +11,8 @@ secret.key
 # C extensions
 *.so
 
+*.key
+
 # Distribution / packaging
 .Python
 build/
