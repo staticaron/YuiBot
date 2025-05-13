@@ -42,6 +42,9 @@ PREV_EMOTE = "<:prev:995484847139209238>"
 FIRST_EMOTE = "<:first:996104181515571201>"
 LAST_EMOTE = "<:last:996104225459277854>"
 
+YOUTUBE_VIDEO_EMOTE = "<:youtube:1371941562358960128>"
+YOUTUBE_MUSIC_EMOTE = "<:youtubemusic:1371941660673708033>"
+
 FILLER_DATA = None
 
 ALL_GENRE = ["action", "adventure", "comedy", "drama", "ecchi", "fantasy", "hentai", "horror", "mecha",
@@ -70,9 +73,16 @@ ALL_GENRE_ALTS = {
 
 SECRET_KEY = ""
 
+# spotify creds
+SPOTIFY_CLIENT_ID = ""
+SPOTIFY_CLIENT_SECRET = ""
+
+YOUTUBE_API_KEY = ""
+YOUTUBE_TRACK_BASE = "http://youtube.com/watch?v="
+YOUTUBE_MUSIC_BASE = "https://music.youtube.com/watch?v="
 
 def initialize_config_vars() -> str:
-    global DISCORD_TOKEN, DISCORD_TEST_TOKEN, ANILIST_ID, ANILIST_TOKEN, INVITE, MONGO_SRV, FILLER_DATA, SECRET_KEY
+    global DISCORD_TOKEN, DISCORD_TEST_TOKEN, ANILIST_ID, ANILIST_TOKEN, INVITE, MONGO_SRV, FILLER_DATA, SECRET_KEY, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, YOUTUBE_API_KEY
 
     load_dotenv()
 
@@ -84,6 +94,9 @@ def initialize_config_vars() -> str:
         MONGO_SRV = environ["MONGO_SRV"]
         INVITE = environ["INVITE"]
         SECRET_KEY = environ["SECRET_KEY"]
+        SPOTIFY_CLIENT_ID = environ["SPOTIFY_CLIENT_ID"]
+        SPOTIFY_CLIENT_SECRET = environ["SPOTIFY_CLIENT_SECRET"]
+        YOUTUBE_API_KEY = environ["YOUTUBE_API_KEY"]
 
         with open("data/filler_data.json", "r", encoding="utf8") as filler_data:
             FILLER_DATA = json.load(filler_data)
