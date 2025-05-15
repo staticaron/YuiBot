@@ -47,8 +47,26 @@ YOUTUBE_MUSIC_EMOTE = "<:youtubemusic:1371941660673708033>"
 
 FILLER_DATA = None
 
-ALL_GENRE = ["action", "adventure", "comedy", "drama", "ecchi", "fantasy", "hentai", "horror", "mecha",
-             "music", "mystery", "psychological", "romance", "sci-fi", "sol", "sports", "supernatural", "thriller"]
+ALL_GENRE = [
+    "action",
+    "adventure",
+    "comedy",
+    "drama",
+    "ecchi",
+    "fantasy",
+    "hentai",
+    "horror",
+    "mecha",
+    "music",
+    "mystery",
+    "psychological",
+    "romance",
+    "sci-fi",
+    "sol",
+    "sports",
+    "supernatural",
+    "thriller",
+]
 
 ALL_GENRE_ALTS = {
     "action": "Action",
@@ -68,7 +86,7 @@ ALL_GENRE_ALTS = {
     "sol": "Slice of Life",
     "sports": "Sports",
     "supernatural": "Supernatural",
-    "thriller": "Thriller"
+    "thriller": "Thriller",
 }
 
 SECRET_KEY = ""
@@ -81,8 +99,20 @@ YOUTUBE_API_KEY = ""
 YOUTUBE_TRACK_BASE = "http://youtube.com/watch?v="
 YOUTUBE_MUSIC_BASE = "https://music.youtube.com/watch?v="
 
+
 def initialize_config_vars() -> str:
-    global DISCORD_TOKEN, DISCORD_TEST_TOKEN, ANILIST_ID, ANILIST_TOKEN, INVITE, MONGO_SRV, FILLER_DATA, SECRET_KEY, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, YOUTUBE_API_KEY
+    global \
+        DISCORD_TOKEN, \
+        DISCORD_TEST_TOKEN, \
+        ANILIST_ID, \
+        ANILIST_TOKEN, \
+        INVITE, \
+        MONGO_SRV, \
+        FILLER_DATA, \
+        SECRET_KEY, \
+        SPOTIFY_CLIENT_ID, \
+        SPOTIFY_CLIENT_SECRET, \
+        YOUTUBE_API_KEY
 
     load_dotenv()
 
@@ -105,4 +135,4 @@ def initialize_config_vars() -> str:
         print(f"Error occurred while trying to cache Config Vars! \n{e}")
         traceback.print_exception(type(e), e, e.__traceback__, file=sys.stderr)
     else:
-        print("Config Vars were cached successfully!")
+        print("Config LOADED!")
