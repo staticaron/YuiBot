@@ -12,9 +12,9 @@ class SpotifyModule(commands.Cog):
         if ctx.subcommand_passed is None:
             enabled = (await cm.manager.get_server(ctx.guild.id)).get("spotify").get("enabled")
 
-            await cm.manager.update_server(ctx.guild.id, {"spotify.enabled": not enabled})
+            await cm.manager.update_server(ctx.guild.id, {"spotify": {"enabled": not enabled}})
 
-            await ctx.send("Spotify Module status set to " + ("offline" if enabled is False else "online"))
+            await ctx.send("Spotify Module status set to " + ("offline" if enabled is True else "online"))
 
     @spotify.command("style", description="Change the style of the spotify alternate music detection. [embed/text]")
     async def style(self, ctx: commands.Context, style: str):
