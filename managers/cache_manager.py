@@ -1,4 +1,4 @@
-import sys, pdb
+import sys
 import traceback
 
 from discord import Embed

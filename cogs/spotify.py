@@ -1,7 +1,4 @@
-import pdb
-
 from discord.ext import commands
-
 
 from managers import cache_manager as cm
 

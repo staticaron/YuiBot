@@ -101,18 +101,7 @@ YOUTUBE_MUSIC_BASE = "https://music.youtube.com/watch?v="
 
 
 def initialize_config_vars() -> str:
-    global \
-        DISCORD_TOKEN, \
-        DISCORD_TEST_TOKEN, \
-        ANILIST_ID, \
-        ANILIST_TOKEN, \
-        INVITE, \
-        MONGO_SRV, \
-        FILLER_DATA, \
-        SECRET_KEY, \
-        SPOTIFY_CLIENT_ID, \
-        SPOTIFY_CLIENT_SECRET, \
-        YOUTUBE_API_KEY
+    global DISCORD_TOKEN, DISCORD_TEST_TOKEN, ANILIST_ID, ANILIST_TOKEN, INVITE, MONGO_SRV, FILLER_DATA, SECRET_KEY, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, YOUTUBE_API_KEY
 
     load_dotenv()
 
