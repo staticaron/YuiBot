@@ -7,7 +7,8 @@ class SpotifyModule(commands.Cog):
     @commands.group(name="spotify", description="Group containing all the spotify module related commands")
     async def spotify(self, ctx: commands.Context):
         if ctx.subcommand_passed is None:
-            enabled = (await cm.manager.get_server(ctx.guild.id)).get("spotify").get("enabled")
+            current_server = await cm.manager.get_server(ctx.guild.id, True)
+            enabled = current_server.get("spotify").get("enabled")
 
             await cm.manager.update_server(ctx.guild.id, {"spotify": {"enabled": not enabled}})
 

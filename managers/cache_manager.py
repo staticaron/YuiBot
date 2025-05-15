@@ -69,7 +69,7 @@ class CacheManager:
         server_details = self.server_cache.get(server_id, None)
 
         if server_details is None and register_if_not_found is True:
-            server_details = self.register_server(server_id, "<none>")
+            server_details = await self.register_server(server_id, "<none>")
 
         return server_details
 
