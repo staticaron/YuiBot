@@ -47,7 +47,7 @@ class Bot(commands.Bot):
         SPOTIFY_TRACK_BASE = "https://open.spotify.com/track/"
 
         if message.content.strip().startswith(SPOTIFY_TRACK_BASE):
-            server_details = await cache_manager.manager.get_server(message.guild.id)
+            server_details = await cache_manager.manager.get_server(message.guild.id, True)
 
             if server_details.get("spotify").get("enabled") is True:
                 splits = message.content.strip().split()

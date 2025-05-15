@@ -63,10 +63,15 @@ class CacheManager:
         for data_item in data:
             self.server_cache[data_item.get("server_id")] = data_item
 
-    async def get_server(self, server_id: int) -> dict:
+    async def get_server(self, server_id: int, register_if_not_found: bool = False) -> dict:
         """Fetch server from cache"""
 
-        return self.server_cache.get(server_id, None)
+        server_details = self.server_cache.get(server_id, None)
+
+        if server_details is None and register_if_not_found is True:
+            server_details = self.register_server(server_id, "<none>")
+
+        return server_details
 
     async def register_server(self, server_id: int, server_name: str) -> None:
         """Register the guild on both db and cache"""
