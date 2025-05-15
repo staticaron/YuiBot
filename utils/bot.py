@@ -56,14 +56,14 @@ class Bot(commands.Bot):
                 if len(track_id_match) > 0:
                     links: spotify_helper.SpotifyTrackAlternative = await spotify_helper.get_alternatives(message=message, spotify_track_id=track_id_match[0])
 
-                    if server_details.get("spotify").get("embed"):
+                    if server_details.get("spotify").get("style") == "embed":
                         embd: Embed = await general_helper.get_information_embed(title="Alternate Links", description="")
                         embd.description += "**Name : **" + links.track_name
                         embd.description += "\n**Artists: **" + links.track_artists
                         view = SpotifyView(links)
 
                         await message.reply(embed=embd, view=view)
-                    else:
+                    elif server_details.get("spotify").get("style") == "text":
                         message = await message.reply(
                             "**Name :** {}, **Artists :** {} | [Youtube Music]({})".format(
                                 links.track_name,
