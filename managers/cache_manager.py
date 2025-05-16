@@ -12,6 +12,7 @@ import config
 CACHED_GENRE_EMBED = None
 
 
+# converts nested dicts to mongodb compatible dicts.
 def flatten_dict(normal: dict) -> dict:
     flatten_dict_output = {}
 
@@ -27,6 +28,7 @@ def flatten_dict(normal: dict) -> dict:
     return flatten_dict_output
 
 
+# updates nested dicts.
 def nested_update(original: dict, update: dict) -> dict:
     for key, value in update.items():
         if isinstance(value, dict) and isinstance(original.get(key), dict):
