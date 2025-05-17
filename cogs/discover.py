@@ -19,7 +19,7 @@ class DiscoverModule(commands.Cog):
 
     @commands.group(name="discover", description="Discover media list from anilist. Supports FILTERS")
     async def discover_group(self, ctx: commands.Context):
-        if ctx.subcommand_passed == None:
+        if ctx.subcommand_passed is None:
             return ctx.send("Please provide a valid subcommand!")
 
     @discover_group.command(name="anime", description="Disover anime by filters")
