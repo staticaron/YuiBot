@@ -5,16 +5,13 @@ from config import ERROR_COLOR
 
 
 class MediaModule(commands.Cog):
-
     """Update the anime progress"""
 
     @commands.command(name="update_anime", aliases=["ua"], description="Sets the progress for the provided anime")
     @commands.check(general_helper.validate_user)
     @general_helper.short_cooldown()
+    @general_helper.with_typing_ctx()
     async def update_anime(self, ctx: commands.Context, *inputs):
-
-        await ctx.trigger_typing()
-
         ep = None
         anime = None
 
@@ -26,7 +23,6 @@ class MediaModule(commands.Cog):
             anime = " ".join(inputs)
 
         async def reply_callback():
-
             mediaID = data_elements[paginator.current_page].anilist_id
 
             return await media_helper.set_progress(str(ctx.author.id), mediaID, ep)
@@ -46,10 +42,8 @@ class MediaModule(commands.Cog):
     @commands.command(name="update_manga", aliases=["um"], description="Sets the progress for the provided anime")
     @commands.check(general_helper.validate_user)
     @general_helper.short_cooldown()
+    @general_helper.with_typing_ctx()
     async def update_manga(self, ctx: commands.Context, *inputs):
-
-        await ctx.trigger_typing()
-
         ep = None
         manga = None
 
@@ -61,7 +55,6 @@ class MediaModule(commands.Cog):
             manga = " ".join(inputs)
 
         async def reply_callback():
-
             mediaID = data_elements[paginator.current_page].anilist_id
 
             return await media_helper.set_progress(str(ctx.author.id), mediaID, ep)
@@ -86,10 +79,8 @@ class MediaModule(commands.Cog):
             return await ctx.reply("Please provide a valid subcommand. Try ```yui help rate```")
 
     @rate.command(name="anime", description="Rate anime", case_insensitive=True)
+    @general_helper.with_typing_ctx()
     async def rate_anime(self, ctx: commands.Context, *inputs):
-
-        await ctx.trigger_typing()
-
         rating = None
         anime = None
 
@@ -115,10 +106,8 @@ class MediaModule(commands.Cog):
             await paginator.send(ctx)
 
     @rate.command(name="manga", description="Rate manga", case_insensitive=True)
+    @general_helper.with_typing_ctx()
     async def rate_manga(self, ctx: commands.Context, *inputs):
-
-        await ctx.trigger_typing()
-
         rating = None
         manga = None
 
@@ -144,12 +133,11 @@ class MediaModule(commands.Cog):
             await paginator.send(ctx)
 
     """Get Anime Op/Ed"""
+
     @commands.command(name="theme", aliases=["song", "op", "ed", "music"], description="Returns the links to opening and ending music of the provided anime")
     @general_helper.short_cooldown()
+    @general_helper.with_typing_ctx()
     async def themes(self, ctx: commands.Context, *inputs):
-
-        await ctx.trigger_typing()
-
         anime = " ".join(inputs)
 
         async def reply_callback():
@@ -168,12 +156,11 @@ class MediaModule(commands.Cog):
             await paginator.send(ctx)
 
     """Anime watch order"""
+
     @commands.command(name="watch_order", aliases=["wo", "order"], description="Returns the watch order of the selected anime")
     @general_helper.short_cooldown()
+    @general_helper.with_typing_ctx()
     async def watch_order(self, ctx: commands.Context, *inputs):
-
-        await ctx.trigger_typing()
-
         anime = " ".join(inputs)
 
         async def reply_callback():

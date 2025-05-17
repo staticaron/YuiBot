@@ -104,6 +104,9 @@ class MongoManager:
 
         await self.servers_collection.insert_one(collection_item)
 
+        # insert_one introduces unwanted _id to the collection
+        del collection_item["_id"]
+
     async def update_server(self, server_id: int, updated_values: dict) -> dict:
         query = {"server_id": server_id}
 

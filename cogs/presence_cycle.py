@@ -9,9 +9,11 @@ class Presence(commands.Cog):
 
     bot: commands.Bot = None
 
-    activity = cycle([
-        Activity(name="you!", type=ActivityType.watching, status=Status.online),
-    ])
+    activity = cycle(
+        [
+            Activity(name="you!", type=ActivityType.watching, status=Status.online),
+        ]
+    )
 
     def __init__(self, bot) -> None:
         self.bot = bot

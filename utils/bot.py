@@ -1,13 +1,44 @@
+import os
+import re
+
 from discord.ext import commands
 from discord import Intents, Message, Embed, Guild
 from discord import __version__
-import os
-import re
 
 from managers import cache_manager
 from views.spotify_view import SpotifyView
 from helpers import spotify_helper, general_helper
 import config
+
+
+@general_helper.with_typing_msg()
+async def process_spotify_links(message: Message):
+    server_details = await cache_manager.manager.get_server(message.guild.id, True)
+
+    if server_details.get("spotify").get("enabled") is True:
+        splits = message.content.strip().split()
+        track_id_match = re.findall(r"(?<=track/)\w+", splits[0]) if len(splits) > 0 else None
+
+        if len(track_id_match) > 0:
+            links: spotify_helper.SpotifyTrackAlternative = await spotify_helper.get_alternatives(message=message, spotify_track_id=track_id_match[0])
+
+            if server_details.get("spotify").get("style") == "embed":
+                embd: Embed = await general_helper.get_information_embed(title="Alternate Links", description="")
+                embd.description += "**Name : **" + links.track_name
+                embd.description += "\n**Artists: **" + links.track_artists
+                view = SpotifyView(links)
+
+                await message.reply(embed=embd, view=view)
+            elif server_details.get("spotify").get("style") == "text":
+                message = await message.reply(
+                    "**Name :** {}, **Artists :** {} | [Youtube Music]({})".format(
+                        links.track_name,
+                        links.track_artists,
+                        links.youtube_music,
+                    )
+                )
+
+                await message.edit(suppress=True)
 
 
 class Bot(commands.Bot):
@@ -44,37 +75,12 @@ class Bot(commands.Bot):
 
             return await message.channel.send(embed=embd)
 
+        await self.process_commands(message)
+
         SPOTIFY_TRACK_BASE = "https://open.spotify.com/track/"
 
         if message.content.strip().startswith(SPOTIFY_TRACK_BASE):
-            server_details = await cache_manager.manager.get_server(message.guild.id, True)
-
-            if server_details.get("spotify").get("enabled") is True:
-                splits = message.content.strip().split()
-                track_id_match = re.findall(r"(?<=track/)\w+", splits[0]) if len(splits) > 0 else None
-
-                if len(track_id_match) > 0:
-                    links: spotify_helper.SpotifyTrackAlternative = await spotify_helper.get_alternatives(message=message, spotify_track_id=track_id_match[0])
-
-                    if server_details.get("spotify").get("style") == "embed":
-                        embd: Embed = await general_helper.get_information_embed(title="Alternate Links", description="")
-                        embd.description += "**Name : **" + links.track_name
-                        embd.description += "\n**Artists: **" + links.track_artists
-                        view = SpotifyView(links)
-
-                        await message.reply(embed=embd, view=view)
-                    elif server_details.get("spotify").get("style") == "text":
-                        message = await message.reply(
-                            "**Name :** {}, **Artists :** {} | [Youtube Music]({})".format(
-                                links.track_name,
-                                links.track_artists,
-                                links.youtube_music,
-                            )
-                        )
-
-                        await message.edit(suppress=True)
-
-        await self.process_commands(message)
+            await process_spotify_links(message)
 
     async def on_guild_join(self, guild: Guild):
         await cache_manager.manager.register_server(guild.id, guild.name)

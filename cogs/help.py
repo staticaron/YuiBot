@@ -6,7 +6,6 @@ import config
 
 
 class HelpCommand(commands.Cog):
-
     help_embed: Embed = None
     bot: commands.Bot = None
 
@@ -17,7 +16,7 @@ class HelpCommand(commands.Cog):
         "media": "Update episode count, rate shows/manga, get opening and endings",
         "list": "To fetch or modify your lists",
         "misc": "Misc. command that don't fall in any category. Gifs, Quotes, Invite links and more",
-        "user": "Follow/unfollow users, get theirs stats and more."
+        "user": "Follow/unfollow users, get theirs stats and more.",
     }
 
     commands_per_module = {
@@ -27,7 +26,7 @@ class HelpCommand(commands.Cog):
         "list": ["addanime", "addmanga", "anime", "manga"],
         "media": ["update_anime", "update_manga", "rate", "theme"],
         "misc": ["gif", "pfp", "quote", "ping", "invite"],
-        "user": ["follow", "unfollow", "info", "animestats", "mangastats"]
+        "user": ["follow", "unfollow", "info", "animestats", "mangastats"],
     }
 
     helps = {
@@ -55,28 +54,23 @@ class HelpCommand(commands.Cog):
         "misc pfp": "Returns a random waifu image. Can be used for getting random profile pictures. ```yui pfp```",
         "misc quote": "Returns a random anime quote ```yui quote```",
         "misc invite": "Sends the invite link of the bot",
-        "misc ping": "Returns the bot's current latency. ```yui hi\nyui ping```"
+        "misc ping": "Returns the bot's current latency. ```yui hi\nyui ping```",
     }
 
     def __init__(self, bot) -> None:
         self.bot = bot
 
     @commands.command(name="help", description="Get help with bot commands", case_insensitive=True)
+    @general_helper.with_typing_ctx()
     async def help(self, ctx: commands.Context, *inputs):
-
         inputs = [x.lower() for x in inputs]
 
         if len(inputs) <= 0:
             if self.help_embed is None:
-                self.help_embed = await general_helper.get_information_embed(
-                    title="Help Menu", description="Use `yui help <module>` and pass any one module from the following list. \n\nExample : yui help **media** \n\n **Modules** : ", thumbnail_link=ctx.bot.user.avatar.url)
+                self.help_embed = await general_helper.get_information_embed(title="Help Menu", description="Use `yui help <module>` and pass any one module from the following list. \n\nExample : yui help **media** \n\n **Modules** : ", thumbnail_link=ctx.bot.user.avatar.url)
 
                 for module, description in self.modules.items():
-                    self.help_embed.add_field(
-                        name=module,
-                        value=description,
-                        inline=False
-                    )
+                    self.help_embed.add_field(name=module, value=description, inline=False)
             await ctx.send(embed=self.help_embed)
 
         if len(inputs) == 1:
@@ -87,7 +81,9 @@ class HelpCommand(commands.Cog):
             if module not in all_modules:
                 return await ctx.reply(embed=await general_helper.get_information_embed(title="Module Not Found!", description="Pick a module from the list using **yui help** command.", color=config.ERROR_COLOR))
 
-            embd = await general_helper.get_information_embed(title=f"{module.capitalize()}'s Help", description=f"Use `yui help {module} <command>` and pass one command from the following list. \n\n Example : yui help {module} **{self.commands_per_module[module][0]}** \n\n **__Commands__** : \n\n", thumbnail_link=ctx.bot.user.avatar.url)
+            embd = await general_helper.get_information_embed(
+                title=f"{module.capitalize()}'s Help", description=f"Use `yui help {module} <command>` and pass one command from the following list. \n\n Example : yui help {module} **{self.commands_per_module[module][0]}** \n\n **__Commands__** : \n\n", thumbnail_link=ctx.bot.user.avatar.url
+            )
 
             for i in self.commands_per_module[module]:
                 embd.description += f"{config.BULLET_EMOTE} **{i}** : {self.bot.get_command(i).description} \n"
