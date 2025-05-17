@@ -74,11 +74,7 @@ async def get_alternatives(message: Message, spotify_track_id: str) -> SpotifyTr
 
     music_results = await youtube_music_fetch(links.track_name, links.track_artists)
 
-    links.youtube_video = (
-        config.YOUTUBE_TRACK_BASE + video_results.items[0].id.videoId
-        if len(video_results.items) > 0
-        else None
-    )
+    links.youtube_video = config.YOUTUBE_TRACK_BASE + video_results.items[0].id.videoId if len(video_results.items) > 0 else None
 
     links.youtube_music = config.YOUTUBE_MUSIC_BASE + music_results[0].get("videoId") if len(music_results) > 0 else None
 
