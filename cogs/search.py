@@ -13,7 +13,6 @@ class SearchModule(commands.Cog):
 
     @commands.group(name="search", aliases=["find"], description="Commands for searching Anime and Manga")
     @general_helper.short_cooldown()
-    @general_helper.with_typing_ctx()
     async def search_group(self, ctx: commands.Context):
         if ctx.subcommand_passed is None:
             return await ctx.reply(f"Please provide a valid subcommand! {config.YUI_SHY_EMOTE}")
