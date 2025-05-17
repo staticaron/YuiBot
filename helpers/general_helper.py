@@ -133,7 +133,7 @@ async def get_id_from_token(token: str, user: Member) -> str:
 
     try:
         data = jwt.decode(token, options={"verify_signature": False})
-    except:
+    except Exception:
         raise InvalidToken(user=user)
 
     return data["sub"]

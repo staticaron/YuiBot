@@ -39,7 +39,7 @@ class FillerModule(commands.Cog):
         for name, id in anime_match.items():
             try:
                 data = config.FILLER_DATA["data"][id]
-            except KeyError as e:
+            except KeyError:
                 if filler_found is False:
                     embds.append(Embed(title="No Filler Information was found!", color=config.NORMAL_COLOR))
                     continue
@@ -59,7 +59,7 @@ class FillerModule(commands.Cog):
                 embd.add_field(name="Mixed Episodes", value="```{}```".format(data["mixed_ep"]), inline=False)
 
                 embd.add_field(name="Filler Episodes", value="```{}```".format(data["filler_ep"]), inline=False)
-            except Exception as e:
+            except Exception:
                 print(name)
 
             embds.append(embd)
