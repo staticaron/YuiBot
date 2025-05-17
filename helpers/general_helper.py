@@ -1,12 +1,15 @@
-from discord import Embed, Member
-from discord.ext import commands
-from datetime import datetime
 import requests
 import jwt
 from cryptography.fernet import Fernet
+from functools import wraps
 
+from discord import Embed, Member, Message
+from discord.ext import commands
+from datetime import datetime
 from utils.errors.UserNotFound import UserNotFound
 from utils.errors.InvalidToken import InvalidToken
+
+
 from views.select_view import SelectPaginator
 from managers import mongo_manager
 from helpers import general_helper
@@ -72,14 +75,7 @@ class DataInclusivePaginator:
         return len(self.data_elements)
 
     async def get_error_embed(self):
-        return await general_helper.get_information_embed(
-            title="Damn",
-            description="No {} were found for that input".format(
-                self.data_type),
-            color=config.ERROR_COLOR
-        )
-
-
+        return await general_helper.get_information_embed(title="Damn", description="No {} were found for that input".format(self.data_type), color=config.ERROR_COLOR)
 
 
 async def get_information_embed(title: str, color=config.NORMAL_COLOR, url: str = None, description: str = None, user: Member = None, thumbnail_link: str = None, fields: list = None) -> Embed:
@@ -95,8 +91,7 @@ async def get_information_embed(title: str, color=config.NORMAL_COLOR, url: str 
         embd.description = description
 
     if user is not None:
-        embd.set_footer(icon_url=user.avatar.url,
-                        text="Requested by {}".format(user.name))
+        embd.set_footer(icon_url=user.avatar.url, text="Requested by {}".format(user.name))
 
     if thumbnail_link is not None:
         embd.set_thumbnail(url=thumbnail_link)
@@ -106,11 +101,7 @@ async def get_information_embed(title: str, color=config.NORMAL_COLOR, url: str 
             if len(field) != 3:
                 continue
 
-            embd.add_field(
-                name=field[0],
-                value=field[1],
-                inline=field[2]
-            )
+            embd.add_field(name=field[0], value=field[1], inline=field[2])
 
     return embd
 
@@ -126,12 +117,9 @@ async def get_id_from_anilist_username(username: str) -> int:
         }
     """
 
-    variables = {
-        "username": username
-    }
+    variables = {"username": username}
 
-    resp = requests.post(config.ANILIST_BASE, json={
-                         "query": query, "variables": variables})
+    resp = requests.post(config.ANILIST_BASE, json={"query": query, "variables": variables})
 
     try:
         return resp.json()["data"]["User"]["id"]
@@ -140,7 +128,7 @@ async def get_id_from_anilist_username(username: str) -> int:
         return None
 
 
-async def get_id_from_token(token: str, user:Member) -> str:
+async def get_id_from_token(token: str, user: Member) -> str:
     """Returns the aniList Id from token"""
 
     try:
@@ -184,17 +172,17 @@ async def get_time_str_from_seconds(seconds: int, front_limit: int = None, back_
         back_limit = len(time_markers)
 
     if front_limit is not None:
-        for i in range(len(time_markers) - ((len(time_markers) - front_limit))):
+        for i in range(len(time_markers) - (len(time_markers) - front_limit)):
             if time_vals[i] > 0:
                 time_str += "{} {} ".format(time_vals[i], time_markers[i])
 
-        return (time_str if time_str != "" else "1 seconds")
+        return time_str if time_str != "" else "1 seconds"
 
     for i in range(len(time_vals)):
         if time_vals[i] > 0:
             time_str += "{} {} ".format(time_vals[i], time_markers[i])
 
-    return (time_str if time_str != "" else "1 seconds")
+    return time_str if time_str != "" else "1 seconds"
 
 
 async def validate_user(ctx: commands.Context):
@@ -215,26 +203,17 @@ def short_cooldown():
 
     return commands.cooldown(rate=1, per=5, type=commands.BucketType.user)
 
-def long_cooldown():
 
-    return commands.cooldown(rate=2, per=5*60, type=commands.BucketType.user)
+def long_cooldown():
+    return commands.cooldown(rate=2, per=5 * 60, type=commands.BucketType.user)
 
 
 async def get_media_selection_paginator(media_name: str, select_callback: callable, media_type="ANIME") -> DataInclusivePaginator:
     """Returns a list of medias to select from"""
 
-    variables = {
-        "search": media_name,
-        "type": media_type
-    }
+    variables = {"search": media_name, "type": media_type}
 
-    anime_resp = requests.post(
-        url=config.ANILIST_BASE,
-        json={
-            "query": media_selection_query,
-            "variables": variables
-        }
-    ).json()
+    anime_resp = requests.post(url=config.ANILIST_BASE, json={"query": media_selection_query, "variables": variables}).json()
 
     anime_data = anime_resp["data"]["Page"]["media"]
 
@@ -242,26 +221,12 @@ async def get_media_selection_paginator(media_name: str, select_callback: callab
     media_list = []
 
     for page_data in anime_data:
-        embd = Embed(
-            title="Which {} are you talking about?".format(media_type),
-            color=config.NORMAL_COLOR
-        )
+        embd = Embed(title="Which {} are you talking about?".format(media_type), color=config.NORMAL_COLOR)
 
-        embd.description = "**Name** : [{name}]({url})\n**Episodes** : {episodes}\n**Status** : {status}".format(
-            name=(page_data["title"]["english"] if page_data["title"]
-                  ["english"] is not None else page_data["title"]["romaji"]),
-            url=page_data["siteUrl"],
-            episodes=page_data["episodes"],
-            status=page_data["status"]
-        )
+        embd.description = "**Name** : [{name}]({url})\n**Episodes** : {episodes}\n**Status** : {status}".format(name=(page_data["title"]["english"] if page_data["title"]["english"] is not None else page_data["title"]["romaji"]), url=page_data["siteUrl"], episodes=page_data["episodes"], status=page_data["status"])
 
-        genres = ("\n".join(["{bullet}**{genre}**".format(bullet=config.BULLET_EMOTE, genre=genre)
-                  for genre in page_data["genres"]]) if len(page_data["genres"]) > 0 else None)
-        embd.add_field(
-            name="Genres",
-            value=genres,
-            inline=False
-        )
+        genres = "\n".join(["{bullet}**{genre}**".format(bullet=config.BULLET_EMOTE, genre=genre) for genre in page_data["genres"]]) if len(page_data["genres"]) > 0 else None
+        embd.add_field(name="Genres", value=genres, inline=False)
 
         embd.set_thumbnail(url=page_data["coverImage"]["medium"])
 
@@ -279,17 +244,9 @@ async def get_media_selection_paginator(media_name: str, select_callback: callab
 async def get_character_selection_paginator(character_name: str, select_callback: callable) -> DataInclusivePaginator:
     """Returns a list of characters to select from"""
 
-    variables = {
-        "name": character_name
-    }
+    variables = {"name": character_name}
 
-    ch_response = requests.post(
-        url=config.ANILIST_BASE,
-        json={
-            "query": character_selection_query,
-            "variables": variables
-        }
-    ).json()
+    ch_response = requests.post(url=config.ANILIST_BASE, json={"query": character_selection_query, "variables": variables}).json()
 
     ch_data = ch_response["data"]["Page"]["characters"]
 
@@ -297,20 +254,10 @@ async def get_character_selection_paginator(character_name: str, select_callback
     media_list = []
 
     for page_data in ch_data:
-        embd = Embed(
-            title="Which CHARACTER are you talking about?",
-            color=config.NORMAL_COLOR
-        )
+        embd = Embed(title="Which CHARACTER are you talking about?", color=config.NORMAL_COLOR)
 
         embd.description = "**Name** : [{name}]({url}), {native}\n**Gender** : {gender}\n**Age** : {age}\n**Date Of Birth** : {dob}\n**Favorites** : {favorites}".format(
-            name=page_data["name"]["full"],
-            native=page_data["name"]["native"],
-            url=page_data["siteUrl"],
-            favorites=page_data["favourites"],
-            age=page_data["age"],
-            gender=page_data["gender"],
-            dob="{d} {m}".format(
-                d=page_data["dateOfBirth"]["day"], m=page_data["dateOfBirth"]["month"])
+            name=page_data["name"]["full"], native=page_data["name"]["native"], url=page_data["siteUrl"], favorites=page_data["favourites"], age=page_data["age"], gender=page_data["gender"], dob="{d} {m}".format(d=page_data["dateOfBirth"]["day"], m=page_data["dateOfBirth"]["month"])
         )
 
         embd.set_thumbnail(url=page_data["image"]["medium"])
@@ -325,8 +272,9 @@ async def get_character_selection_paginator(character_name: str, select_callback
 
     return DataInclusivePaginator(paginator, media_list, "CHARACTER")
 
-async def encrypt_token(token:str) -> str:
-    """ Encrypts the token using the stored key """
+
+async def encrypt_token(token: str) -> str:
+    """Encrypts the token using the stored key"""
 
     cipher_suit = Fernet(config.SECRET_KEY)
 
@@ -334,10 +282,38 @@ async def encrypt_token(token:str) -> str:
 
     return encrypted_token.decode()
 
-async def decrypt_token(encrypted_token:str) -> str:
 
+async def decrypt_token(encrypted_token: str) -> str:
     cipher_suit = Fernet(config.SECRET_KEY)
 
     decrypted_token = cipher_suit.decrypt(encrypted_token.encode())
 
     return decrypted_token.decode()
+
+
+def with_typing_msg():
+    """Adds BOT is typing... to commands with message object"""
+
+    def decorator(func):
+        @wraps(func)
+        async def wrapper(message: Message, *args, **kwargs):
+            async with message.channel.typing():
+                return await func(message, *args, **kwargs)
+
+        return wrapper
+
+    return decorator
+
+
+def with_typing_ctx():
+    """Adds BOT is typing... to commands with commands.Context object"""
+
+    def decorator(func):
+        @wraps(func)
+        async def wrapper(self, ctx: commands.Context, *args, **kwargs):
+            async with ctx.typing():
+                return await func(self, ctx, *args, **kwargs)
+
+        return wrapper
+
+    return decorator

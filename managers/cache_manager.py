@@ -55,23 +55,28 @@ class CacheManager:
 
         self.server_collection = self.db["servers"]
 
-        self.cache_servers_data()
+        count = self.cache_servers_data()
 
-    def cache_servers_data(self):
-        """Bulk load all the data from db to cache"""
+        print(f"{count} Servers Cached!")
+
+    def cache_servers_data(self) -> int:
+        """Bulk load all the data from db to cache and return the count"""
 
         data = self.server_collection.find({}, {"_id": 0}).to_list()
-
+        count = 0
         for data_item in data:
             self.server_cache[data_item.get("server_id")] = data_item
+            count = count + 1
 
-    async def get_server(self, server_id: int, register_if_not_found: bool = False) -> dict:
+        return count
+
+    async def get_server(self, server_id: int, register_if_not_found: bool = False, server_name: str = "<none>") -> dict:
         """Fetch server from cache"""
 
         server_details = self.server_cache.get(server_id, None)
 
         if server_details is None and register_if_not_found is True:
-            server_details = await self.register_server(server_id, "<none>")
+            server_details = await self.register_server(server_id, server_name)
 
         return server_details
 
@@ -83,13 +88,14 @@ class CacheManager:
         new_entry = base_db_entries.base_servers_entry
 
         new_entry["server_id"] = server_id
-
         new_entry["server_name"] = server_name
 
         if existing_server is None:
             await mongo_manager.manager.add_server(new_entry)
 
         self.server_cache[server_id] = new_entry
+
+        return new_entry
 
     async def update_server(self, server_id: int, update_details: dict) -> dict:
         """Update the server details on both db and cache"""
@@ -125,13 +131,9 @@ def init_manager() -> None:
 def init_cache():
     try:
         cache_genre_embed()
-
     except Exception as e:
         print("Error while caching data")
-
         traceback.print_exception(type(e), e, e.__traceback__, sys.stderr)
-    else:
-        print("Data Cached!!")
 
 
 def cache_genre_embed():

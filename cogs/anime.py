@@ -5,11 +5,10 @@ import config
 
 
 class AnimeModule(commands.Cog):
-
     @commands.command(name="quote", description="Returns a random anime quote")
     @general_helper.short_cooldown()
+    @general_helper.with_typing_ctx()
     async def anime_quote(self, ctx: commands.Context):
-
         await ctx.trigger_typing()
 
         reply = await anime_helper.get_random_anime_quote_embed()
@@ -18,8 +17,8 @@ class AnimeModule(commands.Cog):
 
     @commands.command(name="suggest", aliases=["recommend"], description="Recommends an anime similar to the provided anime")
     @general_helper.short_cooldown()
+    @general_helper.with_typing_ctx()
     async def suggest_anime(self, ctx: commands.Context, *anime):
-
         await ctx.trigger_typing()
 
         anime = " ".join(anime)
@@ -32,11 +31,7 @@ class AnimeModule(commands.Cog):
             if anime_scroller is not None:
                 return anime_scroller
             else:
-                return await general_helper.get_information_embed(
-                    title="Whoops",
-                    description="No recommendations were found for this anime",
-                    color=config.ERROR_COLOR
-                )
+                return await general_helper.get_information_embed(title="Whoops", description="No recommendations were found for this anime", color=config.ERROR_COLOR)
 
         response = await general_helper.get_media_selection_paginator(anime, reply_callback)
 

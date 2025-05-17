@@ -1,9 +1,11 @@
+import asyncio
+
 from discord import Message
 import pyyoutube
 import ytmusicapi
-import config
-import asyncio
 import spotipy
+
+import config
 
 
 class SpotifyTrackAlternative:
@@ -40,23 +42,19 @@ async def youtube_music_fetch(track_name: str, track_artists: str):
 
     youtube_music_client = ytmusicapi.YTMusic()
 
-    result = youtube_music_client.search("{} {}".format(track_name, track_artists))
+    result = youtube_music_client.search("{} {}".format(track_name, track_artists), filter="songs", limit=1)
     return result
 
 
 def fetch_spotipy(track_id):
     """Fetch the track details from spotify"""
 
-    auth_manager = spotipy.SpotifyClientCredentials(
-        client_id=config.SPOTIFY_CLIENT_ID, client_secret=config.SPOTIFY_CLIENT_SECRET
-    )
+    auth_manager = spotipy.SpotifyClientCredentials(client_id=config.SPOTIFY_CLIENT_ID, client_secret=config.SPOTIFY_CLIENT_SECRET)
     sp = spotipy.Spotify(auth_manager=auth_manager)
     return sp.track(track_id)
 
 
-async def get_alternatives(
-    message: Message, spotify_track_id: str
-) -> SpotifyTrackAlternative:
+async def get_alternatives(message: Message, spotify_track_id: str) -> SpotifyTrackAlternative:
     """Get alternative links to the current spotify song"""
 
     links: SpotifyTrackAlternative = SpotifyTrackAlternative()
@@ -82,10 +80,6 @@ async def get_alternatives(
         else None
     )
 
-    links.youtube_music = (
-        config.YOUTUBE_MUSIC_BASE + music_results[0].get("videoId")
-        if len(music_results) > 0
-        else None
-    )
+    links.youtube_music = config.YOUTUBE_MUSIC_BASE + music_results[0].get("videoId") if len(music_results) > 0 else None
 
     return links
