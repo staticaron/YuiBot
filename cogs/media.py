@@ -18,7 +18,7 @@ class MediaModule(commands.Cog):
         try:
             anime = " ".join(inputs[:-1])
             ep = int(inputs[-1])
-        except Exception as e:
+        except Exception:
             ep = -1
             anime = " ".join(inputs)
 
@@ -50,7 +50,7 @@ class MediaModule(commands.Cog):
         try:
             manga = " ".join(inputs[:-1])
             ep = int(inputs[-1])
-        except Exception as e:
+        except Exception:
             ep = -1
             manga = " ".join(inputs)
 
@@ -87,7 +87,7 @@ class MediaModule(commands.Cog):
         try:
             rating = float(inputs[-1])
             anime = " ".join(inputs[:-1])
-        except Exception as e:
+        except Exception:
             return await ctx.reply(embed=await general_helper.get_information_embed("Last parameter must be a decimal value representing the new score.", color=ERROR_COLOR))
 
         async def selection_reply():
@@ -114,7 +114,7 @@ class MediaModule(commands.Cog):
         try:
             rating = float(inputs[-1])
             manga = " ".join(inputs[:-1])
-        except Exception as e:
+        except Exception:
             return await ctx.reply(embed=await general_helper.get_information_embed("Last parameter must be a decimal value representing the new score.", color=ERROR_COLOR))
 
         async def selection_reply():
