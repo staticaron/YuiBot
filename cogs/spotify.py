@@ -7,7 +7,6 @@ from helpers import general_helper
 class SpotifyModule(commands.Cog):
     @commands.group(name="spotify", description="Group containing all the spotify module related commands")
     @commands.has_permissions(administrator=True)
-    @general_helper.with_typing_ctx()
     async def spotify(self, ctx: commands.Context):
         if ctx.subcommand_passed is None:
             current_server = await cm.manager.get_server(ctx.guild.id, True, ctx.guild.name)

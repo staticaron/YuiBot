@@ -14,7 +14,6 @@ class ListsModule(commands.Cog):
 
     @commands.group(name="anime", description="Commands about your anime lists")
     @commands.check(general_helper.validate_user)
-    @general_helper.with_typing_ctx()
     async def anime_group(self, ctx: commands.Context):
         if ctx.subcommand_passed is None:
             await ctx.reply("Please provide a valid subcommand.")
@@ -152,7 +151,6 @@ class ListsModule(commands.Cog):
     @commands.group(name="manga", description="Commands about your manga lists")
     @commands.check(general_helper.validate_user)
     @general_helper.short_cooldown()
-    @general_helper.with_typing_ctx()
     async def manga_group(self, ctx: commands.Context):
         if ctx.subcommand_passed is None:
             await ctx.reply("Please provide a valid subcommand.")
