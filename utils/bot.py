@@ -43,7 +43,6 @@ async def process_spotify_links(message: Message):
 
 class Bot(commands.Bot):
     intents: Intents = Intents.default()
-    intents.message_content = True
 
     mentions = ["<@991739924250362047>", "<@!991739924250362047>"]
 
