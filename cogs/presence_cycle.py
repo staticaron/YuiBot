@@ -11,7 +11,7 @@ class Presence(commands.Cog):
 
     activity = cycle(
         [
-            Activity(name="you!", type=ActivityType.watching, status=Status.online),
+            Activity(name="New prefix : @YuiBot", type=ActivityType.watching, status=Status.online),
         ]
     )
 
