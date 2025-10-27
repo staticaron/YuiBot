@@ -1,3 +1,4 @@
+import logging
 import requests
 import jwt
 from cryptography.fernet import Fernet
@@ -28,7 +29,16 @@ class MediaData:
     url: str = None
     image_link = None
 
-    def __init__(self, media_id: int, mal_id: int, media_type: str = "ANIME", title: list = None, genre: list = None, url: str = None, image_link: str = None):
+    def __init__(
+        self,
+        media_id: int,
+        mal_id: int,
+        media_type: str = "ANIME",
+        title: list = None,
+        genre: list = None,
+        url: str = None,
+        image_link: str = None,
+    ):
         self.anilist_id = media_id
         self.mal_id = mal_id
         self.type = media_type
@@ -49,7 +59,13 @@ class CharacterData:
     url: str = None
     image_link: str = None
 
-    def __init__(self, character_id: int, character_titles: list = None, url: str = None, image_link: str = None) -> None:
+    def __init__(
+        self,
+        character_id: int,
+        character_titles: list = None,
+        url: str = None,
+        image_link: str = None,
+    ) -> None:
         self.anilist_id = character_id
         self.titles = character_titles
         self.url = url
@@ -75,10 +91,22 @@ class DataInclusivePaginator:
         return len(self.data_elements)
 
     async def get_error_embed(self):
-        return await general_helper.get_information_embed(title="Damn", description="No {} were found for that input".format(self.data_type), color=config.ERROR_COLOR)
+        return await general_helper.get_information_embed(
+            title="Damn",
+            description="No {} were found for that input".format(self.data_type),
+            color=config.ERROR_COLOR,
+        )
 
 
-async def get_information_embed(title: str, color=config.NORMAL_COLOR, url: str = None, description: str = None, user: Member = None, thumbnail_link: str = None, fields: list = None) -> Embed:
+async def get_information_embed(
+    title: str,
+    color=config.NORMAL_COLOR,
+    url: str = None,
+    description: str = None,
+    user: Member = None,
+    thumbnail_link: str = None,
+    fields: list = None,
+) -> Embed:
     """Returns an embed with specified details"""
 
     embd: Embed = Embed(title=title, color=color)
@@ -91,7 +119,9 @@ async def get_information_embed(title: str, color=config.NORMAL_COLOR, url: str 
         embd.description = description
 
     if user is not None:
-        embd.set_footer(icon_url=user.avatar.url, text="Requested by {}".format(user.name))
+        embd.set_footer(
+            icon_url=user.avatar.url, text="Requested by {}".format(user.name)
+        )
 
     if thumbnail_link is not None:
         embd.set_thumbnail(url=thumbnail_link)
@@ -119,12 +149,14 @@ async def get_id_from_anilist_username(username: str) -> int:
 
     variables = {"username": username}
 
-    resp = requests.post(config.ANILIST_BASE, json={"query": query, "variables": variables})
+    resp = requests.post(
+        config.ANILIST_BASE, json={"query": query, "variables": variables}
+    )
 
     try:
         return resp.json()["data"]["User"]["id"]
     except Exception as e:
-        print(e)
+        logging.error(e)
         return None
 
 
@@ -150,7 +182,9 @@ async def get_id_from_userID(userID: str) -> str:
         raise UserNotFound(user_id=userID)
 
 
-async def get_time_str_from_seconds(seconds: int, front_limit: int = None, back_limit: int = None):
+async def get_time_str_from_seconds(
+    seconds: int, front_limit: int = None, back_limit: int = None
+):
     """Returns a formatted time string"""
 
     time_str = ""
@@ -208,12 +242,17 @@ def long_cooldown():
     return commands.cooldown(rate=2, per=5 * 60, type=commands.BucketType.user)
 
 
-async def get_media_selection_paginator(media_name: str, select_callback: callable, media_type="ANIME") -> DataInclusivePaginator:
+async def get_media_selection_paginator(
+    media_name: str, select_callback: callable, media_type="ANIME"
+) -> DataInclusivePaginator:
     """Returns a list of medias to select from"""
 
     variables = {"search": media_name, "type": media_type}
 
-    anime_resp = requests.post(url=config.ANILIST_BASE, json={"query": media_selection_query, "variables": variables}).json()
+    anime_resp = requests.post(
+        url=config.ANILIST_BASE,
+        json={"query": media_selection_query, "variables": variables},
+    ).json()
 
     anime_data = anime_resp["data"]["Page"]["media"]
 
@@ -221,11 +260,34 @@ async def get_media_selection_paginator(media_name: str, select_callback: callab
     media_list = []
 
     for page_data in anime_data:
-        embd = Embed(title="Which {} are you talking about?".format(media_type), color=config.NORMAL_COLOR)
+        embd = Embed(
+            title="Which {} are you talking about?".format(media_type),
+            color=config.NORMAL_COLOR,
+        )
 
-        embd.description = "**Name** : [{name}]({url})\n**Episodes** : {episodes}\n**Status** : {status}".format(name=(page_data["title"]["english"] if page_data["title"]["english"] is not None else page_data["title"]["romaji"]), url=page_data["siteUrl"], episodes=page_data["episodes"], status=page_data["status"])
+        embd.description = "**Name** : [{name}]({url})\n**Episodes** : {episodes}\n**Status** : {status}".format(
+            name=(
+                page_data["title"]["english"]
+                if page_data["title"]["english"] is not None
+                else page_data["title"]["romaji"]
+            ),
+            url=page_data["siteUrl"],
+            episodes=page_data["episodes"],
+            status=page_data["status"],
+        )
 
-        genres = "\n".join(["{bullet}**{genre}**".format(bullet=config.BULLET_EMOTE, genre=genre) for genre in page_data["genres"]]) if len(page_data["genres"]) > 0 else None
+        genres = (
+            "\n".join(
+                [
+                    "{bullet}**{genre}**".format(
+                        bullet=config.BULLET_EMOTE, genre=genre
+                    )
+                    for genre in page_data["genres"]
+                ]
+            )
+            if len(page_data["genres"]) > 0
+            else None
+        )
         embd.add_field(name="Genres", value=genres, inline=False)
 
         embd.set_thumbnail(url=page_data["coverImage"]["medium"])
@@ -241,12 +303,17 @@ async def get_media_selection_paginator(media_name: str, select_callback: callab
     return DataInclusivePaginator(paginator, media_list, media_type)
 
 
-async def get_character_selection_paginator(character_name: str, select_callback: callable) -> DataInclusivePaginator:
+async def get_character_selection_paginator(
+    character_name: str, select_callback: callable
+) -> DataInclusivePaginator:
     """Returns a list of characters to select from"""
 
     variables = {"name": character_name}
 
-    ch_response = requests.post(url=config.ANILIST_BASE, json={"query": character_selection_query, "variables": variables}).json()
+    ch_response = requests.post(
+        url=config.ANILIST_BASE,
+        json={"query": character_selection_query, "variables": variables},
+    ).json()
 
     ch_data = ch_response["data"]["Page"]["characters"]
 
@@ -254,10 +321,20 @@ async def get_character_selection_paginator(character_name: str, select_callback
     media_list = []
 
     for page_data in ch_data:
-        embd = Embed(title="Which CHARACTER are you talking about?", color=config.NORMAL_COLOR)
+        embd = Embed(
+            title="Which CHARACTER are you talking about?", color=config.NORMAL_COLOR
+        )
 
         embd.description = "**Name** : [{name}]({url}), {native}\n**Gender** : {gender}\n**Age** : {age}\n**Date Of Birth** : {dob}\n**Favorites** : {favorites}".format(
-            name=page_data["name"]["full"], native=page_data["name"]["native"], url=page_data["siteUrl"], favorites=page_data["favourites"], age=page_data["age"], gender=page_data["gender"], dob="{d} {m}".format(d=page_data["dateOfBirth"]["day"], m=page_data["dateOfBirth"]["month"])
+            name=page_data["name"]["full"],
+            native=page_data["name"]["native"],
+            url=page_data["siteUrl"],
+            favorites=page_data["favourites"],
+            age=page_data["age"],
+            gender=page_data["gender"],
+            dob="{d} {m}".format(
+                d=page_data["dateOfBirth"]["day"], m=page_data["dateOfBirth"]["month"]
+            ),
         )
 
         embd.set_thumbnail(url=page_data["image"]["medium"])

@@ -1,5 +1,6 @@
 from discord.ext import commands
 from discord import Embed
+import logging
 
 from views.scroller import Scroller
 from helpers import general_helper
@@ -31,7 +32,11 @@ class FillerModule(commands.Cog):
         embds = []
 
         if len(anime_match.items()) <= 0:
-            return [Embed(title="No Filler Information was found!", color=config.NORMAL_COLOR)]
+            return [
+                Embed(
+                    title="No Filler Information was found!", color=config.NORMAL_COLOR
+                )
+            ]
 
         # True if at least one filler data item was found.
         filler_found: bool = False
@@ -41,7 +46,12 @@ class FillerModule(commands.Cog):
                 data = config.FILLER_DATA["data"][id]
             except KeyError:
                 if filler_found is False:
-                    embds.append(Embed(title="No Filler Information was found!", color=config.NORMAL_COLOR))
+                    embds.append(
+                        Embed(
+                            title="No Filler Information was found!",
+                            color=config.NORMAL_COLOR,
+                        )
+                    )
                     continue
                 continue
             else:
@@ -49,34 +59,56 @@ class FillerModule(commands.Cog):
                     filler_found = True
                     embds.clear()
 
-            embd = Embed(title="{name}'s Filler Episodes".format(name=name), color=config.NORMAL_COLOR)
+            embd = Embed(
+                title="{name}'s Filler Episodes".format(name=name),
+                color=config.NORMAL_COLOR,
+            )
 
             try:
-                embd.add_field(name="Anime Canon Episodes", value="```{}```".format(data["anime_canon"]), inline=False)
+                embd.add_field(
+                    name="Anime Canon Episodes",
+                    value="```{}```".format(data["anime_canon"]),
+                    inline=False,
+                )
 
-                embd.add_field(name="Manga Canon Episodes", value="```{}```".format(data["manga_canon"]), inline=False)
+                embd.add_field(
+                    name="Manga Canon Episodes",
+                    value="```{}```".format(data["manga_canon"]),
+                    inline=False,
+                )
 
-                embd.add_field(name="Mixed Episodes", value="```{}```".format(data["mixed_ep"]), inline=False)
+                embd.add_field(
+                    name="Mixed Episodes",
+                    value="```{}```".format(data["mixed_ep"]),
+                    inline=False,
+                )
 
-                embd.add_field(name="Filler Episodes", value="```{}```".format(data["filler_ep"]), inline=False)
+                embd.add_field(
+                    name="Filler Episodes",
+                    value="```{}```".format(data["filler_ep"]),
+                    inline=False,
+                )
             except Exception:
-                print(name)
+                logging.error(name)
 
             embds.append(embd)
 
         return embds
 
-    @commands.command(name="filler", description="Returns a list of all the recorded filler episodes of the anime")
+    @commands.command(
+        name="filler",
+        description="Returns a list of all the recorded filler episodes of the anime",
+    )
     @general_helper.short_cooldown()
     @general_helper.with_typing_ctx()
     async def filler(self, ctx: commands.Context, *anime):
         anime = " ".join(anime)
 
-        print("Anime name is " + anime)
+        logging.info("Anime name is " + anime)
 
         anime_match = await self.search_filler(anime)
 
-        print(anime_match)
+        logging.info(anime_match)
 
         embds = await self.parse_filler(anime_match)
 

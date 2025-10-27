@@ -1,18 +1,27 @@
 import sys
 
 from utils.bot import Bot
-from managers import mongo_manager, cache_manager
+from managers import mongo_manager, cache_manager, logging_manager
 
 import config
 
+logging_manager.setup_logging()
+
 
 def main(test=False):
-    # init data items
+    print("""
+    .%%..%%..%%..%%..%%%%%%..%%%%%....%%%%...%%%%%%.
+    ..%%%%...%%..%%....%%....%%..%%..%%..%%....%%...
+    ...%%....%%..%%....%%....%%%%%...%%..%%....%%...
+    ...%%....%%..%%....%%....%%..%%..%%..%%....%%...
+    ...%%.....%%%%...%%%%%%..%%%%%....%%%%.....%%...
+    ................................................
+    """)
+
     config.initialize_config_vars()
 
     cache_manager.init()
 
-    # load databases
     mongo_manager.init_motor()
 
     bot: Bot = Bot()
