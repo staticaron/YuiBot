@@ -1,5 +1,6 @@
 import os
 import re
+import logging
 
 from discord.ext import commands
 from discord import Intents, Message, Embed, Guild
@@ -61,8 +62,9 @@ class Bot(commands.Bot):
                 self.load_extension(f"cogs.{file[:-3]}")
 
     async def on_ready(self):
-        print("Logged in as {}".format(self.user))
-        print("Discord Version : {}".format(__version__))
+        logging.info("Logged in as {}".format(self.user))
+        logging.info("Discord Version : {}".format(__version__))
+        
 
     async def on_message(self, message: Message):
         if message.content.strip() in self.mentions:

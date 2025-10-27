@@ -1,3 +1,4 @@
+import logging
 from motor.motor_asyncio import (
     AsyncIOMotorClient,
     AsyncIOMotorDatabase,
@@ -55,9 +56,11 @@ class MongoManager:
 
             await self.user_collection.insert_one(document)
         except Exception as e:
-            print(e)
+            logging.error(e)
 
-    async def update_user(self, userID: str, anilistID: str = None, token: str = None) -> None:
+    async def update_user(
+        self, userID: str, anilistID: str = None, token: str = None
+    ) -> None:
         try:
             query = {"userID": userID}
 
@@ -74,7 +77,7 @@ class MongoManager:
             await self.user_collection.update_one(query, {"$set": updates})
 
         except Exception as e:
-            print(e)
+            logging.error(e)
 
     async def remove_user(self, userID: str) -> None:
         delete_query = {"userID": userID}
@@ -125,6 +128,6 @@ def init_motor():
     try:
         manager = MongoManager()
     except Exception as e:
-        print(e)
+        logging.error(e)
     else:
-        print("Database Initialized")
+        logging.info("Database Initialized")

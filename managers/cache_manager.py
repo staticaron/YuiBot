@@ -1,5 +1,6 @@
 import sys
 import traceback
+import logging
 
 from discord import Embed
 from pymongo import MongoClient, database, collection
@@ -57,7 +58,7 @@ class CacheManager:
 
         count = self.cache_servers_data()
 
-        print(f"{count} Servers Cached!")
+        logging.info(f"{count} Servers Cached!")
 
     def cache_servers_data(self) -> int:
         """Bulk load all the data from db to cache and return the count"""
@@ -70,7 +71,12 @@ class CacheManager:
 
         return count
 
-    async def get_server(self, server_id: int, register_if_not_found: bool = False, server_name: str = "<none>") -> dict:
+    async def get_server(
+        self,
+        server_id: int,
+        register_if_not_found: bool = False,
+        server_name: str = "<none>",
+    ) -> dict:
         """Fetch server from cache"""
 
         server_details = self.server_cache.get(server_id, None)
@@ -132,7 +138,7 @@ def init_cache():
     try:
         cache_genre_embed()
     except Exception as e:
-        print("Error while caching data")
+        logging.error("Error while caching data")
         traceback.print_exception(type(e), e, e.__traceback__, sys.stderr)
 
 
