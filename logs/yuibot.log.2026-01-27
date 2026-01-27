@@ -1,0 +1,114 @@
+2026-01-27 23:19:54 - ERROR - Error occurred while trying to cache Config Vars! 
+'TOKEN'
+2026-01-27 23:27:10 - INFO - Config LOADED!
+2026-01-27 23:27:11 - INFO - 47 Servers Cached!
+2026-01-27 23:27:11 - INFO - Database Initialized
+2026-01-27 23:27:11 - WARNING - PyNaCl is not installed, voice will NOT be supported
+2026-01-27 23:27:11 - INFO - logging in using static token
+2026-01-27 23:27:12 - INFO - Shard ID None has sent the IDENTIFY payload.
+2026-01-27 23:27:12 - INFO - Shard ID None has connected to Gateway: ["gateway-prd-arm-us-east1-d-n3wm",{"micros":190437,"calls":["id_created",{"micros":435,"calls":[]},"session_lookup_time",{"micros":215,"calls":[]},"session_lookup_finished",{"micros":12,"calls":[]},"discord-sessions-prd-2-111",{"micros":189447,"calls":["start_session",{"micros":178886,"calls":["discord-api-rpc-686cbbfd85-hcwpm",{"micros":112014,"calls":["get_user",{"micros":6131},"get_guilds",{"micros":15659},"send_scheduled_deletion_message",{"micros":14},"guild_join_requests",{"micros":2},"authorized_ip_coro",{"micros":46},"pending_payments",{"micros":737},"apex_experiments",{"micros":59158},"user_activities",{"micros":14},"played_application_ids",{"micros":4},"linked_users",{"micros":4},"ad_personalization_toggles_disabled",{"micros":3},"regional_feature_config",{"micros":7}]}]},"starting_guild_connect",{"micros":40,"calls":[]},"presence_started",{"micros":4120,"calls":[]},"guilds_started",{"micros":140,"calls":[]},"lobbies_started",{"micros":2,"calls":[]},"guilds_connect",{"micros":2,"calls":[]},"presence_connect",{"micros":6230,"calls":[]},"connect_finished",{"micros":6244,"calls":[]},"build_ready",{"micros":12,"calls":[]},"clean_ready",{"micros":1,"calls":[]},"optimize_ready",{"micros":0,"calls":[]},"split_ready",{"micros":0,"calls":[]}]}]}] (Session ID: 9caf8bbe27ec2886f8471309d7e110e3).
+2026-01-27 23:27:14 - INFO - Logged in as Ui Bot#3454
+2026-01-27 23:27:14 - INFO - Discord Version : 2.4.0
+2026-01-27 23:29:05 - INFO - Cleaning up tasks.
+2026-01-27 23:29:05 - INFO - Cleaning up after 2 tasks.
+2026-01-27 23:29:05 - INFO - Closing the event loop.
+2026-01-27 23:29:05 - ERROR - Task was destroyed but it is pending!
+task: <Task cancelling name='Task-2' coro=<Client.run.<locals>.runner() running at /home/dev/EXTRAS/Projects/YuiBot/.venv/lib/python3.11/site-packages/discord/client.py:699> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[gather.<locals>._done_callback() at /home/dev/.local/share/uv/python/cpython-3.11.14-linux-x86_64-gnu/lib/python3.11/asyncio/tasks.py:764]>
+2026-01-27 23:29:05 - ERROR - Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7f91ccf27610>
+2026-01-27 23:29:08 - INFO - Config LOADED!
+2026-01-27 23:29:08 - INFO - 47 Servers Cached!
+2026-01-27 23:29:08 - INFO - Database Initialized
+2026-01-27 23:29:08 - WARNING - PyNaCl is not installed, voice will NOT be supported
+2026-01-27 23:29:08 - INFO - logging in using static token
+2026-01-27 23:29:09 - INFO - Shard ID None has sent the IDENTIFY payload.
+2026-01-27 23:29:09 - INFO - Shard ID None has connected to Gateway: ["gateway-prd-arm-us-east1-b-s500",{"micros":120117,"calls":["id_created",{"micros":322,"calls":[]},"session_lookup_time",{"micros":818,"calls":[]},"session_lookup_finished",{"micros":11,"calls":[]},"discord-sessions-prd-2-10",{"micros":118575,"calls":["start_session",{"micros":112186,"calls":["discord-api-rpc-686cbbfd85-fg8lr",{"micros":65443,"calls":["get_user",{"micros":6818},"get_guilds",{"micros":5482},"send_scheduled_deletion_message",{"micros":17},"guild_join_requests",{"micros":6376},"authorized_ip_coro",{"micros":11},"pending_payments",{"micros":588},"apex_experiments",{"micros":38875},"user_activities",{"micros":6},"played_application_ids",{"micros":3},"linked_users",{"micros":4},"ad_personalization_toggles_disabled",{"micros":3},"regional_feature_config",{"micros":11}]}]},"starting_guild_connect",{"micros":33,"calls":[]},"presence_started",{"micros":366,"calls":[]},"guilds_started",{"micros":121,"calls":[]},"lobbies_started",{"micros":1,"calls":[]},"guilds_connect",{"micros":1,"calls":[]},"presence_connect",{"micros":5838,"calls":[]},"connect_finished",{"micros":5852,"calls":[]},"build_ready",{"micros":14,"calls":[]},"clean_ready",{"micros":0,"calls":[]},"optimize_ready",{"micros":1,"calls":[]},"split_ready",{"micros":0,"calls":[]}]}]}] (Session ID: 5c93541165dee5e8aec4c31f0776b79b).
+2026-01-27 23:29:11 - INFO - Logged in as Ui Bot#3454
+2026-01-27 23:29:11 - INFO - Discord Version : 2.4.0
+2026-01-27 23:29:40 - INFO - Cleaning up tasks.
+2026-01-27 23:29:40 - INFO - Cleaning up after 2 tasks.
+2026-01-27 23:29:40 - INFO - Closing the event loop.
+2026-01-27 23:29:41 - ERROR - Task was destroyed but it is pending!
+task: <Task cancelling name='Task-2' coro=<Client.run.<locals>.runner() running at /home/dev/EXTRAS/Projects/YuiBot/.venv/lib/python3.11/site-packages/discord/client.py:699> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[gather.<locals>._done_callback() at /home/dev/.local/share/uv/python/cpython-3.11.14-linux-x86_64-gnu/lib/python3.11/asyncio/tasks.py:764]>
+2026-01-27 23:29:41 - ERROR - Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7f8ba9feb810>
+2026-01-27 23:29:41 - ERROR - Unclosed connector
+connections: ['[(<aiohttp.client_proto.ResponseHandler object at 0x7f8ba8e479a0>, 1774.294106028)]']
+connector: <aiohttp.connector.TCPConnector object at 0x7f8ba9f78410>
+2026-01-27 23:31:21 - INFO - Config LOADED!
+2026-01-27 23:31:23 - INFO - 47 Servers Cached!
+2026-01-27 23:31:25 - INFO - Database Initialized
+2026-01-27 23:31:27 - WARNING - PyNaCl is not installed, voice will NOT be supported
+2026-01-27 23:31:41 - INFO - logging in using static token
+2026-01-27 23:31:42 - INFO - Shard ID None has sent the IDENTIFY payload.
+2026-01-27 23:31:42 - INFO - Shard ID None has connected to Gateway: ["gateway-prd-arm-us-east1-d-r5jq",{"micros":124777,"calls":["id_created",{"micros":936,"calls":[]},"session_lookup_time",{"micros":243,"calls":[]},"session_lookup_finished",{"micros":17,"calls":[]},"discord-sessions-prd-2-144",{"micros":122997,"calls":["start_session",{"micros":96571,"calls":["discord-api-rpc-686cbbfd85-ws45b",{"micros":44005,"calls":["get_user",{"micros":9750},"get_guilds",{"micros":3216},"send_scheduled_deletion_message",{"micros":10},"guild_join_requests",{"micros":3315},"authorized_ip_coro",{"micros":15},"pending_payments",{"micros":633},"apex_experiments",{"micros":39443},"user_activities",{"micros":7},"played_application_ids",{"micros":4},"linked_users",{"micros":4},"ad_personalization_toggles_disabled",{"micros":3},"regional_feature_config",{"micros":3}]}]},"starting_guild_connect",{"micros":33,"calls":[]},"presence_started",{"micros":2738,"calls":[]},"guilds_started",{"micros":128,"calls":[]},"lobbies_started",{"micros":1,"calls":[]},"guilds_connect",{"micros":1,"calls":[]},"presence_connect",{"micros":23502,"calls":[]},"connect_finished",{"micros":23515,"calls":[]},"build_ready",{"micros":10,"calls":[]},"clean_ready",{"micros":0,"calls":[]},"optimize_ready",{"micros":0,"calls":[]},"split_ready",{"micros":1,"calls":[]}]}]}] (Session ID: cf6646f3b97d0e6d3c08f50b3308a22d).
+2026-01-27 23:31:42 - INFO - Cleaning up tasks.
+2026-01-27 23:31:42 - INFO - Cleaning up after 5 tasks.
+2026-01-27 23:31:42 - INFO - Closing the event loop.
+2026-01-27 23:31:43 - ERROR - Task was destroyed but it is pending!
+task: <Task cancelling name='Task-2' coro=<Client.run.<locals>.runner() running at /home/dev/EXTRAS/Projects/YuiBot/.venv/lib/python3.11/site-packages/discord/client.py:699> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[gather.<locals>._done_callback() at /home/dev/.local/share/uv/python/cpython-3.11.14-linux-x86_64-gnu/lib/python3.11/asyncio/tasks.py:764]>
+2026-01-27 23:31:43 - ERROR - Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7ffb38b48650>
+2026-01-27 23:47:41 - INFO - Config LOADED!
+2026-01-27 23:47:42 - INFO - 47 Servers Cached!
+2026-01-27 23:47:42 - INFO - Database Initialized
+2026-01-27 23:47:42 - WARNING - PyNaCl is not installed, voice will NOT be supported
+2026-01-27 23:47:42 - INFO - logging in using static token
+2026-01-27 23:47:42 - INFO - Shard ID None has sent the IDENTIFY payload.
+2026-01-27 23:47:43 - INFO - Shard ID None has connected to Gateway: ["gateway-prd-arm-us-east1-d-qs93",{"micros":161867,"calls":["id_created",{"micros":430,"calls":[]},"session_lookup_time",{"micros":325,"calls":[]},"session_lookup_finished",{"micros":10,"calls":[]},"discord-sessions-prd-2-168",{"micros":160732,"calls":["start_session",{"micros":145390,"calls":["discord-api-rpc-6946bd8d8f-hd5lc",{"micros":60498,"calls":["get_user",{"micros":7220},"get_guilds",{"micros":4544},"send_scheduled_deletion_message",{"micros":20},"guild_join_requests",{"micros":3},"authorized_ip_coro",{"micros":8},"pending_payments",{"micros":489},"apex_experiments",{"micros":71617},"user_activities",{"micros":7},"played_application_ids",{"micros":4},"linked_users",{"micros":4},"ad_personalization_toggles_disabled",{"micros":4},"regional_feature_config",{"micros":4}]}]},"starting_guild_connect",{"micros":37,"calls":[]},"presence_started",{"micros":383,"calls":[]},"guilds_started",{"micros":135,"calls":[]},"lobbies_started",{"micros":1,"calls":[]},"guilds_connect",{"micros":1,"calls":[]},"presence_connect",{"micros":14750,"calls":[]},"connect_finished",{"micros":14766,"calls":[]},"build_ready",{"micros":16,"calls":[]},"clean_ready",{"micros":1,"calls":[]},"optimize_ready",{"micros":0,"calls":[]},"split_ready",{"micros":1,"calls":[]}]}]}] (Session ID: 4123ef54c657eaf7b69943a5722271da).
+2026-01-27 23:47:45 - INFO - Logged in as Ui Bot#3454
+2026-01-27 23:47:45 - INFO - Discord Version : 2.4.0
+2026-01-27 23:48:05 - INFO - Cleaning up tasks.
+2026-01-27 23:48:05 - INFO - Cleaning up after 2 tasks.
+2026-01-27 23:48:05 - INFO - Closing the event loop.
+2026-01-27 23:48:05 - ERROR - Task was destroyed but it is pending!
+task: <Task cancelling name='Task-2' coro=<Client.run.<locals>.runner() running at /home/dev/EXTRAS/Projects/YuiBot/.venv/lib/python3.11/site-packages/discord/client.py:699> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[gather.<locals>._done_callback() at /home/dev/.local/share/uv/python/cpython-3.11.14-linux-x86_64-gnu/lib/python3.11/asyncio/tasks.py:764]>
+2026-01-27 23:48:05 - ERROR - Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7fb688cefb10>
+2026-01-27 23:48:05 - ERROR - Unclosed connector
+connections: ['[(<aiohttp.client_proto.ResponseHandler object at 0x7fb688c51b00>, 2887.801286209)]']
+connector: <aiohttp.connector.TCPConnector object at 0x7fb688d10c50>
+2026-01-27 23:50:04 - INFO - Config LOADED!
+2026-01-27 23:50:05 - INFO - 47 Servers Cached!
+2026-01-27 23:50:05 - INFO - Database Initialized
+2026-01-27 23:50:05 - WARNING - PyNaCl is not installed, voice will NOT be supported
+2026-01-27 23:50:05 - INFO - logging in using static token
+2026-01-27 23:50:05 - INFO - Shard ID None has sent the IDENTIFY payload.
+2026-01-27 23:50:06 - INFO - Shard ID None has connected to Gateway: ["gateway-prd-arm-us-east1-d-9513",{"micros":400748,"calls":["id_created",{"micros":700,"calls":[]},"session_lookup_time",{"micros":1317,"calls":[]},"session_lookup_finished",{"micros":23,"calls":[]},"discord-sessions-prd-2-165",{"micros":398414,"calls":["start_session",{"micros":382295,"calls":["discord-api-rpc-6946bd8d8f-cvtbf",{"micros":256774,"calls":["get_user",{"micros":108265},"get_guilds",{"micros":26398},"send_scheduled_deletion_message",{"micros":26},"guild_join_requests",{"micros":4},"authorized_ip_coro",{"micros":18},"pending_payments",{"micros":829},"apex_experiments",{"micros":104489},"user_activities",{"micros":8},"played_application_ids",{"micros":4},"linked_users",{"micros":4},"ad_personalization_toggles_disabled",{"micros":4},"regional_feature_config",{"micros":13}]}]},"starting_guild_connect",{"micros":32,"calls":[]},"presence_started",{"micros":406,"calls":[]},"guilds_started",{"micros":137,"calls":[]},"lobbies_started",{"micros":1,"calls":[]},"guilds_connect",{"micros":2,"calls":[]},"presence_connect",{"micros":15515,"calls":[]},"connect_finished",{"micros":15530,"calls":[]},"build_ready",{"micros":12,"calls":[]},"clean_ready",{"micros":0,"calls":[]},"optimize_ready",{"micros":0,"calls":[]},"split_ready",{"micros":1,"calls":[]}]}]}] (Session ID: ae4655dd16c7bc07cf0c474a6ae0b684).
+2026-01-27 23:50:08 - INFO - Logged in as Ui Bot#3454
+2026-01-27 23:50:08 - INFO - Discord Version : 2.4.0
+2026-01-27 23:52:13 - INFO - Cleaning up tasks.
+2026-01-27 23:52:13 - INFO - Cleaning up after 2 tasks.
+2026-01-27 23:52:14 - INFO - Closing the event loop.
+2026-01-27 23:52:14 - ERROR - Task was destroyed but it is pending!
+task: <Task cancelling name='Task-2' coro=<Client.run.<locals>.runner() running at /home/dev/EXTRAS/Projects/YuiBot/.venv/lib/python3.11/site-packages/discord/client.py:699> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[gather.<locals>._done_callback() at /home/dev/.local/share/uv/python/cpython-3.11.14-linux-x86_64-gnu/lib/python3.11/asyncio/tasks.py:764]>
+2026-01-27 23:52:14 - ERROR - Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7fa060a08c50>
+2026-01-27 23:52:41 - INFO - Config LOADED!
+2026-01-27 23:52:42 - INFO - 47 Servers Cached!
+2026-01-27 23:52:42 - INFO - Database Initialized
+2026-01-27 23:52:42 - WARNING - PyNaCl is not installed, voice will NOT be supported
+2026-01-27 23:52:42 - INFO - logging in using static token
+2026-01-27 23:52:43 - INFO - Shard ID None has sent the IDENTIFY payload.
+2026-01-27 23:52:43 - INFO - Shard ID None has connected to Gateway: ["gateway-prd-arm-us-east1-b-mwr9",{"micros":105553,"calls":["id_created",{"micros":439,"calls":[]},"session_lookup_time",{"micros":359,"calls":[]},"session_lookup_finished",{"micros":10,"calls":[]},"discord-sessions-prd-2-130",{"micros":104286,"calls":["start_session",{"micros":91226,"calls":["discord-api-rpc-6946bd8d8f-fpbwx",{"micros":47021,"calls":["get_user",{"micros":6628},"get_guilds",{"micros":5556},"send_scheduled_deletion_message",{"micros":15},"guild_join_requests",{"micros":3},"authorized_ip_coro",{"micros":21},"pending_payments",{"micros":632},"apex_experiments",{"micros":33999},"user_activities",{"micros":7},"played_application_ids",{"micros":4},"linked_users",{"micros":3},"ad_personalization_toggles_disabled",{"micros":12},"regional_feature_config",{"micros":3}]}]},"starting_guild_connect",{"micros":30,"calls":[]},"presence_started",{"micros":4877,"calls":[]},"guilds_started",{"micros":717,"calls":[]},"lobbies_started",{"micros":1,"calls":[]},"guilds_connect",{"micros":15,"calls":[]},"presence_connect",{"micros":7361,"calls":[]},"connect_finished",{"micros":7389,"calls":[]},"build_ready",{"micros":44,"calls":[]},"clean_ready",{"micros":0,"calls":[]},"optimize_ready",{"micros":0,"calls":[]},"split_ready",{"micros":1,"calls":[]}]}]}] (Session ID: 135b3b5e0812581a7546e11bb1ee6504).
+2026-01-27 23:52:46 - INFO - Logged in as YuiBot#9359
+2026-01-27 23:52:46 - INFO - Discord Version : 2.4.0
+2026-01-27 23:54:19 - INFO - Cleaning up tasks.
+2026-01-27 23:54:19 - INFO - Cleaning up after 2 tasks.
+2026-01-27 23:54:19 - INFO - Closing the event loop.
+2026-01-27 23:54:20 - ERROR - Task was destroyed but it is pending!
+task: <Task cancelling name='Task-2' coro=<Client.run.<locals>.runner() running at /home/dev/EXTRAS/Projects/YuiBot/.venv/lib/python3.11/site-packages/discord/client.py:699> wait_for=<Future pending cb=[Task.task_wakeup()]> cb=[gather.<locals>._done_callback() at /home/dev/.local/share/uv/python/cpython-3.11.14-linux-x86_64-gnu/lib/python3.11/asyncio/tasks.py:764]>
+2026-01-27 23:54:20 - ERROR - Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x7f593429a050>
+2026-01-27 23:54:21 - INFO - Config LOADED!
+2026-01-27 23:54:22 - INFO - 47 Servers Cached!
+2026-01-27 23:54:22 - INFO - Database Initialized
+2026-01-27 23:54:22 - WARNING - PyNaCl is not installed, voice will NOT be supported
+2026-01-27 23:54:22 - INFO - logging in using static token
+2026-01-27 23:54:23 - INFO - Shard ID None has sent the IDENTIFY payload.
+2026-01-27 23:54:23 - INFO - Shard ID None has connected to Gateway: ["gateway-prd-arm-us-east1-b-jrt0",{"micros":220497,"calls":["id_created",{"micros":495,"calls":[]},"session_lookup_time",{"micros":346,"calls":[]},"session_lookup_finished",{"micros":24,"calls":[]},"discord-sessions-prd-2-79",{"micros":219154,"calls":["start_session",{"micros":202114,"calls":["discord-api-rpc-6946bd8d8f-brn9s",{"micros":118961,"calls":["get_user",{"micros":10441},"get_guilds",{"micros":20291},"send_scheduled_deletion_message",{"micros":10},"guild_join_requests",{"micros":1004},"authorized_ip_coro",{"micros":8},"pending_payments",{"micros":958},"apex_experiments",{"micros":70346},"user_activities",{"micros":5},"played_application_ids",{"micros":3},"linked_users",{"micros":3},"ad_personalization_toggles_disabled",{"micros":3},"regional_feature_config",{"micros":2}]}]},"starting_guild_connect",{"micros":36,"calls":[]},"presence_started",{"micros":7264,"calls":[]},"guilds_started",{"micros":687,"calls":[]},"lobbies_started",{"micros":2,"calls":[]},"guilds_connect",{"micros":16,"calls":[]},"presence_connect",{"micros":8961,"calls":[]},"connect_finished",{"micros":8992,"calls":[]},"build_ready",{"micros":56,"calls":[]},"clean_ready",{"micros":1,"calls":[]},"optimize_ready",{"micros":0,"calls":[]},"split_ready",{"micros":1,"calls":[]}]}]}] (Session ID: 45546c8331f855084e39af635095845e).
+2026-01-27 23:54:31 - INFO - Logged in as YuiBot#9359
+2026-01-27 23:54:36 - INFO - Discord Version : 2.4.0
+2026-01-27 23:54:39 - INFO - Cleaning up tasks.
+2026-01-27 23:54:39 - INFO - Cleaning up after 2 tasks.
+2026-01-27 23:54:40 - INFO - Closing the event loop.

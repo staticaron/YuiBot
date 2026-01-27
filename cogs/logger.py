@@ -13,9 +13,6 @@ from config import (
 
 
 class Logger(commands.Cog):
-    bot: commands.Bot = None
-    server_log_channel: TextChannel = None
-
     general_chat_channel_names = [
         "general",
         "chat",
@@ -60,8 +57,10 @@ class Logger(commands.Cog):
                 if channel == guild.system_channel or any(
                     x in channel.name for x in self.general_chat_channel_names
                 ):
-                    await channel.send(embed=self.welcome_embd)
-                    break
+                    if isinstance(channel, TextChannel):
+                        if self.welcome_embd is not None:
+                            await channel.send(embed=self.welcome_embd)
+                            break
             else:
                 logging.error(f"Can't send messages in # {channel.name}")
                 continue

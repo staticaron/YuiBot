@@ -1,11 +1,10 @@
 import sys
 
 from utils.bot import Bot
-from managers import mongo_manager, cache_manager, logging_manager
+from utils import logger
+from managers import mongo_manager, cache_manager
 
 import config
-
-logging_manager.setup_logging()
 
 
 def main(test=False):
@@ -18,11 +17,13 @@ def main(test=False):
     ................................................
     """)
 
+    logger.setup_logger(test)
+
     config.initialize_config_vars()
-
     cache_manager.init()
-
     mongo_manager.init_motor()
+
+    logger.logger.warning("Components Loaded!")
 
     bot: Bot = Bot()
 

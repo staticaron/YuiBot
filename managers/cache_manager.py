@@ -1,4 +1,5 @@
 import sys
+import pdb
 import traceback
 import logging
 
@@ -76,7 +77,7 @@ class CacheManager:
         server_id: int,
         register_if_not_found: bool = False,
         server_name: str = "<none>",
-    ) -> dict:
+    ) -> dict | None:
         """Fetch server from cache"""
 
         server_details = self.server_cache.get(server_id, None)
