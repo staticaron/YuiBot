@@ -1,6 +1,5 @@
 import os
 import re
-import pdb
 
 from discord.ext import commands
 from discord import Intents, Message, Embed, Guild
@@ -27,8 +26,6 @@ async def process_spotify_links(message: Message):
 
     if server_details is None:
         return
-
-    pdb.set_trace()
 
     if server_details.get("spotify", {}).get("enabled") is True:
         splits = message.content.strip().split()
