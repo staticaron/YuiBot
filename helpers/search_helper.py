@@ -1,6 +1,7 @@
 from os import error
 from discord import Embed, Member
 import enum
+import pdb
 
 import requests
 
@@ -103,7 +104,8 @@ async def get_details_embd(data, title):
         title="DETAILS - " + title, color=config.NORMAL_COLOR, url=data["siteUrl"]
     )
 
-    details_embd.description = data["description"][:300] + "... [read more]({})".format(
+    desc = data.get("description", "") or ""
+    details_embd.description = desc[:300] + "... [read more]({})".format(
         data["siteUrl"]
     )
 
@@ -276,9 +278,9 @@ async def get_manga_details_embed(name: str, user: Member) -> dict:
     )
 
     embd: Embed = Embed(title=title, color=config.NORMAL_COLOR, url=data["siteUrl"])
-    embd.description = data["description"][:200] + "... [read more]({})".format(
-        data["siteUrl"]
-    )
+
+    desc = data.get("description", "") or ""
+    embd.description = desc[:200] + "... [read more]({})".format(data["siteUrl"])
     embd.set_thumbnail(url=data["coverImage"]["large"])
 
     titles = [x if x is not None else "" for x in list(data["title"].values())]
@@ -381,9 +383,9 @@ async def get_character_details_embed(name: str, user: Member) -> Embed:
     )
 
     embd: Embed = Embed(title=title, color=config.NORMAL_COLOR, url=data["siteUrl"])
-    embd.description = data["description"][:300] + "... *[read more]({})*".format(
-        data["siteUrl"]
-    )
+
+    desc = data.get("description", "") or ""
+    embd.description = desc[:300] + "... *[read more]({})*".format(data["siteUrl"])
 
     embd.set_thumbnail(url=data["image"]["medium"])
 
