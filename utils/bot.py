@@ -20,12 +20,15 @@ async def process_spotify_links(message: Message):
 
     # ignore DMs
     if message.guild is None:
-        return
+        return await message.channel.send("This feature is not supported in DMs.")
 
     server_details = await cache_manager.manager.get_server(message.guild.id, True)
 
     if server_details is None:
         return
+
+    if server_details.get("spotify", {}).get("enabled") is False:
+        return await message.channel.send("Your Server doesn't support this feature")
 
     if server_details.get("spotify", {}).get("enabled") is True:
         splits = message.content.strip().split()

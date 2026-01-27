@@ -1,7 +1,6 @@
 from os import error
 from discord import Embed, Member
 import enum
-import pdb
 
 import requests
 
