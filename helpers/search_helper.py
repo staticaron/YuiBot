@@ -1,6 +1,7 @@
 from os import error
 from discord import Embed, Member
 import enum
+import pdb
 
 import requests
 
@@ -241,7 +242,7 @@ async def get_anime_details_embed(name: str, user: Member) -> dict:
 
     if data is None:
         error_embd = await get_error_embed(data_raw)
-        return {"embeds": {"error": error_embd}, "isAdult": False}
+        return {"embeds": {"error": error_embd}, "error": True, "isAdult": False}
 
     title = "#{id} - {eng_name} {is_adult}".format(
         id=data["id"],
@@ -268,7 +269,7 @@ async def get_manga_details_embed(name: str, user: Member) -> dict:
 
     if data is None:
         error_embd = await get_error_embed(data_raw)
-        return {"embeds": {"error": error_embd}, "isAdult": False}
+        return {"error": True, "embeds": {"error": error_embd}, "isAdult": False}
 
     title = "#{id} - {eng_name} {is_adult}".format(
         id=data["id"],
