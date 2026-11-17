@@ -1,22 +1,30 @@
-from discord import Member
+from discord import Member, User
 from discord.ext import commands
 
-from helpers import user_helper, general_helper
+from helpers import general_helper, user_helper
 
 
 class UserModule(commands.Cog):
-    @commands.command(name="user", aliases=["info"], description="Returns the details of mentioned AniList user")
+    @commands.command(
+        name="user",
+        aliases=["info"],
+        description="Returns the details of mentioned AniList user",
+    )
     @commands.check(general_helper.validate_user)
     @general_helper.short_cooldown()
     @general_helper.with_typing_ctx()
-    async def user_info(self, ctx: commands.Context, target: Member = None):
+    async def user_info(
+        self, ctx: commands.Context, target: User | Member | None = None
+    ):
         target = ctx.author if target is None else target
-
         reply = await user_helper.get_user_embed(str(target.id))
-
         await ctx.send(embed=reply)
 
-    @commands.command(name="follow", aliases=["addfollow"], description="Add the mentioned user to the following list.")
+    @commands.command(
+        name="follow",
+        aliases=["addfollow"],
+        description="Add the mentioned user to the following list.",
+    )
     @commands.check(general_helper.validate_user)
     @general_helper.short_cooldown()
     @general_helper.with_typing_ctx()
@@ -25,7 +33,11 @@ class UserModule(commands.Cog):
 
         await ctx.reply(embed=reply)
 
-    @commands.command(name="unfollow", aliases=["removefollow"], description="Add the mentioned user to the following list.")
+    @commands.command(
+        name="unfollow",
+        aliases=["removefollow"],
+        description="Add the mentioned user to the following list.",
+    )
     @commands.check(general_helper.validate_user)
     @general_helper.with_typing_ctx()
     async def unfollow_user(self, ctx: commands.Context, target: Member):
@@ -33,22 +45,34 @@ class UserModule(commands.Cog):
 
         await ctx.reply(embed=reply)
 
-    @commands.command(name="animestats", aliases=["as", "statistics"], description="Returns the anime stats of a user")
+    @commands.command(
+        name="animestats",
+        aliases=["as", "statistics"],
+        description="Returns the anime stats of a user",
+    )
     @commands.check(general_helper.validate_user)
     @general_helper.short_cooldown()
     @general_helper.with_typing_ctx()
-    async def anime_stats(self, ctx: commands.Context, target: Member = None):
+    async def anime_stats(
+        self, ctx: commands.Context, target: User | Member | None = None
+    ):
         target = ctx.author if target is None else target
 
         reply = await user_helper.get_user_media_stats(target, "ANIME")
 
         await ctx.send(embed=reply)
 
-    @commands.command(name="mangastats", aliases=["ms"], description="Returns the manga stats of a user")
+    @commands.command(
+        name="mangastats",
+        aliases=["ms"],
+        description="Returns the manga stats of a user",
+    )
     @commands.check(general_helper.validate_user)
     @general_helper.short_cooldown()
     @general_helper.with_typing_ctx()
-    async def manga_stats(self, ctx: commands.Context, target: Member = None):
+    async def manga_stats(
+        self, ctx: commands.Context, target: User | Member | None = None
+    ):
         target = ctx.author if target is None else target
 
         reply = await user_helper.get_user_media_stats(target, "MANGA")

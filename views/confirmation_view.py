@@ -1,9 +1,15 @@
+from collections.abc import Callable
+
 from discord import ButtonStyle
-from discord.ui import View, Button
+from discord.ui import Button, View
+
 
 class ConfirmationView(View):
-
-    def __init__(self, yes_callback:callable, no_callback:callable):
+    def __init__(
+        self,
+        yes_callback: Callable,
+        no_callback: Callable,
+    ):
         super().__init__(timeout=60)
 
         yes_btn = Button(label="CONFIRM", style=ButtonStyle.green)
@@ -14,4 +20,3 @@ class ConfirmationView(View):
 
         self.add_item(yes_btn)
         self.add_item(no_btn)
-

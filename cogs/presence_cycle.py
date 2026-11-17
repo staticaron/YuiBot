@@ -1,22 +1,24 @@
-from discord import Activity, ActivityType, Status
-from discord.ext import commands
-from discord.ext import tasks
 from itertools import cycle
+
+from discord import Activity, ActivityType, Status
+from discord.ext import commands, tasks
 
 
 class Presence(commands.Cog):
     presence_change_time = 15
 
-    bot: commands.Bot = None
-
     activity = cycle(
         [
-            Activity(name="New prefix : @YuiBot", type=ActivityType.watching, status=Status.online),
+            Activity(
+                name="New prefix : @YuiBot",
+                type=ActivityType.watching,
+                status=Status.online,
+            ),
         ]
     )
 
     def __init__(self, bot) -> None:
-        self.bot = bot
+        self.bot: commands.Bot = bot
         self.update_presence.start()
 
     def cog_unload(self):

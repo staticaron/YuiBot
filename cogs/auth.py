@@ -1,20 +1,25 @@
-from asyncio import TimeoutError
-from discord.ext import commands
-from discord import Message
+import builtins
 
-from views.confirmation_view import ConfirmationView
+from discord import Message
+from discord.ext import commands
+
+from config import ANILIST_ID, ANILIST_LOGIN, BULLET_EMOTE, LOADING_EMOTE, YUI_SHY_EMOTE
+from helpers import auth_helper, general_helper
 from managers import mongo_manager
-from helpers import general_helper, auth_helper
-from config import ANILIST_LOGIN, ANILIST_ID, BULLET_EMOTE, LOADING_EMOTE, YUI_SHY_EMOTE
+from views.confirmation_view import ConfirmationView
 
 
 class AuthModule(commands.Cog):
-    """ Commands related to user authentication """
+    """Commands related to user authentication"""
 
-    @commands.command(name="register", aliases=["login"], description="Login with Anilist to enable more features")
+    @commands.command(
+        name="register",
+        aliases=["login"],
+        description="Login with Anilist to enable more features",
+    )
     @general_helper.short_cooldown()
     async def login(self, ctx: commands.Context):
-        """ Command to take authentication code from users """
+        """Command to take authentication code from users"""
 
         await ctx.trigger_typing()
 
@@ -27,18 +32,20 @@ class AuthModule(commands.Cog):
 
         auth_embd = await general_helper.get_information_embed(
             title="Login with your AniList Account",
-            description="**Steps\n**" +
-                        f"{BULLET_EMOTE} 1. Grab the authentication token using this [link]({ANILIST_LOGIN.format(client_id=ANILIST_ID)}) \n" +
-                        f"{BULLET_EMOTE} 3. Copy the token and send it **here** after this message\n\n" +
-                        "__**Note**__ : You can terminate the login process by sending `stop` instead of the token."
+            description="**Steps\n**"
+            + f"{BULLET_EMOTE} 1. Grab the authentication token using this [link]({ANILIST_LOGIN.format(client_id=ANILIST_ID)}) \n"
+            + f"{BULLET_EMOTE} 3. Copy the token and send it **here** after this message\n\n"
+            + "__**Note**__ : You can terminate the login process by sending `stop` instead of the token.",
         )
 
         await ctx.author.send(embed=auth_embd)
         waiter = await ctx.author.send(f"Waiting for TOKEN {LOADING_EMOTE}")
 
         try:
-            token_msg = await bot.wait_for('message', check=check_user_message, timeout=300)
-        except TimeoutError:
+            token_msg = await bot.wait_for(
+                "message", check=check_user_message, timeout=300
+            )
+        except builtins.TimeoutError:
             await waiter.delete()
             await ctx.author.send("Authentication Timed Out. Please try again.")
             return
@@ -52,11 +59,16 @@ class AuthModule(commands.Cog):
             token = token_msg.content
 
             if len(token) < 500:
-                await ctx.author.send("Authetication Terminated! Please enter a valid token.")
+                await ctx.author.send(
+                    "Authetication Terminated! Please enter a valid token."
+                )
                 return
 
             await ctx.author.send("TOKEN RECEIVED!")
-            await ctx.author.send("**Please delete this message now for your own safety!**", reference=token_msg)
+            await ctx.author.send(
+                "**Please delete this message now for your own safety!**",
+                reference=token_msg,
+            )
 
         await ctx.author.send(f"Authentication Successful {YUI_SHY_EMOTE}")
 
@@ -71,19 +83,15 @@ class AuthModule(commands.Cog):
         await ctx.trigger_typing()
 
         confirmation_embd = await general_helper.get_information_embed(
-            title="Are you sure?",
-            description="Click `CONFIRM` to log out."
+            title="Are you sure?", description="Click `CONFIRM` to log out."
         )
 
         async def yes_callback(self):
             reply = await auth_helper.logout(str(ctx.author.id))
-
             await ctx.reply(embed=reply)
 
         async def no_callback(self):
-
             await ctx.reply("Logout Terminated. You are still logged in ^^.")
-            return
 
         view = ConfirmationView(yes_callback, no_callback)
 

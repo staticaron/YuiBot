@@ -1,60 +1,62 @@
 import os
 import re
-import logging
 
+from discord import Embed, Guild, Intents, Message, __version__
 from discord.ext import commands
-from discord import Intents, Message, Embed, Guild
-from discord import __version__
 
-from managers import cache_manager
-from views.spotify_view import SpotifyView
-from helpers import spotify_helper, general_helper
 import config
+from helpers import general_helper, spotify_helper
+from managers import cache_manager
+from managers.logging_manager import get_logger
+from views.spotify_view import SpotifyView
+
+logger = get_logger()
 
 
 @general_helper.with_typing_msg()
 async def process_spotify_links(message: Message):
-    server_details = await cache_manager.manager.get_server(message.guild.id, True)
+    if message.guild is None:
+        return
 
-    if server_details.get("spotify").get("enabled") is True:
+    server_details: dict | None = await cache_manager.manager.get_server(message.guild.id, True)
+
+    if server_details is None:
+        return
+
+    if server_details.get("spotify", {}).get("enabled", False) is True:
         splits = message.content.strip().split()
-        track_id_match = re.findall(r"(?<=track/)\w+", splits[0]) if len(splits) > 0 else None
 
+        if len(splits) <= 0:
+            return
+
+        track_id_match: list = re.findall(r"(?<=track/)\w+", splits[0])
         if len(track_id_match) > 0:
-            links: spotify_helper.SpotifyTrackAlternative = await spotify_helper.get_alternatives(message=message, spotify_track_id=track_id_match[0])
+            links: spotify_helper.SpotifyTrackAlternative | None = await spotify_helper.get_alternatives(message=message, spotify_track_id=track_id_match[0])
+            if links is None:
+                return
 
-            if server_details.get("spotify").get("style") == "embed":
+            if server_details.get("spotify", {}).get("style", "text") == "embed":
                 embd: Embed = await general_helper.get_information_embed(title="Alternate Links", description="")
-                embd.description += "**Name : **" + links.track_name
+                embd.description = "**Name : **" + links.track_name
                 embd.description += "\n**Artists: **" + links.track_artists
                 view = SpotifyView(links)
 
                 await message.reply(embed=embd, view=view)
-            elif server_details.get("spotify").get("style") == "text":
-                message = await message.reply(
-                    "**Name :** {}, **Artists :** {} | [Youtube Music]({})".format(
-                        links.track_name,
-                        links.track_artists,
-                        links.youtube_music,
-                    )
-                )
+            elif server_details.get("spotify", {}).get("style", "text") == "text":
+                message = await message.reply(f"**Name :** {links.track_name}, **Artists :** {links.track_artists} | [Youtube Music]({links.youtube_music})")
 
                 await message.edit(suppress=True)
 
 
 class Bot(commands.Bot):
-    intents: Intents = Intents.default()
-
-    mentions = ["<@991739924250362047>", "<@!991739924250362047>"]
-
-    mention_embed = None
-
     def prefix_callable(self, bot, msg):
         return ["yui ", "Yui ", "<@991739924250362047> ", "<@!991739924250362047> "]
 
     def __init__(self):
-        super().__init__(command_prefix=self.prefix_callable, intents=self.intents)
+        super().__init__(command_prefix=self.prefix_callable, intents=Intents.default())
         self.remove_command("help")
+        self.mentions = ["<@991739924250362047>", "<@!991739924250362047>"]
+        self.mention_embed = None
 
         # load extensions
         for file in os.listdir("cogs"):
@@ -62,9 +64,8 @@ class Bot(commands.Bot):
                 self.load_extension(f"cogs.{file[:-3]}")
 
     async def on_ready(self):
-        logging.info("Logged in as {}".format(self.user))
-        logging.info("Discord Version : {}".format(__version__))
-        
+        logger.info(f"Logged in as {self.user}")
+        logger.info(f"Discord Version : {__version__}")
 
     async def on_message(self, message: Message):
         if message.content.strip() in self.mentions:
@@ -72,9 +73,10 @@ class Bot(commands.Bot):
                 title="Ya-Ho :wave:",
                 description=f"Prefix : **yui**\nLatency : **{round(self.latency * 1000, 2)} ms**\nInvite : [Click Here]({config.INVITE})",
                 color=config.NORMAL_COLOR,
-            ).set_thumbnail(url=self.user.avatar.url)
+            ).set_thumbnail(url=self.user.avatar.url if self.user is not None and self.user.avatar is not None else "")
 
-            return await message.channel.send(embed=embd)
+            await message.channel.send(embed=embd)
+            return
 
         await self.process_commands(message)
 

@@ -1,15 +1,20 @@
-from discord.ext import commands
-from discord import Embed
 import asyncio
 
-from views.smash_view import SmashView
-from managers import mongo_manager
-from helpers import picture_helper, general_helper
+from discord import Embed
+from discord.ext import commands
+
 import config
+from helpers import general_helper, picture_helper
+from managers import mongo_manager
+from views.smash_view import SmashView
 
 
 class SmashGame(commands.Cog):
-    @commands.command(name="smashgame", aliases=["smash"], description="Starts a Smash or Pass game session")
+    @commands.command(
+        name="smashgame",
+        aliases=["smash"],
+        description="Starts a Smash or Pass game session",
+    )
     @commands.max_concurrency(1, per=commands.BucketType.channel)
     @general_helper.with_typing_ctx()
     async def smashgame(self, ctx: commands.Context, count: int = 10):

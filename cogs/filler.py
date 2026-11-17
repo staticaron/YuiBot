@@ -1,10 +1,12 @@
-from discord.ext import commands
 from discord import Embed
-import logging
+from discord.ext import commands
 
-from views.scroller import Scroller
-from helpers import general_helper
 import config
+from helpers import general_helper
+from managers.logging_manager import get_logger
+from views.scroller import Scroller
+
+logger = get_logger()
 
 
 class FillerModule(commands.Cog):
@@ -32,11 +34,7 @@ class FillerModule(commands.Cog):
         embds = []
 
         if len(anime_match.items()) <= 0:
-            return [
-                Embed(
-                    title="No Filler Information was found!", color=config.NORMAL_COLOR
-                )
-            ]
+            return [Embed(title="No Filler Information was found!", color=config.NORMAL_COLOR)]
 
         # True if at least one filler data item was found.
         filler_found: bool = False
@@ -60,7 +58,7 @@ class FillerModule(commands.Cog):
                     embds.clear()
 
             embd = Embed(
-                title="{name}'s Filler Episodes".format(name=name),
+                title=f"{name}'s Filler Episodes",
                 color=config.NORMAL_COLOR,
             )
 
@@ -88,8 +86,8 @@ class FillerModule(commands.Cog):
                     value="```{}```".format(data["filler_ep"]),
                     inline=False,
                 )
-            except Exception:
-                logging.error(name)
+            except Exception:  # noqa: BLE001
+                logger.error(name)
 
             embds.append(embd)
 
@@ -104,11 +102,11 @@ class FillerModule(commands.Cog):
     async def filler(self, ctx: commands.Context, *anime):
         anime = " ".join(anime)
 
-        logging.info("Anime name is " + anime)
+        logger.info("Anime name is " + anime)
 
         anime_match = await self.search_filler(anime)
 
-        logging.info(anime_match)
+        logger.info(anime_match)
 
         embds = await self.parse_filler(anime_match)
 

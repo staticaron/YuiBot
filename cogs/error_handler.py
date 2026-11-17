@@ -1,79 +1,101 @@
-from discord.ext import commands
-from discord import Embed
-import traceback
 import sys
+import traceback
 
-from helpers import general_helper
-from utils.errors.UserNotFound import UserNotFound
-from utils.errors.InvalidToken import InvalidToken
+from discord import Embed
+from discord.ext import commands
+
 import config
+from helpers import general_helper
+from managers.logging_manager import get_logger
+from utils.errors.InvalidToken import InvalidToken
+from utils.errors.UserNotFound import UserNotFound
+
+logger = get_logger()
 
 
 class ErrorHandlerModule(commands.Cog):
-
     @commands.Cog.listener()
     async def on_command_error(self, ctx: commands.Context, error):
 
         cog = ctx.cog
 
+        if ctx.command is None:
+            return
+
         if hasattr(ctx.command, "on_error"):
             return
 
-        if cog:
-            if cog._get_overridden_method(cog.cog_command_error):
-                return
+        if cog and cog._get_overridden_method(cog.cog_command_error):
+            return
 
-        ignored_exceptions = (commands.CommandNotFound, )
+        ignored_exceptions = (commands.CommandNotFound,)
 
-        error = getattr(error, 'original', error)
+        error = getattr(error, "original", error)
         if isinstance(error, ignored_exceptions):
             return
 
         if isinstance(error, commands.DisabledCommand):
-            await ctx.send(f'{ctx.command} has been disabled.')
+            await ctx.send(f"{ctx.command} has been disabled.")
 
         elif isinstance(error, commands.NoPrivateMessage):
             try:
-                await ctx.author.send(f'{ctx.command} can not be used in Private Messages.')
-            except:
-                pass
+                await ctx.author.send(f"{ctx.command} can not be used in Private Messages.")
+            except Exception:  # noqa: BLE001
+                logger.warning(f"{ctx.command} can't be used in Private Messages! Failed to send Private Error Message as well")
 
         elif isinstance(error, InvalidToken):
-            await error.user.send(embed=await general_helper.get_information_embed(title="Invalid Token received!", description="Try again using `yui login` command.", color=config.ERROR_COLOR))
+            await error.user.send(
+                embed=await general_helper.get_information_embed(
+                    title="Invalid Token received!",
+                    description="Try again using `yui login` command.",
+                    color=config.ERROR_COLOR,
+                )
+            )
 
         elif isinstance(error, UserNotFound):
             if error.user is not None:
-                await ctx.reply(embed=await general_helper.get_information_embed(title="Whoops", description=f"{error.user.mention} haven't logged in yet. Ask them to log in first.", color=config.ERROR_COLOR))
-            else:  
-                await ctx.reply(embed=await general_helper.get_information_embed(title="Whoops", description=f"<@{error.user_id}> haven't logged in yet. Ask them to log in first.", color=config.ERROR_COLOR))
+                await ctx.reply(
+                    embed=await general_helper.get_information_embed(
+                        title="Whoops",
+                        description=f"{error.user.mention} haven't logged in yet. Ask them to log in first.",
+                        color=config.ERROR_COLOR,
+                    )
+                )
+            else:
+                await ctx.reply(
+                    embed=await general_helper.get_information_embed(
+                        title="Whoops",
+                        description=f"<@{error.user_id}> haven't logged in yet. Ask them to log in first.",
+                        color=config.ERROR_COLOR,
+                    )
+                )
 
         elif isinstance(error, commands.CommandOnCooldown):
             time = int(ctx.command.get_cooldown_retry_after(ctx))
             time_str = await general_helper.get_time_str_from_seconds(time)
-            await ctx.reply("You are on a cooldown. Please wait for {}".format(time_str))
+            await ctx.reply(f"You are on a cooldown. Please wait for {time_str}")
 
         elif isinstance(error, commands.CheckFailure):
-            await ctx.reply(embed=await general_helper.get_information_embed(
-                title="Damn!",
-                description="You are not logged in with your AniList Account. Log-in using `login` command",
-                color=config.ERROR_COLOR
-            ))
+            await ctx.reply(
+                embed=await general_helper.get_information_embed(
+                    title="Damn!",
+                    description="You are not logged in with your AniList Account. Log-in using `login` command",
+                    color=config.ERROR_COLOR,
+                )
+            )
 
         else:
-            embd = Embed(title="Damn",
-                         color=config.ERROR_COLOR,
-                         description="Error occurred while trying to run this command.",)
-
-            embd.add_field(
-                name="Details for Nerds",
-                value="```{}```".format(error),
-                inline=False
+            embd = Embed(
+                title="Damn",
+                color=config.ERROR_COLOR,
+                description="Error occurred while trying to run this command.",
             )
+
+            embd.add_field(name="Details for Nerds", value=f"```{error}```", inline=False)
 
             await ctx.reply(embed=embd)
 
-            traceback.print_exception(
-                type(error), error, error.__traceback__, file=sys.stderr)
+            traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
 
 
 def setup(bot):
