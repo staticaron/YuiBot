@@ -1,12 +1,11 @@
-from discord import ButtonStyle
-from discord.ui import View, Button
-from discord import Interaction
+from collections.abc import Callable
+
+from discord import ButtonStyle, Interaction
+from discord.ui import Button, View
+
 
 class WarningView(View):
-
-    proceed_callback_store = None
-
-    def __init__(self, proceed_callback:callable):
+    def __init__(self, proceed_callback: Callable):
         super().__init__(timeout=60)
         self.proceed_callback_store = proceed_callback
 
@@ -16,8 +15,7 @@ class WarningView(View):
 
         self.add_item(proceed_btn)
 
-    async def process_proceed_callback(self, interaction:Interaction):
-        
+    async def process_proceed_callback(self, interaction: Interaction):
         await interaction.response.defer()
-        
         await self.proceed_callback_store(interaction)
+

@@ -1,43 +1,39 @@
-import logging
-import requests
-import jwt
-from cryptography.fernet import Fernet
+import json
+from collections.abc import Awaitable, Callable
+from datetime import UTC, datetime
 from functools import wraps
 
-from discord import Embed, Member, Message
+import httpx
+import jwt
+from cryptography.fernet import Fernet
+from discord import Embed, Member, Message, User
 from discord.ext import commands
-from datetime import datetime
-from utils.errors.UserNotFound import UserNotFound
-from utils.errors.InvalidToken import InvalidToken
+from discord.ext.pages import Paginator
 
-
-from views.select_view import SelectPaginator
-from managers import mongo_manager
-from helpers import general_helper
-from queries.search_queries import media_selection_query, character_selection_query
 import config
+from helpers import general_helper
+from managers import mongo_manager
+from managers.logging_manager import get_logger
+from queries.search_queries import character_selection_query, media_selection_query
+from utils.errors.InvalidToken import InvalidToken
+from utils.errors.UserNotFound import UserNotFound
+from views.select_view import SelectPaginator
+
+logger = get_logger()
 
 """Just a way to transmit paginator and ids at the same time. Please no bully"""
 
 
 class MediaData:
-    anilist_id: int = None
-    mal_id: int = None
-    type = None
-    titles: list = None
-    genre: list = None
-    url: str = None
-    image_link = None
-
     def __init__(
         self,
         media_id: int,
         mal_id: int,
         media_type: str = "ANIME",
-        title: list = None,
-        genre: list = None,
-        url: str = None,
-        image_link: str = None,
+        title: list | None = None,
+        genre: list | None = None,
+        url: str | None = None,
+        image_link: str | None = None,
     ):
         self.anilist_id = media_id
         self.mal_id = mal_id
@@ -48,23 +44,23 @@ class MediaData:
         self.image_link = image_link
 
     def get_name(self):
+        if self.titles is None:
+            return "Not Found!"
+
         for title in self.titles:
             if title is not None:
                 return title
 
+        return "Not Found!"
+
 
 class CharacterData:
-    anilist_id: int = None
-    titles: list = None
-    url: str = None
-    image_link: str = None
-
     def __init__(
         self,
         character_id: int,
-        character_titles: list = None,
-        url: str = None,
-        image_link: str = None,
+        character_titles: list | None = None,
+        url: str | None = None,
+        image_link: str | None = None,
     ) -> None:
         self.anilist_id = character_id
         self.titles = character_titles
@@ -72,16 +68,18 @@ class CharacterData:
         self.image_link = image_link
 
     def get_name(self) -> str:
-        for i in self.titles:
-            if i is not None:
-                return i
+
+        if self.titles is None:
+            return "Not Found!"
+
+        for title in self.titles:
+            if title is not None:
+                return title
+
+        return "Not Found!"
 
 
 class DataInclusivePaginator:
-    paginator: SelectPaginator = None
-    data_elements: list = None
-    data_type: str = None
-
     def __init__(self, paginator, data_elements: list, data_type: str):
         self.paginator = paginator
         self.data_elements = data_elements
@@ -93,7 +91,7 @@ class DataInclusivePaginator:
     async def get_error_embed(self):
         return await general_helper.get_information_embed(
             title="Damn",
-            description="No {} were found for that input".format(self.data_type),
+            description=f"No {self.data_type} were found for that input",
             color=config.ERROR_COLOR,
         )
 
@@ -101,16 +99,16 @@ class DataInclusivePaginator:
 async def get_information_embed(
     title: str,
     color=config.NORMAL_COLOR,
-    url: str = None,
-    description: str = None,
-    user: Member = None,
-    thumbnail_link: str = None,
-    fields: list = None,
+    url: str | None = None,
+    description: str | None = None,
+    user: Member | None = None,
+    thumbnail_link: str | None = None,
+    fields: list | None = None,
 ) -> Embed:
     """Returns an embed with specified details"""
 
     embd: Embed = Embed(title=title, color=color)
-    embd.timestamp = datetime.now()
+    embd.timestamp = datetime.now(UTC)
 
     if url is not None:
         embd.url = url
@@ -118,10 +116,8 @@ async def get_information_embed(
     if description is not None:
         embd.description = description
 
-    if user is not None:
-        embd.set_footer(
-            icon_url=user.avatar.url, text="Requested by {}".format(user.name)
-        )
+    if user is not None and user.avatar is not None:
+        embd.set_footer(icon_url=user.avatar.url, text=f"Requested by {user.name}")
 
     if thumbnail_link is not None:
         embd.set_thumbnail(url=thumbnail_link)
@@ -136,7 +132,7 @@ async def get_information_embed(
     return embd
 
 
-async def get_id_from_anilist_username(username: str) -> int:
+async def get_id_from_anilist_username(username: str) -> int | None:
     """Returns the aniList id from anilist username"""
 
     query = """
@@ -149,23 +145,23 @@ async def get_id_from_anilist_username(username: str) -> int:
 
     variables = {"username": username}
 
-    resp = requests.post(
-        config.ANILIST_BASE, json={"query": query, "variables": variables}
-    )
+    async with httpx.AsyncClient() as client:
+        resp = await client.post(config.ANILIST_BASE, json={"query": query, "variables": variables})
 
-    try:
-        return resp.json()["data"]["User"]["id"]
-    except Exception as e:
-        logging.error(e)
-        return None
+        try:
+            return resp.json()["data"]["User"]["id"]
+        except Exception:  # nkqa: BLE001
+            logger.exception("Failed to get the ID of the user")
+            return None
 
 
-async def get_id_from_token(token: str, user: Member) -> str:
+async def get_id_from_token(token: str, user: User | Member) -> str:
     """Returns the aniList Id from token"""
 
     try:
         data = jwt.decode(token, options={"verify_signature": False})
-    except Exception:
+
+    except Exception:  # noqa: BLE001
         raise InvalidToken(user=user)
 
     return data["sub"]
@@ -173,7 +169,6 @@ async def get_id_from_token(token: str, user: Member) -> str:
 
 async def get_id_from_userID(userID: str) -> str:
     """Returns the aniList id from userID"""
-
     data = await mongo_manager.manager.get_user(userID)
 
     if data is not None:
@@ -182,9 +177,7 @@ async def get_id_from_userID(userID: str) -> str:
         raise UserNotFound(user_id=userID)
 
 
-async def get_time_str_from_seconds(
-    seconds: int, front_limit: int = None, back_limit: int = None
-):
+async def get_time_str_from_seconds(seconds: int, front_limit: int | None = None, back_limit: int | None = None):
     """Returns a formatted time string"""
 
     time_str = ""
@@ -208,28 +201,23 @@ async def get_time_str_from_seconds(
     if front_limit is not None:
         for i in range(len(time_markers) - (len(time_markers) - front_limit)):
             if time_vals[i] > 0:
-                time_str += "{} {} ".format(time_vals[i], time_markers[i])
+                time_str += f"{time_vals[i]} {time_markers[i]} "
 
         return time_str if time_str != "" else "1 seconds"
 
     for i in range(len(time_vals)):
         if time_vals[i] > 0:
-            time_str += "{} {} ".format(time_vals[i], time_markers[i])
+            time_str += f"{time_vals[i]} {time_markers[i]} "
 
     return time_str if time_str != "" else "1 seconds"
 
 
-async def validate_user(ctx: commands.Context):
+async def validate_user(ctx: commands.Context) -> bool | None:
     """Check whether the user is registered with AniList account or not"""
 
     command_user = ctx.author
-
     data = await mongo_manager.manager.get_user(str(command_user.id))
-
-    if data is None:
-        return False
-
-    return True
+    return data is not None
 
 
 def short_cooldown():
@@ -238,62 +226,58 @@ def short_cooldown():
     return commands.cooldown(rate=1, per=5, type=commands.BucketType.user)
 
 
+def medium_cooldown():
+    """Medium Cooldown Decorator! 5 requests per minute"""
+
+    return commands.cooldown(rate=5, per=60, type=commands.BucketType.user)
+
+
 def long_cooldown():
     return commands.cooldown(rate=2, per=5 * 60, type=commands.BucketType.user)
 
 
 async def get_media_selection_paginator(
-    media_name: str, select_callback: callable, media_type="ANIME"
+    media_name: str,
+    select_callback: Callable[[], Awaitable[Paginator | Embed]],
+    media_type="ANIME",
 ) -> DataInclusivePaginator:
     """Returns a list of medias to select from"""
 
     variables = {"search": media_name, "type": media_type}
 
-    anime_resp = requests.post(
-        url=config.ANILIST_BASE,
-        json={"query": media_selection_query, "variables": variables},
-    ).json()
-
-    anime_data = anime_resp["data"]["Page"]["media"]
-
-    pages = []
-    media_list = []
-
-    for page_data in anime_data:
-        embd = Embed(
-            title="Which {} are you talking about?".format(media_type),
-            color=config.NORMAL_COLOR,
+    async with httpx.AsyncClient() as client:
+        anime_resp = await client.post(
+            url=config.ANILIST_BASE,
+            json={"query": media_selection_query, "variables": variables},
         )
 
-        embd.description = "**Name** : [{name}]({url})\n**Episodes** : {episodes}\n**Status** : {status}".format(
-            name=(
-                page_data["title"]["english"]
-                if page_data["title"]["english"] is not None
-                else page_data["title"]["romaji"]
-            ),
-            url=page_data["siteUrl"],
-            episodes=page_data["episodes"],
-            status=page_data["status"],
-        )
+        anime_resp_json = json.loads(anime_resp.text)
+        anime_data = anime_resp_json["data"]["Page"]["media"]
 
-        genres = (
-            "\n".join(
-                [
-                    "{bullet}**{genre}**".format(
-                        bullet=config.BULLET_EMOTE, genre=genre
-                    )
-                    for genre in page_data["genres"]
-                ]
+        pages = []
+        media_list = []
+
+        for page_data in anime_data:
+            embd = Embed(
+                title=f"Which {media_type} are you talking about?",
+                color=config.NORMAL_COLOR,
             )
-            if len(page_data["genres"]) > 0
-            else None
-        )
-        embd.add_field(name="Genres", value=genres, inline=False)
 
-        embd.set_thumbnail(url=page_data["coverImage"]["medium"])
+            embd.description = "**Name** : [{name}]({url})\n**Episodes** : {episodes}\n**Status** : {status}".format(
+                name=(page_data["title"]["english"] if page_data["title"]["english"] is not None else page_data["title"]["romaji"]),
+                url=page_data["siteUrl"],
+                episodes=page_data["episodes"],
+                status=page_data["status"],
+            )
 
-        pages.append(embd)
-        media_list.append(MediaData(page_data["id"], page_data["idMal"]))
+            genres = "\n".join([f"{config.BULLET_EMOTE}**{genre}**" for genre in page_data["genres"]]) if len(page_data["genres"]) > 0 else "<None>"
+            embd.add_field(name="Genres", value=genres, inline=False)
+
+            embd.set_thumbnail(url=page_data["coverImage"]["medium"])
+
+            pages.append(embd)
+
+            media_list.append(MediaData(page_data["id"], page_data["idMal"]))
 
     if len(pages) > 0:
         paginator = SelectPaginator(pages, select_callback)
@@ -303,44 +287,46 @@ async def get_media_selection_paginator(
     return DataInclusivePaginator(paginator, media_list, media_type)
 
 
-async def get_character_selection_paginator(
-    character_name: str, select_callback: callable
-) -> DataInclusivePaginator:
+async def get_character_selection_paginator(character_name: str, select_callback: Callable[[], Awaitable[Embed]]) -> DataInclusivePaginator:
     """Returns a list of characters to select from"""
 
     variables = {"name": character_name}
 
-    ch_response = requests.post(
-        url=config.ANILIST_BASE,
-        json={"query": character_selection_query, "variables": variables},
-    ).json()
-
-    ch_data = ch_response["data"]["Page"]["characters"]
-
-    pages = []
-    media_list = []
-
-    for page_data in ch_data:
-        embd = Embed(
-            title="Which CHARACTER are you talking about?", color=config.NORMAL_COLOR
+    async with httpx.AsyncClient() as client:
+        ch_response = await client.post(
+            url=config.ANILIST_BASE,
+            json={"query": character_selection_query, "variables": variables},
         )
 
-        embd.description = "**Name** : [{name}]({url}), {native}\n**Gender** : {gender}\n**Age** : {age}\n**Date Of Birth** : {dob}\n**Favorites** : {favorites}".format(
-            name=page_data["name"]["full"],
-            native=page_data["name"]["native"],
-            url=page_data["siteUrl"],
-            favorites=page_data["favourites"],
-            age=page_data["age"],
-            gender=page_data["gender"],
-            dob="{d} {m}".format(
-                d=page_data["dateOfBirth"]["day"], m=page_data["dateOfBirth"]["month"]
-            ),
-        )
+        ch_response_raw = json.loads(ch_response.text)
+        ch_data = ch_response_raw["data"]["Page"]["characters"]
 
-        embd.set_thumbnail(url=page_data["image"]["medium"])
+        pages = []
+        media_list = []
 
-        pages.append(embd)
-        media_list.append(CharacterData(page_data["id"]))
+        for page_data in ch_data:
+            embd = Embed(
+                title="Which CHARACTER are you talking about?",
+                color=config.NORMAL_COLOR,
+            )
+
+            embd.description = "**Name** : [{name}]({url}), {native}\n**Gender** : {gender}\n**Age** : {age}\n**Date Of Birth** : {dob}\n**Favorites** : {favorites}".format(
+                name=page_data["name"]["full"],
+                native=page_data["name"]["native"],
+                url=page_data["siteUrl"],
+                favorites=page_data["favourites"],
+                age=page_data["age"],
+                gender=page_data["gender"],
+                dob="{d} {m}".format(
+                    d=page_data["dateOfBirth"]["day"],
+                    m=page_data["dateOfBirth"]["month"],
+                ),
+            )
+
+            embd.set_thumbnail(url=page_data["image"]["medium"])
+
+            pages.append(embd)
+            media_list.append(CharacterData(page_data["id"]))
 
     if len(pages) > 0:
         paginator = SelectPaginator(pages, select_callback)

@@ -1,14 +1,16 @@
-from discord import Embed, Member
-import enum
+import enum, pdb
+import json
 
-import requests
+import httpx
+from discord import Embed, Member, User
 
-from views.scroller import Scroller
-from managers import mongo_manager
-from helpers import general_helper
-from queries.search_queries import *  # noqa: F403
-from queries.studio_queries import studio_query
 import config
+from helpers import general_helper
+from managers import mongo_manager
+from queries.search_queries import *
+from queries.studio_queries import studio_query
+from utils.errors.UserNotFound import UserNotFound
+from views.scroller import Scroller
 
 
 class MediaType(enum.Enum):
@@ -18,7 +20,11 @@ class MediaType(enum.Enum):
 
 async def get_error_embed(data_raw: dict) -> Embed:
     errors = [error["message"] for error in data_raw["errors"]]
-    return await general_helper.get_information_embed(title="Error Occurred!", color=config.ERROR_COLOR, description="{}{}".format(config.BULLET_EMOTE, "\n{}".format(config.BULLET_EMOTE).join(errors)))
+    return await general_helper.get_information_embed(
+        title="Error Occurred!",
+        color=config.ERROR_COLOR,
+        description="{}{}".format(config.BULLET_EMOTE, f"\n{config.BULLET_EMOTE}".join(errors)),
+    )
 
 
 async def get_query_from_media_type_and_user(type, anilist_user):
@@ -35,38 +41,70 @@ async def get_query_from_media_type_and_user(type, anilist_user):
     return query
 
 
-async def get_media_details(name: str, type: MediaType, user: Member) -> dict:
+async def get_media_details(name: str, type: MediaType, user: User | Member) -> dict:
     anilist_user = await mongo_manager.manager.get_user(str(user.id))
+    if anilist_user is None:
+        raise UserNotFound(user)
 
     query = await get_query_from_media_type_and_user(type, anilist_user)
 
+    pdb.set_trace()
+
     try:
-        resp = requests.post(url=config.ANILIST_BASE, json={"query": query, "variables": {"search": name}}, headers={"Authorization": anilist_user["token"]})
-    except Exception:
-        resp = requests.post(url=config.ANILIST_BASE, json={"query": query, "variables": {"search": name}})
+        async with httpx.AsyncClient() as client:
+            resp_raw = await client.post(
+                url=config.ANILIST_BASE,
+                json={"query": query, "variables": {"search": name}},
+                headers={"Authorization": anilist_user["token"]},
+            )
+        resp = json.loads(resp_raw.text)
 
-    return resp.json()
+    except Exception:  # noqa: BLE001
+        async with httpx.AsyncClient() as client:
+            resp_raw = await client.post(
+                url=config.ANILIST_BASE,
+                json={"query": query, "variables": {"search": name}},
+            )
+
+        resp = json.loads(resp_raw.text)
+
+    return resp
 
 
-async def get_character_details(name: str, user: Member) -> dict:
+async def get_character_details(name: str, user: User | Member) -> dict:
     anilist_user = await mongo_manager.manager.get_user(str(user.id))
 
     variables = {"search": name}
 
     if anilist_user is None:
-        resp = requests.post(config.ANILIST_BASE, json={"query": character_query_without_stats, "variables": variables})
-    else:
-        resp = requests.post(config.ANILIST_BASE, json={"query": character_query_with_stats, "variables": variables}, headers={"Authorization": anilist_user["token"]})
+        async with httpx.AsyncClient() as client:
+            resp_raw = await client.post(
+                config.ANILIST_BASE,
+                json={"query": character_query_without_stats, "variables": variables},
+            )
 
-    return resp.json()
+        resp = json.loads(resp_raw.text)
+
+    else:
+        async with httpx.AsyncClient() as client:
+            resp_raw = await client.post(
+                config.ANILIST_BASE,
+                json={"query": character_query_with_stats, "variables": variables},
+                headers={"Authorization": anilist_user["token"]},
+            )
+
+        resp = json.loads(resp_raw.text)
+
+    return resp
 
 
 async def get_studio_details(name: str) -> dict:
     variables = {"search": name}
 
-    resp = requests.post(config.ANILIST_BASE, json={"query": studio_query, "variables": variables})
+    async with httpx.AsyncClient() as client:
+        resp_raw = await client.post(config.ANILIST_BASE, json={"query": studio_query, "variables": variables})
 
-    return resp.json()
+    return json.loads(resp_raw.text)
 
 
 async def get_details_embd(data, title):
@@ -101,24 +139,29 @@ async def get_details_embd(data, title):
     details_embd.add_field(name="Format", value=data["format"] or "None", inline=True)
 
     studios = data["studios"]["nodes"] if len(data["studios"]["nodes"]) <= 3 else data["studios"]["nodes"][:3]
-    studios_str = "\n".join(["[{name}]({url})".format(name=studio["name"], url=studio["siteUrl"] if studio["siteUrl"] is not None else "") for studio in studios])
+    studios_str = "\n".join(
+        [
+            "[{name}]({url})".format(
+                name=studio["name"],
+                url=studio["siteUrl"] if studio["siteUrl"] is not None else "",
+            )
+            for studio in studios
+        ]
+    )
     details_embd.add_field(name="Studios", value=studios_str or "None", inline=True)
 
     trailer_link = "[click here](https://www.youtube.com/watch?v={})".format(data["trailer"]["id"]) if data["trailer"] is not None and data["trailer"]["site"] == "youtube" else "Not Available"
     details_embd.add_field(name="Trailer", value=trailer_link, inline=True)
 
-    # Footer
-    try:
-        isFav = "🔘FAV : Yes" if data["isFavourite"] is True else ""
-        status = "STATUS : " + data["mediaListEntry"]["status"] if data["mediaListEntry"] is not None else ""
-        score = ("🔘SCORE : " + str(data["mediaListEntry"]["score"]) if data["mediaListEntry"]["score"] != 0 else "") if data["mediaListEntry"] is not None else ""
-        progress = "🔘PROGRESS : " + str(data["mediaListEntry"]["progress"] if data["mediaListEntry"] is not None else "")
-        total = "/" + str(data["mediaListEntry"]["media"]["episodes"] if data["mediaListEntry"] is not None else "")
+    isFav = "🔘FAV : Yes" if data["isFavourite"] is True else ""
+    status = "STATUS : " + data["mediaListEntry"]["status"] if data["mediaListEntry"] is not None else ""
+    score = ("🔘SCORE : " + str(data["mediaListEntry"]["score"]) if data["mediaListEntry"]["score"] != 0 else "") if data["mediaListEntry"] is not None else ""
+    progress = "🔘PROGRESS : " + str(data["mediaListEntry"]["progress"] if data["mediaListEntry"] is not None else "")
+    total = "/" + str(data["mediaListEntry"]["media"]["episodes"] if data["mediaListEntry"] is not None else "")
 
-        if not (isFav == "" and status == ""):
-            details_embd.set_footer(text="{status}{fav}{score}{progress}{total}".format(status=status, fav=isFav, score=score, progress=progress, total=total))
-    except Exception:
-        pass
+    if not (isFav == "" and status == ""):
+        details_embd.set_footer(text=f"{status}{isFav}{score}{progress}{total}")
+
     return details_embd
 
 
@@ -137,34 +180,51 @@ async def get_tags_embd(data, title, isAdultAllowed: bool = False) -> Embed:
         if tag.get("isAdult") and not isAdultAllowed:
             continue
 
-        tags_embd.add_field(name=tag.get("name", "not found!"), value="Similarity : " + str(tag.get("rank")) + "%")
+        tags_embd.add_field(
+            name=tag.get("name", "not found!"),
+            value="Similarity : " + str(tag.get("rank")) + "%",
+        )
 
     return tags_embd
 
 
-async def get_anime_details_embed(name: str, user: Member) -> Embed:
+async def get_anime_details_embed(name: str, user: User | Member) -> dict:
     data_raw = await get_media_details(name, MediaType.ANIME, user)
+
+    pdb.set_trace()
+
     data = data_raw["data"]["Media"]
 
     if data is None:
-        return await get_error_embed(data_raw)
+        return {"is_error": True, "error_embed": await get_error_embed(data_raw)}
 
-    title = "#{id} - {eng_name} {is_adult}".format(id=data["id"], eng_name=(data["title"]["english"] if data["title"]["english"] is not None else data["title"]["romaji"]), is_adult=" - 18+" if data["isAdult"] else "")
+    title = "#{id} - {eng_name} {is_adult}".format(
+        id=data["id"],
+        eng_name=(data["title"]["english"] if data["title"]["english"] is not None else data["title"]["romaji"]),
+        is_adult=" - 18+" if data["isAdult"] else "",
+    )
 
     details_embd = await get_details_embd(data, title)
     tags_embd = await get_tags_embd(data, title, data["isAdult"])
 
-    return {"embeds": {"details": details_embd, "tags": tags_embd}, "isAdult": data["isAdult"]}
+    return {
+        "embeds": {"details": details_embd, "tags": tags_embd},
+        "isAdult": data["isAdult"],
+    }
 
 
-async def get_manga_details_embed(name: str, user: Member) -> Embed:
+async def get_manga_details_embed(name: str, user: User | Member) -> dict:
     data_raw = await get_media_details(name, MediaType.MANGA, user)
     data = data_raw["data"]["Media"]
 
     if data is None:
-        return await get_error_embed(data_raw)
+        return {"is_error": True, "error_embed": await get_error_embed(data_raw)}
 
-    title = "#{id} - {eng_name} {is_adult}".format(id=data["id"], eng_name=data["title"]["english"], is_adult=" - 18+" if data["isAdult"] else "")
+    title = "#{id} - {eng_name} {is_adult}".format(
+        id=data["id"],
+        eng_name=data["title"]["english"],
+        is_adult=" - 18+" if data["isAdult"] else "",
+    )
 
     embd: Embed = Embed(title=title, color=config.NORMAL_COLOR, url=data["siteUrl"])
     embd.description = data["description"][:200] + "... [read more]({})".format(data["siteUrl"])
@@ -201,30 +261,29 @@ async def get_manga_details_embed(name: str, user: Member) -> Embed:
     trailer_link = "[click here](https://www.youtube.com/watch?v={})".format(data["trailer"]["id"]) if data["trailer"] is not None and data["trailer"]["site"] == "youtube" else "Not Available"
     embd.add_field(name="Trailer", value=trailer_link or "None", inline=True)
 
-    try:
-        # Footer
-        isFav = "🔘FAV : Yes" if data["isFavourite"] is True else ""
-        status = "STATUS : " + data["mediaListEntry"]["status"] if data["mediaListEntry"] is not None else ""
-        score = ("🔘SCORE : " + str(data["mediaListEntry"]["score"]) if data["mediaListEntry"]["score"] != 0 else "") if data["mediaListEntry"] is not None else ""
-        progress = "🔘PROGRESS : " + str(data["mediaListEntry"]["progress"] if data["mediaListEntry"] is not None else "")
-        total = "/" + str(data["mediaListEntry"]["media"]["chapters"] if data["mediaListEntry"] is not None else "")
+    isFav = "🔘FAV : Yes" if data["isFavourite"] is True else ""
+    status = "STATUS : " + data["mediaListEntry"]["status"] if data["mediaListEntry"] is not None else ""
+    score = ("🔘SCORE : " + str(data["mediaListEntry"]["score"]) if data["mediaListEntry"]["score"] != 0 else "") if data["mediaListEntry"] is not None else ""
+    progress = "🔘PROGRESS : " + str(data["mediaListEntry"]["progress"] if data["mediaListEntry"] is not None else "")
+    total = "/" + str(data["mediaListEntry"]["media"]["chapters"] if data["mediaListEntry"] is not None else "")
 
-        if not (isFav == "" and status == ""):
-            embd.set_footer(text="{status}{fav}{score}{progress}{total}".format(status=status, fav=isFav, score=score, progress=progress, total=total))
-    except Exception:
-        pass
+    if not (isFav == "" and status == ""):
+        embd.set_footer(text=f"{status}{isFav}{score}{progress}{total}")
 
     return {"embed": embd, "isAdult": data["isAdult"]}
 
 
-async def get_character_details_embed(name: str, user: Member) -> Embed:
+async def get_character_details_embed(name: str, user: User | Member) -> Embed:
     data_raw = await get_character_details(name, user)
     data = data_raw["data"]["Character"]
 
     if data is None:
         return await get_error_embed(data_raw)
 
-    title = "#{} - {}".format(data["id"], data["name"]["full"] if data["name"]["full"] is not None else data["name"]["native"])
+    title = "#{} - {}".format(
+        data["id"],
+        data["name"]["full"] if data["name"]["full"] is not None else data["name"]["native"],
+    )
 
     embd: Embed = Embed(title=title, color=config.NORMAL_COLOR, url=data["siteUrl"])
     embd.description = data["description"][:300] + "... *[read more]({})*".format(data["siteUrl"])
@@ -245,13 +304,21 @@ async def get_character_details_embed(name: str, user: Member) -> Embed:
     dateOfBirth = [str(date) for date in list(data["dateOfBirth"].values())]
     embd.add_field(name="Date Of Birth", value="\n".join(dateOfBirth) or "None", inline=True)
 
-    appearances_str = "\n".join(["[{name}]({url})".format(name=media["title"]["english"] if media["title"]["english"] is not None else media["title"]["romaji"], url=media["siteUrl"] if media["siteUrl"] is not None else "") for media in data["media"]["nodes"][:3]])
+    appearances_str = "\n".join(
+        [
+            "[{name}]({url})".format(
+                name=media["title"]["english"] if media["title"]["english"] is not None else media["title"]["romaji"],
+                url=media["siteUrl"] if media["siteUrl"] is not None else "",
+            )
+            for media in data["media"]["nodes"][:3]
+        ]
+    )
     embd.add_field(name="Appearances", value=appearances_str or "None", inline=True)
 
     try:
         if data["isFavourite"]:
             embd.set_footer(text="FAVORITE : Yes")
-    except Exception:
+    except Exception:  # noqa: S110
         pass
 
     return embd
@@ -275,17 +342,33 @@ async def get_studio_details_embed(name: str) -> Embed:
     work_str = ""
     medias = data["media"]["nodes"] if len(data["media"]["nodes"]) <= 5 else data["media"]["nodes"][:6]
     for media in medias:
-        work_str += "{bullet} [{name}]({url}) {dot} {format} {dot} {status} \n".format(bullet=config.BULLET_EMOTE, dot=config.DOT_EMOTE, name=media["title"]["english"] if media["title"]["english"] is not None else media["title"]["romaji"], url=media["siteUrl"], format=media["format"], status=media["status"])
+        work_str += "{bullet} [{name}]({url}) {dot} {format} {dot} {status} \n".format(
+            bullet=config.BULLET_EMOTE,
+            dot=config.DOT_EMOTE,
+            name=media["title"]["english"] if media["title"]["english"] is not None else media["title"]["romaji"],
+            url=media["siteUrl"],
+            format=media["format"],
+            status=media["status"],
+        )
 
     embd.add_field(name="Works ", value=work_str, inline=False)
 
     return embd
 
 
-async def get_top_by_genre(genres: list, media_type: str = "ANIME") -> Scroller:
-    genres = [config.ALL_GENRE_ALTS[genre.lower()] for genre in genres]
+async def get_top_by_genre(genres: tuple, media_type: str = "ANIME") -> Scroller:
+    genres = tuple(config.ALL_GENRE_ALTS[genre.lower()] for genre in genres)
 
-    resp = requests.post(url=config.ANILIST_BASE, json={"query": top_genre_query, "variables": {"genre": genres, "type": media_type}}).json()
+    async with httpx.AsyncClient() as client:
+        resp_raw = await client.post(
+            url=config.ANILIST_BASE,
+            json={
+                "query": top_genre_query,
+                "variables": {"genre": genres, "type": media_type},
+            },
+        )
+
+    resp = json.loads(resp_raw.text)
 
     data = resp["data"]["Page"]["media"]
 
@@ -293,7 +376,10 @@ async def get_top_by_genre(genres: list, media_type: str = "ANIME") -> Scroller:
 
     pages = []
 
-    embd = await general_helper.get_information_embed(title="Top {type} in {genre}".format(type=media_type, genre=", ".join(genres).upper()), description="")
+    embd = await general_helper.get_information_embed(
+        title="Top {type} in {genre}".format(type=media_type, genre=", ".join(genres).upper()),
+        description="",
+    )
 
     MAX_PER_EMBED = 10
     entry_count = 1
@@ -301,7 +387,15 @@ async def get_top_by_genre(genres: list, media_type: str = "ANIME") -> Scroller:
 
     for media in data:
         title = media["title"]["english"] if media["title"]["english"] is not None else media["title"]["romaji"]
-        embd.description += "{number}. [{name}]({link}) - {meanScore}".format(number=total_entry_count, name=title, link=media["siteUrl"], meanScore=media["meanScore"]) + "\n"
+        embd.description = (
+            "{number}. [{name}]({link}) - {meanScore}".format(
+                number=total_entry_count,
+                name=title,
+                link=media["siteUrl"],
+                meanScore=media["meanScore"],
+            )
+            + "\n"
+        )
 
         entry_count += 1
         total_entry_count += 1
@@ -309,6 +403,9 @@ async def get_top_by_genre(genres: list, media_type: str = "ANIME") -> Scroller:
         if entry_count > MAX_PER_EMBED:
             entry_count = 1
             pages.append(embd)
-            embd = await general_helper.get_information_embed(title="Top {type} in {genre}".format(type=media_type, genre=", ".join(genres).capitalize()), description="")
+            embd = await general_helper.get_information_embed(
+                title="Top {type} in {genre}".format(type=media_type, genre=", ".join(genres).capitalize()),
+                description="",
+            )
 
     return Scroller(embed_pages=pages, show_all_btns=True)

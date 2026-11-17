@@ -1,13 +1,17 @@
-from discord.ext import commands
 from discord import Embed
+from discord.ext import commands
 
-from views.scroller import Scroller
 from helpers import anime_detection_helper, general_helper
+from views.scroller import Scroller
 
 
 class AnimeDetection(commands.Cog):
-    @commands.command(name="detect-anime", aliases=["da"], description="Returns the anime name from the provided image.")
-    @general_helper.long_cooldown()
+    @commands.command(
+        name="detect-anime",
+        aliases=["da"],
+        description="Returns the anime name from the provided image.",
+    )
+    @general_helper.medium_cooldown()
     @general_helper.with_typing_ctx()
     async def detect_anime(self, ctx: commands.Context, url):
         await ctx.trigger_typing()

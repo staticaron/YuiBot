@@ -1,14 +1,12 @@
-import sys
-import traceback
-import logging
-
 from discord import Embed
-from pymongo import MongoClient, database, collection
+from pymongo import MongoClient, collection, database
 
-from managers import mongo_manager
-from data import base_db_entries
 import config
+from data import base_db_entries
+from managers import mongo_manager
+from managers.logging_manager import get_logger
 
+logger = get_logger()
 
 CACHED_GENRE_EMBED = None
 
@@ -41,24 +39,18 @@ def nested_update(original: dict, update: dict) -> dict:
 
 
 class CacheManager:
-    db: database.Database = None
-
-    server_collection: collection.Collection = None
-
-    server_cache: dict = {
-        # "server_id" : <data>,
-    }
-
     def __init__(self) -> None:
         client: MongoClient = MongoClient(config.MONGO_SRV)
 
         self.db: database.Database = client[config.DB]
+        self.server_collection: collection.Collection = self.db["servers"]
 
-        self.server_collection = self.db["servers"]
+        # "server_id" : <data>,
+        self.server_cache: dict = {}
 
         count = self.cache_servers_data()
 
-        logging.info(f"{count} Servers Cached!")
+        logger.info(f"{count} Servers Cached!")
 
     def cache_servers_data(self) -> int:
         """Bulk load all the data from db to cache and return the count"""
@@ -76,7 +68,7 @@ class CacheManager:
         server_id: int,
         register_if_not_found: bool = False,
         server_name: str = "<none>",
-    ) -> dict:
+    ) -> dict | None:
         """Fetch server from cache"""
 
         server_details = self.server_cache.get(server_id, None)
@@ -84,39 +76,42 @@ class CacheManager:
         if server_details is None and register_if_not_found is True:
             server_details = await self.register_server(server_id, server_name)
 
+        # No existing server exists and registering a new one is disabled.
+        if server_details is None:
+            return None
+
         return server_details
 
-    async def register_server(self, server_id: int, server_name: str) -> None:
+    async def register_server(self, server_id: int, server_name: str) -> dict:
         """Register the guild on both db and cache"""
 
         existing_server = self.server_cache.get(server_id, None)
 
         new_entry = base_db_entries.base_servers_entry
-
         new_entry["server_id"] = server_id
         new_entry["server_name"] = server_name
 
+        # Server doesn't exists in the cache, so load it in both the cache and the database
         if existing_server is None:
             await mongo_manager.manager.add_server(new_entry)
 
         self.server_cache[server_id] = new_entry
-
         return new_entry
 
-    async def update_server(self, server_id: int, update_details: dict) -> dict:
+    async def update_server(self, server_id: int, update_details: dict) -> dict | None:
         """Update the server details on both db and cache"""
 
-        existing_server: dict = self.server_cache.get(server_id, None)
-
+        existing_server: dict | None = self.server_cache.get(server_id, None)
         if existing_server is None:
-            return
+            return None  # no loaded server exists! Can't update
 
         updated_server = nested_update(existing_server, update_details)
-
         flatten_updated_values = flatten_dict(update_details)
 
+        # update the new details over the database as well
         await mongo_manager.manager.update_server(server_id, flatten_updated_values)
 
+        # update the local cache
         self.server_cache[server_id] = updated_server
 
 
@@ -125,21 +120,16 @@ def init():
     init_manager()
 
 
-manager: CacheManager = None
-
-
 def init_manager() -> None:
     global manager
-
     manager = CacheManager()
 
 
 def init_cache():
     try:
         cache_genre_embed()
-    except Exception as e:
-        logging.error("Error while caching data")
-        traceback.print_exception(type(e), e, e.__traceback__, sys.stderr)
+    except Exception:
+        logger.exception("Error while caching data")
 
 
 def cache_genre_embed():

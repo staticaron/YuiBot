@@ -1,16 +1,15 @@
-from discord.ui import Button, View
-from discord.ext import pages
-from discord import Embed, ButtonStyle, Interaction
-from discord.ext.pages import PaginatorButton
+from collections.abc import Callable
 
-from config import PREV_EMOTE, NEXT_EMOTE
+from discord import ButtonStyle, Embed, Interaction
+from discord.ext import pages
+from discord.ext.pages import PaginatorButton
+from discord.ui import Button, View
+
+from config import NEXT_EMOTE, PREV_EMOTE
 
 
 class SelectView(View):
-
-    reply_callback: callable = None
-
-    def __init__(self, reply_callable: callable, timeout: int = 30):
+    def __init__(self, reply_callable: Callable, timeout: int = 30):
         super().__init__(timeout=timeout)
 
         self.reply_callback = reply_callable
@@ -31,18 +30,29 @@ class SelectView(View):
         elif isinstance(reply, pages.Paginator):
             await reply.respond(interaction)
 
-class SelectPaginator(pages.Paginator):
 
-    def __init__(self, pages: list, reply_callable: callable, timeout: int = 30):
+class SelectPaginator(pages.Paginator):
+    def __init__(self, pages: list, reply_callable: Callable, timeout: int = 30):
 
         prev_btn: PaginatorButton = PaginatorButton(
-            "prev", None, PREV_EMOTE, ButtonStyle.gray)
+            "prev", "", PREV_EMOTE, ButtonStyle.gray
+        )
         next_btn: PaginatorButton = PaginatorButton(
-            "next", None, NEXT_EMOTE, ButtonStyle.gray)
+            "next", "", NEXT_EMOTE, ButtonStyle.gray
+        )
 
         buttons = []
         buttons.append(prev_btn)
         buttons.append(next_btn)
 
-        super().__init__(pages, loop_pages=True, show_indicator=False, use_default_buttons=False, show_disabled=False,
-                         disable_on_timeout=True, custom_buttons=buttons, custom_view=SelectView(reply_callable), timeout=timeout)
+        super().__init__(
+            pages,
+            loop_pages=True,
+            show_indicator=False,
+            use_default_buttons=False,
+            show_disabled=False,
+            disable_on_timeout=True,
+            custom_buttons=buttons,
+            custom_view=SelectView(reply_callable),
+            timeout=timeout,
+        )

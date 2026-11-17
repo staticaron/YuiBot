@@ -1,9 +1,8 @@
 import sys
 
-from utils.bot import Bot
-from managers import mongo_manager, cache_manager, logging_manager
-
 import config
+from managers import cache_manager, logging_manager, mongo_manager
+from utils.bot import Bot
 
 logging_manager.setup_logging()
 

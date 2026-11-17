@@ -1,10 +1,14 @@
-from discord import Color
-from os import environ
 import json
-import traceback
 import sys
+import traceback
+from os import environ
+
+from discord import Color
 from dotenv import load_dotenv
-import logging
+
+from managers.logging_manager import get_logger
+
+logger = get_logger()
 
 load_dotenv()
 
@@ -101,19 +105,8 @@ YOUTUBE_TRACK_BASE = "http://youtube.com/watch?v="
 YOUTUBE_MUSIC_BASE = "https://music.youtube.com/watch?v="
 
 
-def initialize_config_vars() -> str:
-    global \
-        DISCORD_TOKEN, \
-        DISCORD_TEST_TOKEN, \
-        ANILIST_ID, \
-        ANILIST_TOKEN, \
-        INVITE, \
-        MONGO_SRV, \
-        FILLER_DATA, \
-        SECRET_KEY, \
-        SPOTIFY_CLIENT_ID, \
-        SPOTIFY_CLIENT_SECRET, \
-        YOUTUBE_API_KEY
+def initialize_config_vars():
+    global DISCORD_TOKEN, DISCORD_TEST_TOKEN, ANILIST_ID, ANILIST_TOKEN, INVITE, MONGO_SRV, FILLER_DATA, SECRET_KEY, SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, YOUTUBE_API_KEY
 
     load_dotenv()
 
@@ -132,8 +125,8 @@ def initialize_config_vars() -> str:
         with open("data/filler_data.json", "r", encoding="utf8") as filler_data:
             FILLER_DATA = json.load(filler_data)
 
-    except Exception as e:
-        logging.error(f"Error occurred while trying to cache Config Vars! \n{e}")
+    except Exception as e:  # noqa: BLE001
+        logger.error(f"Error occurred while trying to cache Config Vars! \n{e}")
         traceback.print_exception(type(e), e, e.__traceback__, file=sys.stderr)
     else:
-        logging.info("Config LOADED!")
+        logger.info("Config LOADED!")

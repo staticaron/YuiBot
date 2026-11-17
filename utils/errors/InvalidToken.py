@@ -1,9 +1,7 @@
-from discord import Member
+from discord import Member, User
+
 
 class InvalidToken(Exception):
-
-    user:Member = None
-
-    def __init__(self, user:Member) -> None:
+    def __init__(self, user: User | Member) -> None:
         super().__init__()
         self.user = user

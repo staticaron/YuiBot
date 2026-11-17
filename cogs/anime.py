@@ -1,7 +1,9 @@
+from discord import Embed
 from discord.ext import commands
+from discord.ext.pages import Paginator
 
-from helpers import anime_helper, general_helper
 import config
+from helpers import anime_helper, general_helper
 
 
 class AnimeModule(commands.Cog):
@@ -15,7 +17,11 @@ class AnimeModule(commands.Cog):
 
         await ctx.send(embed=reply)
 
-    @commands.command(name="suggest", aliases=["recommend"], description="Recommends an anime similar to the provided anime")
+    @commands.command(
+        name="suggest",
+        aliases=["recommend"],
+        description="Recommends an anime similar to the provided anime",
+    )
     @general_helper.short_cooldown()
     @general_helper.with_typing_ctx()
     async def suggest_anime(self, ctx: commands.Context, *anime):
@@ -23,7 +29,7 @@ class AnimeModule(commands.Cog):
 
         anime = " ".join(anime)
 
-        async def reply_callback():
+        async def reply_callback() -> Paginator | Embed:
             media_id = anime_list[paginator.current_page].anilist_id
 
             anime_scroller = await anime_helper.get_similar_anime(media_id)
@@ -31,9 +37,15 @@ class AnimeModule(commands.Cog):
             if anime_scroller is not None:
                 return anime_scroller
             else:
-                return await general_helper.get_information_embed(title="Whoops", description="No recommendations were found for this anime", color=config.ERROR_COLOR)
+                return await general_helper.get_information_embed(
+                    title="Whoops",
+                    description="No recommendations were found for this anime",
+                    color=config.ERROR_COLOR,
+                )
 
-        response = await general_helper.get_media_selection_paginator(anime, reply_callback)
+        response = await general_helper.get_media_selection_paginator(
+            anime, reply_callback
+        )
 
         paginator = response.paginator
         anime_list = response.data_elements
