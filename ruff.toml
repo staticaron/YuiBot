@@ -1,0 +1,6 @@
+# The formatter wraps lines at a length of 88.
+line-length = 1000
+
+[pycodestyle]
+# E501 reports lines that exceed the length of 100.
+max-line-length = 1000
