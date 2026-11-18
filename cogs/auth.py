@@ -32,19 +32,14 @@ class AuthModule(commands.Cog):
 
         auth_embd = await general_helper.get_information_embed(
             title="Login with your AniList Account",
-            description="**Steps\n**"
-            + f"{BULLET_EMOTE} 1. Grab the authentication token using this [link]({ANILIST_LOGIN.format(client_id=ANILIST_ID)}) \n"
-            + f"{BULLET_EMOTE} 3. Copy the token and send it **here** after this message\n\n"
-            + "__**Note**__ : You can terminate the login process by sending `stop` instead of the token.",
+            description="**Steps\n**" + f"{BULLET_EMOTE} 1. Grab the authentication token using this [link]({ANILIST_LOGIN.format(client_id=ANILIST_ID)}) \n" + f"{BULLET_EMOTE} 3. Copy the token and send it **here** after this message\n\n" + "__**Note**__ : You can terminate the login process by sending `stop` instead of the token.",
         )
 
         await ctx.author.send(embed=auth_embd)
         waiter = await ctx.author.send(f"Waiting for TOKEN {LOADING_EMOTE}")
 
         try:
-            token_msg = await bot.wait_for(
-                "message", check=check_user_message, timeout=300
-            )
+            token_msg = await bot.wait_for("message", check=check_user_message, timeout=300)
         except builtins.TimeoutError:
             await waiter.delete()
             await ctx.author.send("Authentication Timed Out. Please try again.")
@@ -59,9 +54,7 @@ class AuthModule(commands.Cog):
             token = token_msg.content
 
             if len(token) < 500:
-                await ctx.author.send(
-                    "Authetication Terminated! Please enter a valid token."
-                )
+                await ctx.author.send("Authetication Terminated! Please enter a valid token.")
                 return
 
             await ctx.author.send("TOKEN RECEIVED!")
@@ -82,9 +75,7 @@ class AuthModule(commands.Cog):
 
         await ctx.trigger_typing()
 
-        confirmation_embd = await general_helper.get_information_embed(
-            title="Are you sure?", description="Click `CONFIRM` to log out."
-        )
+        confirmation_embd = await general_helper.get_information_embed(title="Are you sure?", description="Click `CONFIRM` to log out.")
 
         async def yes_callback(self):
             reply = await auth_helper.logout(str(ctx.author.id))

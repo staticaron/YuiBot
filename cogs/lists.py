@@ -20,14 +20,10 @@ class ListsModule(commands.Cog):
 
     """View Favorite Anime"""
 
-    @anime_group.command(
-        name="fav", aliases=["favorite"], description="Returns your favorite anime list"
-    )
+    @anime_group.command(name="fav", aliases=["favorite"], description="Returns your favorite anime list")
     @commands.check(general_helper.validate_user)
     @general_helper.with_typing_ctx()
-    async def fav_anime_list(
-        self, ctx: commands.Context, target: User | Member | None = None
-    ):
+    async def fav_anime_list(self, ctx: commands.Context, target: User | Member | None = None):
         target = ctx.author if target is None else target
 
         paginator = await lists_helper.get_fav_paginator(target, "ANIME")
@@ -72,9 +68,7 @@ class ListsModule(commands.Cog):
             # modify the ptw list
             return await lists_helper.add_to_list(list_name, mediaId, ctx.author)
 
-        response = await general_helper.get_media_selection_paginator(
-            media_name=anime, select_callback=reply_callback
-        )
+        response = await general_helper.get_media_selection_paginator(media_name=anime, select_callback=reply_callback)
 
         paginator = response.paginator
         ids = [str(anime.anilist_id) for anime in response.data_elements]
@@ -95,9 +89,7 @@ class ListsModule(commands.Cog):
     @commands.check(general_helper.validate_user)
     @general_helper.short_cooldown()
     @general_helper.with_typing_ctx()
-    async def anime_planning_list(
-        self, ctx: commands.Context, user: User | Member | None = None
-    ):
+    async def anime_planning_list(self, ctx: commands.Context, user: User | Member | None = None):
         user = user if user is not None else ctx.author
 
         reply = await lists_helper.get_list_paginator(user, "ANIME", "PLANNING")
@@ -124,9 +116,7 @@ class ListsModule(commands.Cog):
     @commands.check(general_helper.validate_user)
     @general_helper.short_cooldown()
     @general_helper.with_typing_ctx()
-    async def anime_watching_list(
-        self, ctx: commands.Context, user: User | Member | None = None
-    ):
+    async def anime_watching_list(self, ctx: commands.Context, user: User | Member | None = None):
         user = user if user is not None else ctx.author
 
         reply = await lists_helper.get_list_paginator(user, "ANIME", "CURRENT")
@@ -153,9 +143,7 @@ class ListsModule(commands.Cog):
     @commands.check(general_helper.validate_user)
     @general_helper.short_cooldown()
     @general_helper.with_typing_ctx()
-    async def anime_completed_list(
-        self, ctx: commands.Context, user: User | Member | None = None
-    ):
+    async def anime_completed_list(self, ctx: commands.Context, user: User | Member | None = None):
         user = user if user is not None else ctx.author
 
         reply = await lists_helper.get_list_paginator(user, "ANIME", "COMPLETED")
@@ -182,9 +170,7 @@ class ListsModule(commands.Cog):
     @commands.check(general_helper.validate_user)
     @general_helper.short_cooldown()
     @general_helper.with_typing_ctx()
-    async def anime_dropped_list(
-        self, ctx: commands.Context, user: User | Member | None = None
-    ):
+    async def anime_dropped_list(self, ctx: commands.Context, user: User | Member | None = None):
         user = user if user is not None else ctx.author
 
         reply = await lists_helper.get_list_paginator(user, "ANIME", "DROPPED")
@@ -211,9 +197,7 @@ class ListsModule(commands.Cog):
     @commands.check(general_helper.validate_user)
     @general_helper.short_cooldown()
     @general_helper.with_typing_ctx()
-    async def anime_paused_list(
-        self, ctx: commands.Context, user: User | Member | None = None
-    ):
+    async def anime_paused_list(self, ctx: commands.Context, user: User | Member | None = None):
         user = user if user is not None else ctx.author
 
         reply = await lists_helper.get_list_paginator(user, "ANIME", "PAUSED")
@@ -244,14 +228,10 @@ class ListsModule(commands.Cog):
 
     """View Favorite Manga"""
 
-    @manga_group.command(
-        name="fav", aliases=["favorite"], description="Returns your favorite manga list"
-    )
+    @manga_group.command(name="fav", aliases=["favorite"], description="Returns your favorite manga list")
     @commands.check(general_helper.validate_user)
     @general_helper.with_typing_ctx()
-    async def fav_manga_list(
-        self, ctx: commands.Context, target: User | Member | None = None
-    ):
+    async def fav_manga_list(self, ctx: commands.Context, target: User | Member | None = None):
         target = ctx.author if target is None else target
 
         paginator = await lists_helper.get_fav_paginator(target, "MANGA")
@@ -295,13 +275,9 @@ class ListsModule(commands.Cog):
             mediaId = ids[paginator.current_page]
 
             # modify the ptw list
-            return await lists_helper.add_to_list(
-                list_name, mediaId, ctx.author, "MANGA"
-            )
+            return await lists_helper.add_to_list(list_name, mediaId, ctx.author, "MANGA")
 
-        response = await general_helper.get_media_selection_paginator(
-            media_name=manga, select_callback=reply_callback, media_type="MANGA"
-        )
+        response = await general_helper.get_media_selection_paginator(media_name=manga, select_callback=reply_callback, media_type="MANGA")
 
         paginator = response.paginator
         ids = [str(anime.anilist_id) for anime in response.data_elements]
@@ -322,9 +298,7 @@ class ListsModule(commands.Cog):
     @commands.check(general_helper.validate_user)
     @general_helper.short_cooldown()
     @general_helper.with_typing_ctx()
-    async def manga_planning_list(
-        self, ctx: commands.Context, user: User | Member | None = None
-    ):
+    async def manga_planning_list(self, ctx: commands.Context, user: User | Member | None = None):
         user = user if user is not None else ctx.author
 
         reply = await lists_helper.get_list_paginator(user, "MANGA", "PLANNING")
@@ -351,9 +325,7 @@ class ListsModule(commands.Cog):
     @commands.check(general_helper.validate_user)
     @general_helper.short_cooldown()
     @general_helper.with_typing_ctx()
-    async def manga_reading_list(
-        self, ctx: commands.Context, user: User | Member | None = None
-    ):
+    async def manga_reading_list(self, ctx: commands.Context, user: User | Member | None = None):
         user = user if user is not None else ctx.author
 
         reply = await lists_helper.get_list_paginator(user, "MANGA", "CURRENT")
@@ -380,9 +352,7 @@ class ListsModule(commands.Cog):
     @commands.check(general_helper.validate_user)
     @general_helper.short_cooldown()
     @general_helper.with_typing_ctx()
-    async def manga_completed_list(
-        self, ctx: commands.Context, user: User | Member | None = None
-    ):
+    async def manga_completed_list(self, ctx: commands.Context, user: User | Member | None = None):
         user = user if user is not None else ctx.author
 
         reply = await lists_helper.get_list_paginator(user, "MANGA", "COMPLETED")
@@ -409,9 +379,7 @@ class ListsModule(commands.Cog):
     @commands.check(general_helper.validate_user)
     @general_helper.short_cooldown()
     @general_helper.with_typing_ctx()
-    async def manga_dropped_list(
-        self, ctx: commands.Context, user: User | Member | None = None
-    ):
+    async def manga_dropped_list(self, ctx: commands.Context, user: User | Member | None = None):
         user = user if user is not None else ctx.author
 
         reply = await lists_helper.get_list_paginator(user, "MANGA", "DROPPED")
@@ -438,9 +406,7 @@ class ListsModule(commands.Cog):
     @commands.check(general_helper.validate_user)
     @general_helper.short_cooldown()
     @general_helper.with_typing_ctx()
-    async def manga_paused_list(
-        self, ctx: commands.Context, user: User | Member | None = None
-    ):
+    async def manga_paused_list(self, ctx: commands.Context, user: User | Member | None = None):
         user = user if user is not None else ctx.author
 
         reply = await lists_helper.get_list_paginator(user, "MANGA", "PAUSED")

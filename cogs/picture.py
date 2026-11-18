@@ -1,4 +1,4 @@
-from discord import Member
+from discord import Member, User
 from discord.ext import commands
 
 from helpers import general_helper, picture_helper
@@ -17,12 +17,10 @@ class PictureModule(commands.Cog):
 
         await ctx.send(embed=reply)
 
-    @commands.command(
-        name="gif", aliases=["react"], description="Returns a gif of valid reaction"
-    )
+    @commands.command(name="gif", aliases=["react"], description="Returns a gif of valid reaction")
     @general_helper.short_cooldown()
     @general_helper.with_typing_ctx()
-    async def cry(self, ctx: commands.Context, reaction: str, target: Member):
+    async def cry(self, ctx: commands.Context, reaction: str, target: User | Member | None):
         reply = await picture_helper.get_reaction_embed(reaction, ctx.author, target)
         await ctx.send(embed=reply)
 

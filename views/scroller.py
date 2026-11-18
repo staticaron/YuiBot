@@ -8,18 +8,10 @@ from config import FIRST_EMOTE, LAST_EMOTE, NEXT_EMOTE, PREV_EMOTE
 class Scroller(pages.Paginator):
     def __init__(self, embed_pages: list, show_all_btns: bool = False):
 
-        prev_btn: PaginatorButton = PaginatorButton(
-            "prev", "", PREV_EMOTE, ButtonStyle.gray
-        )
-        next_btn: PaginatorButton = PaginatorButton(
-            "next", "", NEXT_EMOTE, ButtonStyle.gray
-        )
-        first_btn: PaginatorButton = PaginatorButton(
-            "first", "", FIRST_EMOTE, ButtonStyle.gray
-        )
-        last_btn: PaginatorButton = PaginatorButton(
-            "last", "", LAST_EMOTE, ButtonStyle.gray
-        )
+        prev_btn: PaginatorButton = PaginatorButton("prev", "", PREV_EMOTE, ButtonStyle.gray)
+        next_btn: PaginatorButton = PaginatorButton("next", "", NEXT_EMOTE, ButtonStyle.gray)
+        first_btn: PaginatorButton = PaginatorButton("first", "", FIRST_EMOTE, ButtonStyle.gray)
+        last_btn: PaginatorButton = PaginatorButton("last", "", LAST_EMOTE, ButtonStyle.gray)
 
         buttons = []
 
@@ -33,9 +25,7 @@ class Scroller(pages.Paginator):
             buttons.append(last_btn)
 
         for index in range(len(embed_pages)):
-            embed_pages[index].set_footer(
-                text=f"Page {index + 1} of {len(embed_pages)}"
-            )
+            embed_pages[index].set_footer(text=f"Page {index + 1} of {len(embed_pages)}")
 
         super().__init__(
             embed_pages,
