@@ -349,7 +349,7 @@ async def encrypt_token(token: str) -> str:
 async def decrypt_token(encrypted_token: str) -> str:
     cipher_suit = Fernet(config.SECRET_KEY)
 
-    decrypted_token = cipher_suit.decrypt(encrypted_token.encode())
+    decrypted_token = cipher_suit.decrypt(encrypted_token)
 
     return decrypted_token.decode()
 
@@ -380,3 +380,15 @@ def with_typing_ctx():
         return wrapper
 
     return decorator
+
+
+async def get_error_embed(data_raw: dict) -> Embed:
+    """
+    Get Error Embed from Anilist Response
+    """
+    errors = [error["message"] for error in data_raw["errors"]]
+    return await general_helper.get_information_embed(
+        title="Error Occurred!",
+        color=config.ERROR_COLOR,
+        description="{}{}".format(config.BULLET_EMOTE, f"\n{config.BULLET_EMOTE}".join(errors)),
+    )

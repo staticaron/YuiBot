@@ -3,6 +3,7 @@ from discord.ext import commands
 
 import config
 from helpers import general_helper, search_helper
+from helpers.search_helper import ErrorResult, MediaEmbedResult
 from managers import cache_manager
 from views import media_info_view, warning_view
 
@@ -18,63 +19,57 @@ class SearchModule(commands.Cog):
     @general_helper.short_cooldown()
     async def search_group(self, ctx: commands.Context):
         if ctx.subcommand_passed is None:
-            return await ctx.reply(
-                f"Please provide a valid subcommand! {config.YUI_SHY_EMOTE}"
-            )
+            return await ctx.reply(f"Please provide a valid subcommand! {config.YUI_SHY_EMOTE}")
 
     """Anime Search"""
 
-    @search_group.command(
-        name="anime", description="Returns the anime details with provided name"
-    )
+    @search_group.command(name="anime", description="Returns the anime details with provided name")
     @general_helper.with_typing_ctx()
     async def anime_details(self, ctx: commands.Context, *name):
         name = " ".join(name)
 
-        result = await search_helper.get_anime_details_embed(name, ctx.author)
+        result: MediaEmbedResult | ErrorResult = await search_helper.get_anime_details_embed(name, ctx.author)
 
-        info_view = media_info_view.MediaInfoView(result["embeds"])
+        if isinstance(result, MediaEmbedResult):
+            info_view = media_info_view.MediaInfoView({"details": result.embd, "tags": result.tags_embd})
 
-        if result.get("isAdult") is False:
-            return await ctx.send(embed=result["embeds"]["details"], view=info_view)
+            if result.is_adult is False:
+                return await ctx.send(embed=result.embd, view=info_view)
 
-        async def proceed_callback(interaction: Interaction):
-            return await interaction.followup.send(
-                embed=result["embeds"]["details"], ephemeral=True, view=info_view
-            )
+            async def proceed_callback(interaction: Interaction):
+                return await interaction.followup.send(embed=result.embd, ephemeral=True, view=info_view)
 
-        confirmation_embd = Embed(
-            title="Watch Out!", description="This media entry is marked as **18+**."
-        )
-        confirmation_view = warning_view.WarningView(proceed_callback)
+            confirmation_embd = Embed(title="Watch Out!", description="This media entry is marked as **18+**.")
+            confirmation_view = warning_view.WarningView(proceed_callback)
 
-        await ctx.send(embed=confirmation_embd, view=confirmation_view)
+            await ctx.send(embed=confirmation_embd, view=confirmation_view)
+        else:
+            await ctx.send(embed=result.embd)
 
     """Manga Search"""
 
-    @search_group.command(
-        name="manga", description="Returns the manga details with provide name"
-    )
+    @search_group.command(name="manga", description="Returns the manga details with provide name")
     @general_helper.with_typing_ctx()
     async def manga_details(self, ctx: commands.Context, *name):
         name = " ".join(name)
 
-        result = await search_helper.get_manga_details_embed(name, ctx.author)
+        result: MediaEmbedResult | ErrorResult = await search_helper.get_manga_details_embed(name, ctx.author)
 
-        if result.get("isAdult") is False:
-            return await ctx.send(embed=result["embed"])
+        if isinstance(result, MediaEmbedResult):
+            info_view = media_info_view.MediaInfoView({"details": result.embd, "tags": result.tags_embd})
 
-        async def proceed_callback(interaction: Interaction):
-            return await interaction.followup.send(
-                embed=result["embed"], ephemeral=True
-            )
+            if result.is_adult is False:
+                return await ctx.send(embed=result.embd, view=info_view)
 
-        confirmation_embd = Embed(
-            title="Watch Out!", description="This media entry is marked as **18+**."
-        )
-        confirmation_view = warning_view.WarningView(proceed_callback)
+            async def proceed_callback(interaction: Interaction):
+                return await interaction.followup.send(embed=result.embd, ephemeral=True, view=info_view)
 
-        await ctx.send(embed=confirmation_embd, view=confirmation_view)
+            confirmation_embd = Embed(title="Watch Out!", description="This media entry is marked as **18+**.")
+            confirmation_view = warning_view.WarningView(proceed_callback)
+
+            await ctx.send(embed=confirmation_embd, view=confirmation_view)
+        else:
+            await ctx.send(embed=result.embd)
 
     """Character Search"""
 
@@ -93,14 +88,12 @@ class SearchModule(commands.Cog):
 
     """Studio Search"""
 
-    @search_group.command(
-        name="studio", description="Returns the studio details with provided name"
-    )
+    @search_group.command(name="studio", description="Returns the studio details with provided name")
     @general_helper.with_typing_ctx()
     async def studio_details(self, ctx: commands.Context, *name):
         name = " ".join(name)
 
-        embd = await search_helper.get_studio_details_embed(name)
+        embd = await search_helper.get_studio_details_embed(name, ctx.author)
 
         await ctx.send(embed=embd)
 

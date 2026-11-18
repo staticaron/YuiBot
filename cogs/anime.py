@@ -13,6 +13,9 @@ class AnimeModule(commands.Cog):
     async def anime_quote(self, ctx: commands.Context):
         await ctx.trigger_typing()
 
+        await ctx.send(embed=await general_helper.get_information_embed("Error!", description="Not Supported Anymore!", color=config.ERROR_COLOR))
+        return
+
         reply = await anime_helper.get_random_anime_quote_embed()
 
         await ctx.send(embed=reply)
@@ -43,9 +46,7 @@ class AnimeModule(commands.Cog):
                     color=config.ERROR_COLOR,
                 )
 
-        response = await general_helper.get_media_selection_paginator(
-            anime, reply_callback
-        )
+        response = await general_helper.get_media_selection_paginator(anime, reply_callback)
 
         paginator = response.paginator
         anime_list = response.data_elements

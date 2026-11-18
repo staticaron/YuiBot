@@ -33,9 +33,7 @@ class MediaModule(commands.Cog):
 
             return await media_helper.set_progress(str(ctx.author.id), mediaID, ep)
 
-        data_inclusive_paginator = await general_helper.get_media_selection_paginator(
-            anime, reply_callback
-        )
+        data_inclusive_paginator = await general_helper.get_media_selection_paginator(anime, reply_callback)
 
         paginator = data_inclusive_paginator.paginator
         data_elements = data_inclusive_paginator.data_elements
@@ -70,9 +68,7 @@ class MediaModule(commands.Cog):
             mediaID = data_elements[paginator.current_page].anilist_id
             return await media_helper.set_progress(str(ctx.author.id), mediaID, ep)
 
-        data_inclusive_paginator = await general_helper.get_media_selection_paginator(
-            manga, reply_callback, "MANGA"
-        )
+        data_inclusive_paginator = await general_helper.get_media_selection_paginator(manga, reply_callback, "MANGA")
 
         paginator = data_inclusive_paginator.paginator
         data_elements = data_inclusive_paginator.data_elements
@@ -93,9 +89,7 @@ class MediaModule(commands.Cog):
     @general_helper.short_cooldown()
     async def rate(self, ctx: commands.Context):
         if ctx.subcommand_passed is None:
-            return await ctx.reply(
-                "Please provide a valid subcommand. Try ```yui help rate```"
-            )
+            return await ctx.reply("Please provide a valid subcommand. Try ```yui help rate```")
 
     @rate.command(name="anime", description="Rate anime", case_insensitive=True)
     @general_helper.with_typing_ctx()
@@ -118,9 +112,7 @@ class MediaModule(commands.Cog):
             anime_id = data_elements[paginator.current_page].anilist_id
             return await media_helper.rate_media(str(ctx.author.id), anime_id, rating)
 
-        selection_result = await general_helper.get_media_selection_paginator(
-            anime, selection_reply
-        )
+        selection_result = await general_helper.get_media_selection_paginator(anime, selection_reply)
 
         paginator = selection_result.paginator
         data_elements = selection_result.data_elements
@@ -151,9 +143,7 @@ class MediaModule(commands.Cog):
             manga_id = data_elements[paginator.current_page].anilist_id
             return await media_helper.rate_media(str(ctx.author.id), manga_id, rating)
 
-        selection_result = await general_helper.get_media_selection_paginator(
-            manga, selection_reply, "MANGA"
-        )
+        selection_result = await general_helper.get_media_selection_paginator(manga, selection_reply, "MANGA")
 
         paginator = selection_result.paginator
         data_elements = selection_result.data_elements
@@ -173,15 +163,17 @@ class MediaModule(commands.Cog):
     @general_helper.short_cooldown()
     @general_helper.with_typing_ctx()
     async def themes(self, ctx: commands.Context, *inputs):
+
+        await ctx.send(embed=await general_helper.get_information_embed("Error!", description="Not Supported Anymore!", color=ERROR_COLOR))
+        return
+
         anime = " ".join(inputs)
 
         async def reply_callback() -> Scroller:
             selected_id = data_elements[paginator.current_page].mal_id
             return await theme_scrapper.get_themes_embed(selected_id)
 
-        anime_selector = await general_helper.get_media_selection_paginator(
-            anime, reply_callback
-        )
+        anime_selector = await general_helper.get_media_selection_paginator(anime, reply_callback)
 
         paginator = anime_selector.paginator
         data_elements = anime_selector.data_elements
@@ -204,13 +196,14 @@ class MediaModule(commands.Cog):
     async def watch_order(self, ctx: commands.Context, *inputs):
         anime = " ".join(inputs)
 
+        await ctx.send(embed=await general_helper.get_information_embed("Error!", description="Not Supported Anymore!", color=ERROR_COLOR))
+        return
+
         async def reply_callback() -> Scroller:
             mal_id = data_elements[paginator.current_page].mal_id
             return await media_helper.get_watch_order_embd(mal_id, anime)
 
-        selector = await general_helper.get_media_selection_paginator(
-            anime, reply_callback
-        )
+        selector = await general_helper.get_media_selection_paginator(anime, reply_callback)
 
         paginator = selector.paginator
         data_elements = selector.data_elements

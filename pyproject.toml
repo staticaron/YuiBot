@@ -19,7 +19,6 @@ dependencies = [
     "python-youtube>=0.9.9",
     "spotipy>=2.26.0",
     "tracemoepy>=4.1",
-    "uv>=0.13.8",
     "ytmusicapi>=1.12.3",
 ]
 

@@ -119,6 +119,8 @@ def init():
     init_cache()
     init_manager()
 
+    logger.info("Caching Done! Cache Manager Initialized!")
+
 
 def init_manager() -> None:
     global manager

@@ -50,7 +50,7 @@ class HelpCommand(commands.Cog):
             "media update_manga": "Updates the progress/episode count of the provided manga. ```yui update_manga <manga_name> <new_progress>\n\nyui update_manga chainsaw man 5\nyui um k-on 8```",
             "media rate": "Rates a particular anime/manga ```yui rate anime <anime_name> <new_score>\n\nyui rate anime haikyu 100\nyui rate manga berserk 80```",
             "media theme": "Returns the opening and endings of the provided anime with their links. ```yui theme <anime_name>\n\nyui theme shikimori is not just a cutie\nyui op and you thought there was never a girl online```",
-            "misc gif": "Returns a reaction gif on supported type. ```yui gif happy\nyui gif bonk\nyui gif wave",
+            "misc gif": "Returns a reaction gif on supported type. ```yui gif happy\nyui gif bonk\nyui gif wave```",
             "misc pfp": "Returns a random waifu image. Can be used for getting random profile pictures. ```yui pfp```",
             "misc quote": "Returns a random anime quote ```yui quote```",
             "misc invite": "Sends the invite link of the bot",

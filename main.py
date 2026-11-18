@@ -20,7 +20,6 @@ def main(test=False):
     config.initialize_config_vars()
 
     cache_manager.init()
-
     mongo_manager.init_motor()
 
     bot: Bot = Bot()

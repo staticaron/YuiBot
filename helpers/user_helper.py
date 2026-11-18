@@ -31,18 +31,29 @@ async def is_following(current_user_token: str, targetID: str) -> bool:
 """Get user information from AniList"""
 
 
-async def get_user_embed(targetID: str) -> Embed:
-    anilistUser = await mongo_manager.manager.get_user(targetID)
-    if anilistUser is None:
+async def get_user_embed(targetID: str, user: User | Member | None = None) -> Embed:
+    target_user = await mongo_manager.manager.get_user(targetID)
+    if target_user is None:
         raise UserNotFound(user_id=targetID)
 
-    anilistID = int(anilistUser["anilistID"])
+    anilistID = int(target_user["anilistID"])
+    current_user = await mongo_manager.manager.get_user(str(user.id)) if user is not None else None
 
-    async with httpx.AsyncClient() as client:
-        user_resp_raw = await client.post(
-            url=config.ANILIST_BASE,
-            json={"query": user_query, "variables": {"id": anilistID}},
-        )
+    if current_user is not None:
+        async with httpx.AsyncClient() as client:
+            user_resp_raw = await client.post(
+                url=config.ANILIST_BASE,
+                json={"query": user_query, "variables": {"id": anilistID}},
+                headers={"Authorization": current_user["token"]},
+            )
+
+    # Fetch without any token
+    else:
+        async with httpx.AsyncClient() as client:
+            user_resp_raw = await client.post(
+                url=config.ANILIST_BASE,
+                json={"query": user_query, "variables": {"id": anilistID}},
+            )
 
     user_resp = json.loads(user_resp_raw.text)
 
@@ -55,9 +66,9 @@ async def get_user_embed(targetID: str) -> Embed:
     embd: Embed = Embed(
         title="User Information",
         description="**Name** : [{name}]({url})\n**Followers** : {followers}".format(
-            name=user_data["user"],
+            name=user_data["name"],
             url=user_data["siteUrl"],
-            followers=social_data["pageInfo"]["total"],
+            followers=social_data.get("pageInfo", {}).get("total", "-"),
         ),
         color=config.NORMAL_COLOR,
     )
@@ -66,9 +77,7 @@ async def get_user_embed(targetID: str) -> Embed:
         "\n".join(
             [
                 "[{name}]({url})".format(
-                    name=anime["title"]["english"]
-                    if anime["title"]["english"] is not None
-                    else anime["title"]["romaji"],
+                    name=anime["title"]["english"] if anime["title"]["english"] is not None else anime["title"]["romaji"],
                     url=anime["siteUrl"],
                 )
                 for anime in user_data["favourites"]["anime"]["nodes"]
@@ -76,9 +85,7 @@ async def get_user_embed(targetID: str) -> Embed:
         )
         + " ..."
     )
-    fav_anime = (
-        "None" if len(user_data["favourites"]["anime"]["nodes"]) <= 0 else fav_anime
-    )
+    fav_anime = "None" if len(user_data["favourites"]["anime"]["nodes"]) <= 0 else fav_anime
 
     embd.add_field(name="Favorite Anime", value=fav_anime, inline=True)
 
@@ -86,9 +93,7 @@ async def get_user_embed(targetID: str) -> Embed:
         "\n".join(
             [
                 "[{name}]({url})".format(
-                    name=manga["title"]["english"]
-                    if manga["title"]["english"] is not None
-                    else manga["title"]["romaji"],
+                    name=manga["title"]["english"] if manga["title"]["english"] is not None else manga["title"]["romaji"],
                     url=manga["siteUrl"],
                 )
                 for manga in user_data["favourites"]["manga"]["nodes"]
@@ -96,28 +101,12 @@ async def get_user_embed(targetID: str) -> Embed:
         )
         + " ..."
     )
-    fav_manga = (
-        "None" if len(user_data["favourites"]["manga"]["nodes"]) <= 0 else fav_manga
-    )
+    fav_manga = "None" if len(user_data["favourites"]["manga"]["nodes"]) <= 0 else fav_manga
 
     embd.add_field(name="Favorite Manga", value=fav_manga, inline=True)
 
-    fav_characters = (
-        "\n".join(
-            [
-                "[{name}]({url})".format(
-                    name=character["name"]["full"], url=character["siteUrl"]
-                )
-                for character in user_data["favourites"]["characters"]["nodes"]
-            ]
-        )
-        + " ..."
-    )
-    fav_characters = (
-        "None"
-        if len(user_data["favourites"]["characters"]["nodes"]) <= 0
-        else fav_characters
-    )
+    fav_characters = "\n".join(["[{name}]({url})".format(name=character["name"]["full"], url=character["siteUrl"]) for character in user_data["favourites"]["characters"]["nodes"]]) + " ..."
+    fav_characters = "None" if len(user_data["favourites"]["characters"]["nodes"]) <= 0 else fav_characters
 
     embd.add_field(name="Favorite Characters", value=fav_characters, inline=True)
 
@@ -128,12 +117,7 @@ async def get_user_embed(targetID: str) -> Embed:
             mean_score=user_data["statistics"]["anime"]["meanScore"],
             standard_deviation=user_data["statistics"]["anime"]["standardDeviation"],
             episodes=user_data["statistics"]["anime"]["episodesWatched"],
-            genre="\n".join(
-                "{bullet}**{name}**".format(
-                    name=genre["genre"], bullet=config.BULLET_EMOTE
-                )
-                for genre in user_data["statistics"]["anime"]["genres"]
-            ),
+            genre="\n".join("{bullet}**{name}**".format(name=genre["genre"], bullet=config.BULLET_EMOTE) for genre in user_data["statistics"]["anime"]["genres"]),
         ),
         inline=True,
     )
@@ -145,12 +129,7 @@ async def get_user_embed(targetID: str) -> Embed:
             mean_score=user_data["statistics"]["manga"]["meanScore"],
             standard_deviation=user_data["statistics"]["manga"]["standardDeviation"],
             chapters=user_data["statistics"]["manga"]["chaptersRead"],
-            genre="\n".join(
-                "{bullet}**{name}**".format(
-                    name=genre["genre"], bullet=config.BULLET_EMOTE
-                )
-                for genre in user_data["statistics"]["manga"]["genres"]
-            ),
+            genre="\n".join("{bullet}**{name}**".format(name=genre["genre"], bullet=config.BULLET_EMOTE) for genre in user_data["statistics"]["manga"]["genres"]),
         ),
         inline=True,
     )
@@ -207,9 +186,7 @@ async def follow_user(user: User | Member, target: Member) -> Embed:
         return await general_helper.get_information_embed(
             title="Error Occurred!",
             color=config.ERROR_COLOR,
-            description="The following error occurred : ```>{}```".format(
-                "\n>".join(errors)
-            ),
+            description="The following error occurred : ```>{}```".format("\n>".join(errors)),
         )
 
     return (
@@ -267,9 +244,7 @@ async def unfollow_user(user: User | Member, target: Member) -> Embed:
         return await general_helper.get_information_embed(
             title="Error Occurred!",
             color=config.ERROR_COLOR,
-            description="The following error occurred : ```>{}```".format(
-                "\n>".join(errors)
-            ),
+            description="The following error occurred : ```>{}```".format("\n>".join(errors)),
         )
 
     return (
@@ -286,9 +261,7 @@ async def unfollow_user(user: User | Member, target: Member) -> Embed:
 """Get user media stats """
 
 
-async def get_user_media_stats(
-    target: User | Member, media_type: str = "ANIME"
-) -> Embed:
+async def get_user_media_stats(target: User | Member, media_type: str = "ANIME") -> Embed:
 
     stats_query = anime_stats_query
     if media_type == "MANGA":
@@ -312,9 +285,7 @@ async def get_user_media_stats(
 
     embd = Embed(
         title="Anime Statistics",
-        description="**Name : ** [{}]({})\n\n".format(
-            user_data["name"], user_data["siteUrl"]
-        ),
+        description="**Name : ** [{}]({})\n\n".format(user_data["name"], user_data["siteUrl"]),
     )
 
     embd.set_thumbnail(url=user_data["avatar"]["medium"])
@@ -337,22 +308,16 @@ async def get_user_media_stats(
             inline=False,
         )
     else:
-        embd.add_field(
-            name="Chapters Read", value=str(stats_data["chaptersRead"]), inline=False
-        )
+        embd.add_field(name="Chapters Read", value=str(stats_data["chaptersRead"]), inline=False)
 
     if media_type == "ANIME":
         embd.add_field(
             name="Watch Time",
-            value=await general_helper.get_time_str_from_seconds(
-                stats_data["minutesWatched"] * 60, 2
-            ),
+            value=await general_helper.get_time_str_from_seconds(stats_data["minutesWatched"] * 60, 2),
             inline=False,
         )
 
     if media_type == "MANGA":
-        embd.add_field(
-            name="Volumes Read", value=str(stats_data["volumesRead"]), inline=False
-        )
+        embd.add_field(name="Volumes Read", value=str(stats_data["volumesRead"]), inline=False)
 
     return embd
