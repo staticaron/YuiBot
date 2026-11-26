@@ -2,7 +2,7 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "edge" ]
+    branches: [ "actions" ]
 
 jobs:
 
@@ -42,5 +42,5 @@ jobs:
 
           docker stop yui-bot || true
           docker rm yui-bot || true
-          
+
           docker run -d --env-file /root/yuibot/.env --name yui-bot --restart always docker.io/staticaron/yui-bot:latest
