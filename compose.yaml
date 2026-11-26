@@ -4,5 +4,6 @@ services:
     container_name: yui-bot
     env_file:
       - /root/yui-bot/.env
+    restart: always
     volumes:
       - /root/yui-bot/logs:/app/logs
