@@ -15,6 +15,7 @@ logger = get_logger()
 
 @general_helper.with_typing_msg()
 async def process_spotify_links(message: Message):
+
     if message.guild is None:
         return
 
@@ -29,7 +30,7 @@ async def process_spotify_links(message: Message):
         if len(splits) <= 0:
             return
 
-        track_id_match: list = re.findall(r"(?<=track/)\w+", splits[0])
+        track_id_match: list = re.findall(r"(?<=track/)\w+", splits[1])
         if len(track_id_match) > 0:
             links: spotify_helper.SpotifyTrackAlternative | None = await spotify_helper.get_alternatives(message=message, spotify_track_id=track_id_match[0])
             if links is None:
@@ -82,7 +83,7 @@ class Bot(commands.Bot):
 
         SPOTIFY_TRACK_BASE = "https://open.spotify.com/track/"
 
-        if message.content.strip().startswith(SPOTIFY_TRACK_BASE):
+        if SPOTIFY_TRACK_BASE in message.content.strip():
             await process_spotify_links(message)
 
     async def on_guild_join(self, guild: Guild):
